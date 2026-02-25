@@ -95,7 +95,11 @@
 ## 🚀 Current Projects <sub>(Updated within the last month)</sub>
 
 <!-- CURRENT_PROJECTS:start -->
-_No repositories updated within the last month._
+- [s26-ikigai](https://github.com/Clemson-Capstone/s26-ikigai) - s26-ikigai contains implementation details project structure and key development artifacts used recently. - Uses: TypeScript, JavaScript, CSS, Python - Updated 3 hours ago
+- [Curiosity](https://github.com/Walhalla7/Curiosity) - Short description of the project - Survival Horror - Current development goal Low-level Items Mechanics. - Uses: Not specified - Updated 23 hours ago
+- [website](https://github.com/9by9-sudoku/website) - Repository for the 9x9project s website files. with clear project. - Uses: HTML, SCSS, Less, PHP - Updated 1 day ago
+- [Physics](https://github.com/superbode/Physics) - A small particle-in-a-box physics demo implemented in C++ using OpenGL FreeGLUT. - Uses: C++, C, Makefile - Updated 4 days ago
+- [solvepath-analysis](https://github.com/9by9-sudoku/solvepath-analysis) - This is the repository for the solvepath analysis section of the class and where the. - Uses: JavaScript, MATLAB, CSS, Python - Updated 8 days ago
 <!-- CURRENT_PROJECTS:end -->
 
 ---
@@ -103,7 +107,16 @@ _No repositories updated within the last month._
 ## 🗄️ Past Projects <sub>(Not updated in over one month)</sub>
 
 <!-- PAST_PROJECTS:start -->
+- [CanTrip](https://github.com/JohnkGitt/CanTrip) - run cantrip.py John Aragon - CanRobot the player - Door. - Uses: Python - Updated 2 months ago
+- [cpsc-3300-p2](https://github.com/coolguycaden/cpsc-3300-p2) - Team members - Caden Allen - Bode Hooker - Curren Patel. - Uses: C++, Makefile - Updated 3 months ago
+- [CPSC4110-SP25-Team7](https://github.com/sveaej/CPSC4110-SP25-Team7) - A repository for CPSC 4110 Team 7 s Fishing Simulator. - Uses: ShaderLab, C#, Mathematica - Updated 10 months ago
+- [CPSC3720.1-S25-Team12](https://github.com/CPSC3720S25-ClassRepos/CPSC3720.1-S25-Team12) - CPSC3720.1-S25-Team12 contains implementation details project structure and key development artifacts used recently. - Uses: Python - Updated 10 months ago
+- [CPSC3720-Team12](https://github.com/LumpyTacos/CPSC3720-Team12) - CPSC3720-Team12 contains implementation details project structure and key development artifacts used recently. - Uses: Python - Updated 10 months ago
 - [3720-learn-git](https://github.com/superbode/3720-learn-git) - Setting up git Make sure to sign in with github before starting this assignment. - Uses: Not specified - Updated 11 months ago
+- [SudokuSolver](https://github.com/9by9-sudoku/SudokuSolver) - Created and maintained by David Clamage Rangsk Installation Guide Setting Up and Using f-puzzles.com Integration. - Uses: C#, JavaScript, Shell - Updated 1 year ago
+- [cyberpunk-game](https://github.com/isaac-fletcher/cyberpunk-game) - CPSC 4820 Cyberpunk Game with clear project goals and organized. - Uses: ShaderLab, C#, HLSL - Updated 2 years ago
+- [cyberpunk-game](https://github.com/superbode/cyberpunk-game) - CPSC 4820 Cyberpunk Game with clear project goals and organized. - Uses: C# - Updated 2 years ago
+- [puzzle-vault](https://github.com/9by9-sudoku/puzzle-vault) - By Nathan Goller-Deitsch with clear project goals and organized code. - Uses: JavaScript, TypeScript, CSS - Updated 2 years ago
 <!-- PAST_PROJECTS:end -->
 
 ---
