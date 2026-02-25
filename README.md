@@ -88,7 +88,16 @@
 ### Language Breakdown (Included Repositories)
 
 <!-- LANGUAGE_SUMMARY:start -->
-_No language data available yet._
+- **ShaderLab:** 52.3%
+- **C#:** 17.4%
+- **HTML:** 7.2%
+- **Python:** 6.2%
+- **C++:** 4.1%
+- **SCSS:** 2.7%
+- **Less:** 2.7%
+- **TypeScript:** 2.7%
+- **JavaScript:** 2.4%
+- **PHP:** 2.3%
 <!-- LANGUAGE_SUMMARY:end -->
 
 <p align="center">
@@ -101,6 +110,29 @@ _No language data available yet._
 
 <!-- CURRENT_PROJECTS:start -->
 _No repositories updated within the last month._
+**[s26-ikigai](https://github.com/Clemson-Capstone/s26-ikigai)** - Supports Ikigai Gardens by connecting South Carolina churches and volunteers to grow food and combat insecurity.
+- **Languages:** TypeScript, JavaScript, CSS, Python, Dockerfile, HTML
+- **Contributors:** 5
+- **Organization/Owner:** Organization (Clemson-Capstone)
+- **Role:** Contributor/Collaborator
+
+**[Curiosity](https://github.com/Walhalla7/Curiosity)** - An indie Unreal Engine 5 horror game built by a small Clemson development team.
+- **Languages:** Not specified
+- **Contributors:** 2
+- **Organization/Owner:** Owner (Walhalla7)
+- **Role:** Contributor/Collaborator
+
+**[website](https://github.com/9by9-sudoku/website)** - Repository for the 9x9project s website files.
+- **Languages:** HTML, SCSS, Less, PHP, JavaScript, Hack, CSS
+- **Contributors:** 5
+- **Organization/Owner:** Organization (9by9-sudoku)
+- **Role:** Contributor/Collaborator
+
+**[Physics](https://github.com/superbode/Physics)** - Includes an evolution of a simple physics encoded in C++.
+- **Languages:** C++, C, Makefile
+- **Contributors:** 2
+- **Organization/Owner:** Owner (superbode)
+- **Role:** Owner
 <!-- CURRENT_PROJECTS:end -->
 
 ---
