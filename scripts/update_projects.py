@@ -58,8 +58,12 @@ def fetch_repos():
         # Filter out excluded private repos
         filtered_repos = []
         for repo in data:
+            # Skip excluded private repos
             if repo["private"] and repo["name"] in EXCLUDE_PRIVATE_REPOS:
-                continue  # Skip excluded private repos
+                continue
+            # Skip forks unless they have significant activity
+            if repo.get("fork") and repo.get("stargazers_count", 0) == 0 and repo.get("forks_count", 0) == 0:
+                continue
             filtered_repos.append(repo)
         
         repos.extend(filtered_repos)
@@ -131,6 +135,9 @@ def main():
     print(f"Fetching {repo_access} repos for {GITHUB_USERNAME} …")
     if EXCLUDE_PRIVATE_REPOS:
         print(f"Excluding private repos: {', '.join(EXCLUDE_PRIVATE_REPOS)}")
+    if not GITHUB_TOKEN:
+        print("⚠️  No GITHUB_TOKEN found - only public repos will be shown")
+        print("   Set PERSONAL_ACCESS_TOKEN in repository secrets to include private repos")
     
     try:
         all_repos = fetch_repos()
@@ -139,10 +146,24 @@ def main():
         if not GITHUB_TOKEN:
             print("TIP: Set GITHUB_TOKEN environment variable to access private repos", file=sys.stderr)
         sys.exit(1)
+    
+    # Debug: Show raw repo count before filtering
+    print(f"\\n📊 Raw API response: {len(all_repos)} repositories")
 
     cutoff = datetime.now(timezone.utc) - timedelta(days=RECENT_DAYS)
-    # Exclude the profile README repo itself
-    all_repos = [r for r in all_repos if r["name"] != GITHUB_USERNAME]
+    # Only exclude the profile README repo if it's just a basic profile repo
+    # (allow it if it has stars, forks, or significant recent activity)
+    filtered_repos = []
+    for repo in all_repos:
+        # Only exclude profile repo if it's clearly just a basic README with no activity
+        if (repo["name"] == GITHUB_USERNAME and 
+            repo.get("stargazers_count", 0) == 0 and 
+            repo.get("forks_count", 0) == 0 and
+            not (repo.get("description") or "").strip()):
+            continue
+        filtered_repos.append(repo)
+    
+    all_repos = filtered_repos
     
     # Include repos with recent activity OR interesting projects
     current_repos = []
@@ -151,12 +172,12 @@ def main():
     for repo in all_repos:
         pushed_date = datetime.fromisoformat(repo["pushed_at"].replace("Z", "+00:00"))
         
-        # Check if repo is "current" (recent OR has meaningful activity)
+        # Check if repo is "current" (recent activity OR has meaningful engagement)
         is_current = (
-            pushed_date > cutoff or  # Recent activity
+            pushed_date > cutoff or  # Recent activity (within 90 days)
             repo.get("stargazers_count", 0) > 0 or  # Has stars
             repo.get("forks_count", 0) > 0 or  # Has forks  
-            repo.get("description", "").strip()  # Has description
+            (repo.get("description") and len(repo.get("description", "")) > 20)  # Has meaningful description
         )
         
         if is_current and len(current_repos) < MAX_CURRENT:
@@ -164,8 +185,22 @@ def main():
         elif len(past_repos) < MAX_PAST:
             past_repos.append(repo)
 
-    print(f"  Current (last {RECENT_DAYS}d): {len(current_repos)} repos")
+    print(f"  Found {len(all_repos)} total repositories")
+    print(f"  Current (recent or notable): {len(current_repos)} repos")
     print(f"  Past: {len(past_repos)} repos")
+    
+    # Debug: Show what repos were found
+    if current_repos:
+        print("\nCurrent repos:")
+        for repo in current_repos:
+            privacy = "🔒" if repo.get("private") else "🌍"
+            print(f"  {privacy} {repo['name']} - {repo.get('language', 'N/A')} - Updated {relative_time(datetime.fromisoformat(repo['pushed_at'].replace('Z', '+00:00')))}")
+    
+    if past_repos:
+        print("\nPast repos:")
+        for repo in past_repos[:3]:  # Show first 3
+            privacy = "🔒" if repo.get("private") else "🌍"
+            print(f"  {privacy} {repo['name']} - {repo.get('language', 'N/A')} - Updated {relative_time(datetime.fromisoformat(repo['pushed_at'].replace('Z', '+00:00')))}")
 
     with open(README_PATH, "r", encoding="utf-8") as fh:
         readme = fh.read()
