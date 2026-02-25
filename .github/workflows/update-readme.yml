@@ -29,6 +29,35 @@ jobs:
       - name: Install dependencies
         run: pip install requests python-dateutil pypdf
 
+      - name: Warn on duplicate README markers (non-blocking)
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          content = Path("README.md").read_text(encoding="utf-8")
+          markers = [
+              "LANGUAGE_SUMMARY",
+              "CURRENT_PROJECTS",
+              "PAST_PROJECTS",
+              "RESUME_SKILLS",
+              "OTHER_TOOLS",
+              "RESUME_EXPERIENCE",
+          ]
+
+          duplicates_found = False
+          for marker in markers:
+              start = f"<!-- {marker}:start -->"
+              end = f"<!-- {marker}:end -->"
+              start_count = content.count(start)
+              end_count = content.count(end)
+              if start_count > 1 or end_count > 1:
+                  duplicates_found = True
+                  print(f"::warning::Duplicate marker pair detected for {marker} (start={start_count}, end={end_count}). Updater will auto-clean.")
+
+          if not duplicates_found:
+              print("No duplicate marker pairs detected.")
+          PY
+
       - name: Commit and push changes
         env:
           GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN || secrets.GITHUB_TOKEN }}

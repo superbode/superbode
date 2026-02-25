@@ -9,6 +9,7 @@ import sys
 SECTION_PATTERN_TEMPLATE = r"({start})\n.*?({end})"
 SECTION_REPLACEMENT_TEMPLATE = r"\1\n{body}\n\2"
 MISSING_MARKER_WARNING_TEMPLATE = "WARNING: marker pair not found: {marker!r}"
+DUPLICATE_MARKER_WARNING_TEMPLATE = "WARNING: duplicate marker pairs found for {marker!r}; collapsing to first occurrence"
 
 # This function does replace a marker-delimited README block.
 # It preserves surrounding content and warns if markers are missing.
@@ -20,8 +21,16 @@ def replace_section(content: str, start_marker: str, end_marker: str, new_body: 
         ),
         re.DOTALL,
     )
+
+    matches = list(pattern.finditer(content))
+    if len(matches) > 1:
+        print(DUPLICATE_MARKER_WARNING_TEMPLATE.format(marker=start_marker), file=sys.stderr)
+        for duplicate in reversed(matches[1:]):
+            content = content[:duplicate.start()] + content[duplicate.end():]
+        matches = list(pattern.finditer(content))
+
     replacement = SECTION_REPLACEMENT_TEMPLATE.format(body=new_body)
-    result, count = pattern.subn(replacement, content)
+    result, count = pattern.subn(replacement, content, count=1)
     if count == 0:
         print(MISSING_MARKER_WARNING_TEMPLATE.format(marker=start_marker), file=sys.stderr)
     return result
