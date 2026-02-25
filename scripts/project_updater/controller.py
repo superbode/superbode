@@ -209,6 +209,10 @@ def run_update() -> None:
         else:
             past_repos_raw.append(repo)
 
+    size_then_recency_key = lambda repo: (int(repo.get("size", 0) or 0), repo.get("pushed_at", ""))
+    current_repos_raw.sort(key=size_then_recency_key, reverse=True)
+    past_repos_raw.sort(key=size_then_recency_key, reverse=True)
+
     print(f"  Found {len(all_repos)} total repositories")
     print(f"  Current (updated within {config.recent_days} days): {len(current_repos_raw)} repos")
     print(f"  Past: {len(past_repos_raw)} repos")
