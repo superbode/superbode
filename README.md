@@ -92,7 +92,7 @@
 
 ---
 
-## 🚀 Current Projects <sub>(Active in last 3 weeks)</sub>
+## 🚀 Current Projects <sub>(Active or Notable)</sub>
 
 <!-- CURRENT_PROJECTS:start -->
 - **[3720-learn-git](https://github.com/superbode/3720-learn-git)** — Setting up git  — `N/A` — _Updated 11 months ago_
