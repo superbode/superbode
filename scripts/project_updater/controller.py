@@ -4,6 +4,7 @@
 #                  README section updates.
 
 import os
+import re
 from datetime import datetime, timezone, timedelta
 from typing import Dict, List, Tuple
 from .config import (
@@ -59,6 +60,25 @@ from .views.markdown_view import (
     render_resume_experience,
     render_skill_icons,
 )
+
+COURSE_TEAM_SIGNATURE_PATTERN = re.compile(r"cpsc\s*([0-9]{3,4}).*?team\s*([0-9]+)", re.IGNORECASE)
+
+def _canonical_repo_key(repo_name: str) -> str:
+    normalized = (repo_name or "").strip().lower()
+    if not normalized:
+        return ""
+
+    signature_match = COURSE_TEAM_SIGNATURE_PATTERN.search(normalized)
+    if signature_match:
+        course_id = signature_match.group(1)
+        team_id = signature_match.group(2)
+        return f"cpsc{course_id}-team{team_id}"
+
+    return normalized
+
+def _repo_specificity_score(repo_name: str) -> int:
+    normalized = (repo_name or "").strip().lower()
+    return len(re.sub(r"[^a-z0-9]", "", normalized))
 
 # This function does build a display-ready repository object.
 # It combines summary, language, contributor, and ownership metadata.
@@ -188,11 +208,22 @@ def run_update() -> None:
 
     deduped = {}
     for repo in filtered_repos:
-        key = (repo.get("name") or "").strip().lower()
+        key = _canonical_repo_key(repo.get("name") or "")
         if not key:
             continue
         existing = deduped.get(key)
-        if existing is None or repo.get("pushed_at", "") > existing.get("pushed_at", ""):
+        if existing is None:
+            deduped[key] = repo
+            continue
+
+        incoming_specificity = _repo_specificity_score(repo.get("name") or "")
+        existing_specificity = _repo_specificity_score(existing.get("name") or "")
+
+        if incoming_specificity > existing_specificity:
+            deduped[key] = repo
+            continue
+
+        if incoming_specificity == existing_specificity and repo.get("pushed_at", "") > existing.get("pushed_at", ""):
             deduped[key] = repo
 
     all_repos = list(deduped.values())
