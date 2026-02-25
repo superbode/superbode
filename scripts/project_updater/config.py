@@ -6,6 +6,55 @@ import json
 import os
 from typing import Dict, Set
 
+# Environment variable names for configuration
+ENV_GITHUB_USERNAME = "GITHUB_USERNAME"
+ENV_GITHUB_TOKEN = "GITHUB_TOKEN"
+ENV_EXCLUDE_PRIVATE_REPOS = "EXCLUDE_PRIVATE_REPOS"
+
+# Default values for configuration parameters
+DEFAULT_GITHUB_USERNAME = "superbode"
+DEFAULT_RECENT_DAYS = 30
+DEFAULT_USES_CAP = 10
+DEFAULT_LANGUAGE_SUMMARY_TOP = 10
+
+# Constants for GitHub API interaction and README formatting
+GITHUB_API_ACCEPT_HEADER = "application/vnd.github+json"
+GITHUB_API_BASE_URL = "https://api.github.com"
+GITHUB_REPOS_PER_PAGE = 100
+GITHUB_MAX_REPO_PAGES = 10
+GITHUB_REQUEST_TIMEOUT_SECONDS = 30
+GITHUB_README_MAX_LINES = 30
+GITHUB_CONTRIBUTOR_PER_PAGE = 1
+GITHUB_LANGUAGE_FALLBACK_BYTES = 1
+
+# The minimum repository size (in KB) to consider.
+MIN_PROFILE_REPO_SIZE = 50
+
+# Markers used in README.md to identify sections for updates.
+LANGUAGE_SUMMARY_START_MARKER = "<!-- LANGUAGE_SUMMARY:start -->"
+LANGUAGE_SUMMARY_END_MARKER = "<!-- LANGUAGE_SUMMARY:end -->"
+CURRENT_PROJECTS_START_MARKER = "<!-- CURRENT_PROJECTS:start -->"
+CURRENT_PROJECTS_END_MARKER = "<!-- CURRENT_PROJECTS:end -->"
+PAST_PROJECTS_START_MARKER = "<!-- PAST_PROJECTS:start -->"
+PAST_PROJECTS_END_MARKER = "<!-- PAST_PROJECTS:end -->"
+
+# Messages and templates for README content and logging.
+EMPTY_CURRENT_PROJECTS_MESSAGE = "_No repositories updated within the last month._"
+EMPTY_PAST_PROJECTS_MESSAGE = "_No repositories older than one month found._"
+
+# Owner label templates for different GitHub owner types.
+ROLE_OWNER = "Owner"
+ROLE_COLLABORATOR = "Contributor/Collaborator"
+OWNER_TYPE_ORGANIZATION = "organization"
+DEFAULT_OWNER_TYPE = "User"
+UNKNOWN_OWNER_LABEL = "Unknown"
+OWNER_LABEL_ORGANIZATION_TEMPLATE = "Organization ({owner})"
+OWNER_LABEL_USER_TEMPLATE = "Owner ({owner})"
+
+# The message shown when no GITHUB_TOKEN is provided.
+NO_GITHUB_TOKEN_MESSAGE = "No GITHUB_TOKEN found - only public repos will be shown"
+
+# Directory paths for the project and configuration files.
 SCRIPTS_DIR = os.path.dirname(os.path.dirname(__file__))
 ROOT_DIR = os.path.dirname(SCRIPTS_DIR)
 README_PATH = os.path.join(ROOT_DIR, "README.md")

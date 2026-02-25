@@ -90,6 +90,7 @@
 </p>
 
 ### Language Breakdown (Included Repositories)
+> Note: This breakdown reflects only languages detected in repositories on this GitHub profile, so it does not include coding work done outside GitHub.
 
 <!-- LANGUAGE_SUMMARY:start -->
 - **C#:** 36.5%

@@ -7,7 +7,31 @@ import os
 from datetime import datetime, timezone, timedelta
 from typing import Dict, List, Tuple
 from .config import (
+    CURRENT_PROJECTS_END_MARKER,
+    CURRENT_PROJECTS_START_MARKER,
+    DEFAULT_OWNER_TYPE,
+    DEFAULT_GITHUB_USERNAME,
+    DEFAULT_LANGUAGE_SUMMARY_TOP,
+    DEFAULT_RECENT_DAYS,
+    DEFAULT_USES_CAP,
+    EMPTY_CURRENT_PROJECTS_MESSAGE,
+    EMPTY_PAST_PROJECTS_MESSAGE,
+    ENV_EXCLUDE_PRIVATE_REPOS,
+    ENV_GITHUB_TOKEN,
+    ENV_GITHUB_USERNAME,
+    LANGUAGE_SUMMARY_END_MARKER,
+    LANGUAGE_SUMMARY_START_MARKER,
+    MIN_PROFILE_REPO_SIZE,
+    NO_GITHUB_TOKEN_MESSAGE,
+    OWNER_LABEL_ORGANIZATION_TEMPLATE,
+    OWNER_LABEL_USER_TEMPLATE,
+    OWNER_TYPE_ORGANIZATION,
+    PAST_PROJECTS_END_MARKER,
+    PAST_PROJECTS_START_MARKER,
     README_PATH,
+    ROLE_COLLABORATOR,
+    ROLE_OWNER,
+    UNKNOWN_OWNER_LABEL,
     load_description_overrides,
     load_ignored_languages,
     load_ignored_repos,
@@ -35,10 +59,14 @@ def _build_repo_presentation(
     languages = select_languages(language_usage, context_text, uses_cap)
     contributors = github_service.fetch_contributor_count(repo)
 
-    owner = (repo.get("owner") or {}).get("login") or "Unknown"
-    owner_type = (repo.get("owner") or {}).get("type") or "User"
-    owner_label = f"Organization ({owner})" if owner_type.lower() == "organization" else f"Owner ({owner})"
-    role = "Owner" if owner.lower() == username.lower() else "Contributor/Collaborator"
+    owner = (repo.get("owner") or {}).get("login") or UNKNOWN_OWNER_LABEL
+    owner_type = (repo.get("owner") or {}).get("type") or DEFAULT_OWNER_TYPE
+    owner_label = (
+        OWNER_LABEL_ORGANIZATION_TEMPLATE.format(owner=owner)
+        if owner_type.lower() == OWNER_TYPE_ORGANIZATION
+        else OWNER_LABEL_USER_TEMPLATE.format(owner=owner)
+    )
+    role = ROLE_OWNER if owner.lower() == username.lower() else ROLE_COLLABORATOR
 
     return RepoPresentation(
         name=repo["name"],
@@ -74,11 +102,11 @@ def _aggregate_language_totals(
 # It fetches repos, prepares sections, and writes the README output.
 def run_update() -> None:
     config = UpdateConfig(
-        github_username=os.environ.get("GITHUB_USERNAME", "superbode"),
-        github_token=os.environ.get("GITHUB_TOKEN", ""),
-        recent_days=30,
-        uses_cap=10,
-        language_summary_top=10,
+        github_username=os.environ.get(ENV_GITHUB_USERNAME, DEFAULT_GITHUB_USERNAME),
+        github_token=os.environ.get(ENV_GITHUB_TOKEN, ""),
+        recent_days=DEFAULT_RECENT_DAYS,
+        uses_cap=DEFAULT_USES_CAP,
+        language_summary_top=DEFAULT_LANGUAGE_SUMMARY_TOP,
     )
 
     overrides = load_description_overrides()
@@ -86,7 +114,7 @@ def run_update() -> None:
     ignored_languages = load_ignored_languages()
     excluded_private_repos = {
         item.strip().lower()
-        for item in os.environ.get("EXCLUDE_PRIVATE_REPOS", "").split(",")
+        for item in os.environ.get(ENV_EXCLUDE_PRIVATE_REPOS, "").split(",")
         if item.strip()
     }
 
@@ -100,7 +128,7 @@ def run_update() -> None:
     if excluded_private_repos:
         print(f"Loaded excluded private repos: {len(excluded_private_repos)}")
     if not config.github_token:
-        print("No GITHUB_TOKEN found - only public repos will be shown")
+        print(NO_GITHUB_TOKEN_MESSAGE)
 
     github_service = GitHubService(config)
     all_repos = github_service.fetch_repos()
@@ -121,7 +149,7 @@ def run_update() -> None:
             and repo.get("stargazers_count", 0) == 0
             and repo.get("forks_count", 0) == 0
             and not (repo.get("description") or "").strip()
-            and repo.get("size", 0) < 50
+            and repo.get("size", 0) < MIN_PROFILE_REPO_SIZE
         ):
             print(f"Skipping minimal profile repo: {repo['name']}")
             continue
@@ -171,18 +199,18 @@ def run_update() -> None:
     )
 
     readme = load_readme(README_PATH)
-    readme = replace_section(readme, "<!-- LANGUAGE_SUMMARY:start -->", "<!-- LANGUAGE_SUMMARY:end -->", language_summary)
+    readme = replace_section(readme, LANGUAGE_SUMMARY_START_MARKER, LANGUAGE_SUMMARY_END_MARKER, language_summary)
     readme = replace_section(
         readme,
-        "<!-- CURRENT_PROJECTS:start -->",
-        "<!-- CURRENT_PROJECTS:end -->",
-        render_repo_section(current_repos, "_No repositories updated within the last month._"),
+        CURRENT_PROJECTS_START_MARKER,
+        CURRENT_PROJECTS_END_MARKER,
+        render_repo_section(current_repos, EMPTY_CURRENT_PROJECTS_MESSAGE),
     )
     readme = replace_section(
         readme,
-        "<!-- PAST_PROJECTS:start -->",
-        "<!-- PAST_PROJECTS:end -->",
-        render_repo_section(past_repos, "_No repositories older than one month found._"),
+        PAST_PROJECTS_START_MARKER,
+        PAST_PROJECTS_END_MARKER,
+        render_repo_section(past_repos, EMPTY_PAST_PROJECTS_MESSAGE),
     )
 
     save_readme(README_PATH, readme)

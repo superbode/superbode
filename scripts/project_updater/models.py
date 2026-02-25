@@ -3,6 +3,7 @@
 #     Defines dataclasses used by the updater pipeline.
 
 from dataclasses import dataclass
+from .config import DEFAULT_LANGUAGE_SUMMARY_TOP, DEFAULT_RECENT_DAYS, DEFAULT_USES_CAP
 
 @dataclass
 class RepoPresentation:
@@ -18,6 +19,6 @@ class RepoPresentation:
 class UpdateConfig:
     github_username: str
     github_token: str
-    recent_days: int = 30
-    uses_cap: int = 10
-    language_summary_top: int = 10
+    recent_days: int = DEFAULT_RECENT_DAYS
+    uses_cap: int = DEFAULT_USES_CAP
+    language_summary_top: int = DEFAULT_LANGUAGE_SUMMARY_TOP

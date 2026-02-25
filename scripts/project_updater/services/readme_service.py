@@ -6,17 +6,24 @@
 import re
 import sys
 
+SECTION_PATTERN_TEMPLATE = r"({start})\n.*?({end})"
+SECTION_REPLACEMENT_TEMPLATE = r"\1\n{body}\n\2"
+MISSING_MARKER_WARNING_TEMPLATE = "WARNING: marker pair not found: {marker!r}"
+
 # This function does replace a marker-delimited README block.
 # It preserves surrounding content and warns if markers are missing.
 def replace_section(content: str, start_marker: str, end_marker: str, new_body: str) -> str:
     pattern = re.compile(
-        rf"({re.escape(start_marker)})\n.*?({re.escape(end_marker)})",
+        SECTION_PATTERN_TEMPLATE.format(
+            start=re.escape(start_marker),
+            end=re.escape(end_marker),
+        ),
         re.DOTALL,
     )
-    replacement = rf"\1\n{new_body}\n\2"
+    replacement = SECTION_REPLACEMENT_TEMPLATE.format(body=new_body)
     result, count = pattern.subn(replacement, content)
     if count == 0:
-        print(f"WARNING: marker pair not found: {start_marker!r}", file=sys.stderr)
+        print(MISSING_MARKER_WARNING_TEMPLATE.format(marker=start_marker), file=sys.stderr)
     return result
 
 # This function does load README text from the given path.

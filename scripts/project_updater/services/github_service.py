@@ -7,7 +7,34 @@ import base64
 import re
 from typing import Dict, List, Tuple
 import requests
+from ..config import (
+    GITHUB_API_ACCEPT_HEADER,
+    GITHUB_API_BASE_URL,
+    GITHUB_CONTRIBUTOR_PER_PAGE,
+    GITHUB_LANGUAGE_FALLBACK_BYTES,
+    GITHUB_MAX_REPO_PAGES,
+    GITHUB_README_MAX_LINES,
+    GITHUB_REPOS_PER_PAGE,
+    GITHUB_REQUEST_TIMEOUT_SECONDS,
+)
 from ..models import UpdateConfig
+
+AUTH_REPOS_ENDPOINT = "/user/repos"
+USER_REPOS_ENDPOINT_TEMPLATE = "/users/{username}/repos"
+README_ENDPOINT_TEMPLATE = "/repos/{full_name}/readme"
+CONTRIBUTORS_ENDPOINT_TEMPLATE = "/repos/{full_name}/contributors?per_page={per_page}&anon=true"
+REPO_QUERY_TEMPLATE = "{base}?sort=pushed&direction=desc&per_page={per_page}&page={page}"
+PUBLIC_REPOS_FILTER_QUERY = "&type=public"
+
+AUTH_REPOS_MESSAGE = "Using authenticated /user/repos endpoint"
+PUBLIC_REPOS_MESSAGE = "Using public-only /users/{username}/repos endpoint"
+PAGE_RESULT_MESSAGE = "Page {page}: Found {count} repositories"
+
+README_EXPECTED_ENCODING = "base64"
+README_DECODE_ENCODING = "utf-8"
+README_DECODE_ERROR_MODE = "ignore"
+README_SKIP_PREFIXES = ("#", "![", "[![", "<img", "<p align")
+LINK_LAST_PAGE_PATTERN = r"[?&]page=(\d+)>;\s*rel=\"last\""
 
 class GitHubService:
 
@@ -21,7 +48,7 @@ class GitHubService:
     # This function does build request headers for GitHub API calls.
     # It adds auth headers when a token is configured.
     def headers(self) -> Dict[str, str]:
-        headers = {"Accept": "application/vnd.github+json"}
+        headers = {"Accept": GITHUB_API_ACCEPT_HEADER}
         if self.config.github_token:
             headers["Authorization"] = f"Bearer {self.config.github_token}"
         return headers
@@ -33,27 +60,27 @@ class GitHubService:
         page = 1
 
         if self.config.github_token:
-            base_url = "https://api.github.com/user/repos"
-            print("Using authenticated /user/repos endpoint")
+            base_url = f"{GITHUB_API_BASE_URL}{AUTH_REPOS_ENDPOINT}"
+            print(AUTH_REPOS_MESSAGE)
         else:
-            base_url = f"https://api.github.com/users/{self.config.github_username}/repos"
-            print("Using public-only /users/{username}/repos endpoint")
+            base_url = f"{GITHUB_API_BASE_URL}{USER_REPOS_ENDPOINT_TEMPLATE.format(username=self.config.github_username)}"
+            print(PUBLIC_REPOS_MESSAGE)
 
         while True:
-            url = f"{base_url}?sort=pushed&direction=desc&per_page=100&page={page}"
+            url = REPO_QUERY_TEMPLATE.format(base=base_url, per_page=GITHUB_REPOS_PER_PAGE, page=page)
             if not self.config.github_token:
-                url += "&type=public"
+                url += PUBLIC_REPOS_FILTER_QUERY
 
-            response = requests.get(url, headers=self.headers(), timeout=30)
+            response = requests.get(url, headers=self.headers(), timeout=GITHUB_REQUEST_TIMEOUT_SECONDS)
             response.raise_for_status()
             data = response.json()
             if not data:
                 break
 
-            print(f"Page {page}: Found {len(data)} repositories")
+            print(PAGE_RESULT_MESSAGE.format(page=page, count=len(data)))
             repos.extend(data)
             page += 1
-            if page > 10:
+            if page > GITHUB_MAX_REPO_PAGES:
                 break
 
         return repos
@@ -61,19 +88,19 @@ class GitHubService:
     # This function does fetch and decode repository README text.
     # It strips non-content lines and returns condensed text.
     def fetch_readme_text(self, full_name: str) -> str:
-        url = f"https://api.github.com/repos/{full_name}/readme"
-        response = requests.get(url, headers=self.headers(), timeout=30)
+        url = f"{GITHUB_API_BASE_URL}{README_ENDPOINT_TEMPLATE.format(full_name=full_name)}"
+        response = requests.get(url, headers=self.headers(), timeout=GITHUB_REQUEST_TIMEOUT_SECONDS)
         if response.status_code != 200:
             return ""
 
         data = response.json()
         content = data.get("content", "")
         encoding = data.get("encoding", "")
-        if not content or encoding != "base64":
+        if not content or encoding != README_EXPECTED_ENCODING:
             return ""
 
         try:
-            decoded = base64.b64decode(content).decode("utf-8", errors="ignore")
+            decoded = base64.b64decode(content).decode(README_DECODE_ENCODING, errors=README_DECODE_ERROR_MODE)
         except Exception:
             return ""
 
@@ -82,10 +109,10 @@ class GitHubService:
             stripped = line.strip()
             if not stripped:
                 continue
-            if stripped.startswith(("#", "![", "[![", "<img", "<p align")):
+            if stripped.startswith(README_SKIP_PREFIXES):
                 continue
             lines.append(stripped)
-            if len(lines) >= 30:
+            if len(lines) >= GITHUB_README_MAX_LINES:
                 break
 
         return " ".join(lines)
@@ -96,28 +123,28 @@ class GitHubService:
         repo_id = repo.get("id")
         if repo_id is None:
             primary = repo.get("language")
-            return [(primary, 1)] if primary else []
+            return [(primary, GITHUB_LANGUAGE_FALLBACK_BYTES)] if primary else []
         if repo_id in self.language_usage_cache:
             return self.language_usage_cache[repo_id]
 
         url = repo.get("languages_url")
         if not url:
             primary = repo.get("language")
-            usage = [(primary, 1)] if primary else []
+            usage = [(primary, GITHUB_LANGUAGE_FALLBACK_BYTES)] if primary else []
             self.language_usage_cache[repo_id] = usage
             return usage
 
-        response = requests.get(url, headers=self.headers(), timeout=30)
+        response = requests.get(url, headers=self.headers(), timeout=GITHUB_REQUEST_TIMEOUT_SECONDS)
         if response.status_code != 200:
             primary = repo.get("language")
-            usage = [(primary, 1)] if primary else []
+            usage = [(primary, GITHUB_LANGUAGE_FALLBACK_BYTES)] if primary else []
             self.language_usage_cache[repo_id] = usage
             return usage
 
         languages = response.json()
         if not isinstance(languages, dict) or not languages:
             primary = repo.get("language")
-            usage = [(primary, 1)] if primary else []
+            usage = [(primary, GITHUB_LANGUAGE_FALLBACK_BYTES)] if primary else []
             self.language_usage_cache[repo_id] = usage
             return usage
 
@@ -139,8 +166,8 @@ class GitHubService:
         if not full_name:
             return 0
 
-        url = f"https://api.github.com/repos/{full_name}/contributors?per_page=1&anon=true"
-        response = requests.get(url, headers=self.headers(), timeout=30)
+        url = f"{GITHUB_API_BASE_URL}{CONTRIBUTORS_ENDPOINT_TEMPLATE.format(full_name=full_name, per_page=GITHUB_CONTRIBUTOR_PER_PAGE)}"
+        response = requests.get(url, headers=self.headers(), timeout=GITHUB_REQUEST_TIMEOUT_SECONDS)
         if response.status_code != 200:
             self.contributor_count_cache[repo_id] = 0
             return 0
@@ -165,7 +192,7 @@ class GitHubService:
     def _parse_last_page_from_link_header(link_header: str) -> int:
         if not link_header:
             return 0
-        match = re.search(r"[?&]page=(\d+)>;\s*rel=\"last\"", link_header)
+        match = re.search(LINK_LAST_PAGE_PATTERN, link_header)
         if not match:
             return 0
         try:
