@@ -10,6 +10,7 @@ from typing import Dict, Set
 ENV_GITHUB_USERNAME = "GITHUB_USERNAME"
 ENV_GITHUB_TOKEN = "GITHUB_TOKEN"
 ENV_EXCLUDE_PRIVATE_REPOS = "EXCLUDE_PRIVATE_REPOS"
+ENV_RESUME_PATH = "RESUME_PATH"
 
 # Default values for configuration parameters
 DEFAULT_GITHUB_USERNAME = "superbode"
@@ -37,10 +38,16 @@ CURRENT_PROJECTS_START_MARKER = "<!-- CURRENT_PROJECTS:start -->"
 CURRENT_PROJECTS_END_MARKER = "<!-- CURRENT_PROJECTS:end -->"
 PAST_PROJECTS_START_MARKER = "<!-- PAST_PROJECTS:start -->"
 PAST_PROJECTS_END_MARKER = "<!-- PAST_PROJECTS:end -->"
+RESUME_EXPERIENCE_START_MARKER = "<!-- RESUME_EXPERIENCE:start -->"
+RESUME_EXPERIENCE_END_MARKER = "<!-- RESUME_EXPERIENCE:end -->"
+RESUME_SKILLS_START_MARKER = "<!-- RESUME_SKILLS:start -->"
+RESUME_SKILLS_END_MARKER = "<!-- RESUME_SKILLS:end -->"
 
 # Messages and templates for README content and logging.
 EMPTY_CURRENT_PROJECTS_MESSAGE = "_No repositories updated within the last month._"
 EMPTY_PAST_PROJECTS_MESSAGE = "_No repositories older than one month found._"
+EMPTY_RESUME_EXPERIENCE_MESSAGE = "_No experience entries extracted from resume yet._"
+EMPTY_RESUME_SKILLS_MESSAGE = "_No skill categories extracted from resume yet._"
 
 # Owner label templates for different GitHub owner types.
 ROLE_OWNER = "Owner"
@@ -62,6 +69,15 @@ CONFIG_DIR = os.path.join(SCRIPTS_DIR, "config")
 DESCRIPTION_OVERRIDES_PATH = os.path.join(CONFIG_DIR, "repo_description_overrides.json")
 IGNORE_REPOS_PATH = os.path.join(CONFIG_DIR, "repo_ignore_list.json")
 IGNORE_LANGUAGES_PATH = os.path.join(CONFIG_DIR, "language_ignore_list.json")
+DEFAULT_RESUME_FILENAME = "Bode Hooker Resume.pdf"
+
+def resolve_resume_path() -> str:
+    configured = os.environ.get(ENV_RESUME_PATH, "").strip()
+    if configured:
+        if os.path.isabs(configured):
+            return configured
+        return os.path.join(ROOT_DIR, configured)
+    return os.path.join(ROOT_DIR, DEFAULT_RESUME_FILENAME)
 
 # This function does load JSON content from disk safely.
 # It returns None when the file is missing or invalid.

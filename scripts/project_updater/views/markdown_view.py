@@ -15,6 +15,8 @@ REPO_BLOCK_TEMPLATE = (
     "- **Role:** {role}"
 )
 LANGUAGE_LINE_TEMPLATE = "- **{language}:** {percent:.1f}%"
+RESUME_EXPERIENCE_LINE_TEMPLATE = "- {line}"
+RESUME_SKILL_LINE_TEMPLATE = "- **{category}:** {items}"
 
 # This function does render one repository markdown block.
 # It includes summary, languages, contributors, and ownership data.
@@ -52,3 +54,24 @@ def render_language_summary(language_totals: List[tuple]) -> str:
         lines.append(LANGUAGE_LINE_TEMPLATE.format(language=language, percent=percent))
 
     return "\n".join(lines)
+
+# This function does render extracted resume experience lines.
+# It emits bullet points or an empty-state message.
+def render_resume_experience(lines: List[str], empty_message: str) -> str:
+    if not lines:
+        return empty_message
+    return "\n".join(RESUME_EXPERIENCE_LINE_TEMPLATE.format(line=line) for line in lines)
+
+# This function does render extracted resume skill categories.
+# It emits category bullets or an empty-state message.
+def render_resume_skills(skills: dict, empty_message: str) -> str:
+    if not skills:
+        return empty_message
+
+    rendered = []
+    for category, items in skills.items():
+        if not items:
+            continue
+        rendered.append(RESUME_SKILL_LINE_TEMPLATE.format(category=category, items=", ".join(items)))
+
+    return "\n".join(rendered) if rendered else empty_message

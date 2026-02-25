@@ -16,6 +16,8 @@ from .config import (
     DEFAULT_USES_CAP,
     EMPTY_CURRENT_PROJECTS_MESSAGE,
     EMPTY_PAST_PROJECTS_MESSAGE,
+    EMPTY_RESUME_EXPERIENCE_MESSAGE,
+    EMPTY_RESUME_SKILLS_MESSAGE,
     ENV_EXCLUDE_PRIVATE_REPOS,
     ENV_GITHUB_TOKEN,
     ENV_GITHUB_USERNAME,
@@ -29,18 +31,29 @@ from .config import (
     PAST_PROJECTS_END_MARKER,
     PAST_PROJECTS_START_MARKER,
     README_PATH,
+    RESUME_EXPERIENCE_END_MARKER,
+    RESUME_EXPERIENCE_START_MARKER,
+    RESUME_SKILLS_END_MARKER,
+    RESUME_SKILLS_START_MARKER,
     ROLE_COLLABORATOR,
     ROLE_OWNER,
     UNKNOWN_OWNER_LABEL,
     load_description_overrides,
     load_ignored_languages,
     load_ignored_repos,
+    resolve_resume_path,
 )
 from .models import RepoPresentation, UpdateConfig
 from .services.description_service import clean_text, select_description, select_languages
 from .services.github_service import GitHubService
 from .services.readme_service import load_readme, replace_section, save_readme
-from .views.markdown_view import render_language_summary, render_repo_section
+from .services.resume_service import extract_resume_snapshot
+from .views.markdown_view import (
+    render_language_summary,
+    render_repo_section,
+    render_resume_experience,
+    render_resume_skills,
+)
 
 # This function does build a display-ready repository object.
 # It combines summary, language, contributor, and ownership metadata.
@@ -130,6 +143,9 @@ def run_update() -> None:
     if not config.github_token:
         print(NO_GITHUB_TOKEN_MESSAGE)
 
+    resume_path = resolve_resume_path()
+    print(f"Resume source: {resume_path}")
+
     github_service = GitHubService(config)
     all_repos = github_service.fetch_repos()
     print(f"\nRaw API response: {len(all_repos)} repositories")
@@ -197,6 +213,7 @@ def run_update() -> None:
     language_summary = render_language_summary(
         _aggregate_language_totals(all_repos, github_service, ignored_languages, config.language_summary_top)
     )
+    resume_snapshot = extract_resume_snapshot(resume_path)
 
     readme = load_readme(README_PATH)
     readme = replace_section(readme, LANGUAGE_SUMMARY_START_MARKER, LANGUAGE_SUMMARY_END_MARKER, language_summary)
@@ -211,6 +228,18 @@ def run_update() -> None:
         PAST_PROJECTS_START_MARKER,
         PAST_PROJECTS_END_MARKER,
         render_repo_section(past_repos, EMPTY_PAST_PROJECTS_MESSAGE),
+    )
+    readme = replace_section(
+        readme,
+        RESUME_EXPERIENCE_START_MARKER,
+        RESUME_EXPERIENCE_END_MARKER,
+        render_resume_experience(resume_snapshot.experiences, EMPTY_RESUME_EXPERIENCE_MESSAGE),
+    )
+    readme = replace_section(
+        readme,
+        RESUME_SKILLS_START_MARKER,
+        RESUME_SKILLS_END_MARKER,
+        render_resume_skills(resume_snapshot.skills, EMPTY_RESUME_SKILLS_MESSAGE),
     )
 
     save_readme(README_PATH, readme)

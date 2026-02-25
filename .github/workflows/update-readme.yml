@@ -1,6 +1,11 @@
 name: Update README Projects
 
 on:
+  push:
+    paths:
+      - "README.md"
+      - "scripts/**"
+      - "Bode Hooker Resume.pdf"
   schedule:
     - cron: "0 6 * * *"
   workflow_dispatch:
@@ -22,7 +27,7 @@ jobs:
           python-version: "3.11"
 
       - name: Install dependencies
-        run: pip install requests python-dateutil
+        run: pip install requests python-dateutil pypdf
 
       - name: Commit and push changes
         env:
@@ -41,6 +46,6 @@ jobs:
           if git diff --cached --quiet; then
             echo "No changes to README.md — skipping commit."
           else
-            git commit -m "chore: auto-update Current/Past Projects in README [skip ci]"
+            git commit -m "chore: auto-update README from repos and resume [skip ci]"
             git push
           fi

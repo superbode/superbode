@@ -54,6 +54,11 @@ The updater now follows an MVC-inspired structure:
 - Reads and writes root README.
 - Replaces marker-delimited generated sections safely.
 
+### `project_updater/services/resume_service.py` (Services)
+- Extracts text from a local resume PDF.
+- Parses experience/date lines and skill categories (Languages, Tools, Platforms, etc.).
+- Provides structured data for generated README sections.
+
 ### `project_updater/config.py`
 - Centralized filesystem paths.
 - JSON config loading helpers.
@@ -83,8 +88,9 @@ The updater now follows an MVC-inspired structure:
 2. Controller loads JSON configs and environment variables.
 3. GitHub service fetches repo data and metadata.
 4. Description/language services produce curated display data.
-5. View layer renders markdown blocks.
-6. README service updates only marker sections.
+5. Resume service optionally extracts data from `Bode Hooker Resume.pdf` (or `RESUME_PATH`).
+6. View layer renders markdown blocks.
+7. README service updates only marker sections.
 
 ---
 
@@ -93,3 +99,5 @@ The updater now follows an MVC-inspired structure:
 - The main root `README.md` should still be edited manually for static content only.
 - Generated sections are managed by the updater and overwritten on each run.
 - Keep JSON files valid strict JSON (no comments).
+- Resume-generated sections use `RESUME_EXPERIENCE` and `RESUME_SKILLS` marker pairs.
+- Set `RESUME_PATH` to override the default resume file location.
