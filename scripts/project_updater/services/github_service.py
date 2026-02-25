@@ -10,7 +10,7 @@ import requests
 from ..models import UpdateConfig
 
 class GitHubService:
-    
+
     # This function does initialize service state and in-memory caches.
     # It stores runtime configuration used by API methods.
     def __init__(self, config: UpdateConfig):
@@ -94,6 +94,9 @@ class GitHubService:
     # It caches results and falls back to the primary language.
     def fetch_language_usage(self, repo: dict) -> List[Tuple[str, int]]:
         repo_id = repo.get("id")
+        if repo_id is None:
+            primary = repo.get("language")
+            return [(primary, 1)] if primary else []
         if repo_id in self.language_usage_cache:
             return self.language_usage_cache[repo_id]
 
@@ -126,6 +129,9 @@ class GitHubService:
     # It uses link headers when available and caches results.
     def fetch_contributor_count(self, repo: dict) -> int:
         repo_id = repo.get("id")
+        if repo_id is None:
+            return 0
+        
         if repo_id in self.contributor_count_cache:
             return self.contributor_count_cache[repo_id]
 
