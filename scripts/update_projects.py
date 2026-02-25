@@ -35,9 +35,11 @@ IGNORE_REPOS_PATH = os.path.join(
 )
 RECENT_DAYS = 30  # repos pushed within this many days are "current"
 USES_CAP = 10
+LANGUAGE_SUMMARY_TOP = 10
 DESCRIPTION_OVERRIDES = {}
 IGNORED_REPOS = set()
 CONTRIBUTOR_COUNT_CACHE = {}
+LANGUAGE_USAGE_CACHE = {}
 
 
 def github_headers():
@@ -278,22 +280,62 @@ def fetch_readme_text(full_name: str) -> str:
 
 
 def fetch_language_usage(repo: dict) -> list:
+    repo_id = repo.get("id")
+    if repo_id in LANGUAGE_USAGE_CACHE:
+        return LANGUAGE_USAGE_CACHE[repo_id]
+
     url = repo.get("languages_url")
     if not url:
         primary = repo.get("language")
-        return [(primary, 1)] if primary else []
+        usage = [(primary, 1)] if primary else []
+        LANGUAGE_USAGE_CACHE[repo_id] = usage
+        return usage
 
     response = requests.get(url, headers=github_headers(), timeout=30)
     if response.status_code != 200:
         primary = repo.get("language")
-        return [(primary, 1)] if primary else []
+        usage = [(primary, 1)] if primary else []
+        LANGUAGE_USAGE_CACHE[repo_id] = usage
+        return usage
 
     languages = response.json()
     if not isinstance(languages, dict) or not languages:
         primary = repo.get("language")
-        return [(primary, 1)] if primary else []
+        usage = [(primary, 1)] if primary else []
+        LANGUAGE_USAGE_CACHE[repo_id] = usage
+        return usage
 
-    return sorted(languages.items(), key=lambda item: item[1], reverse=True)
+    usage = sorted(languages.items(), key=lambda item: item[1], reverse=True)
+    LANGUAGE_USAGE_CACHE[repo_id] = usage
+    return usage
+
+
+def build_language_summary(repos: list, top_n: int = LANGUAGE_SUMMARY_TOP) -> str:
+    if not repos:
+        return "_No language data available yet._"
+
+    language_totals = {}
+    for repo in repos:
+        for language, byte_count in fetch_language_usage(repo):
+            if not language:
+                continue
+            language_totals[language] = language_totals.get(language, 0) + int(byte_count or 0)
+
+    if not language_totals:
+        return "_No language data available yet._"
+
+    ranked = sorted(language_totals.items(), key=lambda item: item[1], reverse=True)
+    ranked = ranked[:top_n]
+    total_bytes = sum(count for _, count in ranked)
+    if total_bytes == 0:
+        return "_No language data available yet._"
+
+    lines = []
+    for language, count in ranked:
+        percent = (count / total_bytes) * 100
+        lines.append(f"- **{language}:** {percent:.1f}%")
+
+    return "\n".join(lines)
 
 
 def infer_frameworks(text: str) -> list:
@@ -563,6 +605,13 @@ def main():
 
     with open(README_PATH, "r", encoding="utf-8") as fh:
         readme = fh.read()
+
+    readme = replace_section(
+        readme,
+        "<!-- LANGUAGE_SUMMARY:start -->",
+        "<!-- LANGUAGE_SUMMARY:end -->",
+        build_language_summary(all_repos),
+    )
 
     readme = replace_section(
         readme,
