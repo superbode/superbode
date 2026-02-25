@@ -52,7 +52,7 @@ from .views.markdown_view import (
     render_language_summary,
     render_repo_section,
     render_resume_experience,
-    render_resume_skills,
+    render_skill_icons,
 )
 
 # This function does build a display-ready repository object.
@@ -210,9 +210,8 @@ def run_update() -> None:
         for repo in past_repos_raw
     ]
 
-    language_summary = render_language_summary(
-        _aggregate_language_totals(all_repos, github_service, ignored_languages, config.language_summary_top)
-    )
+    language_totals = _aggregate_language_totals(all_repos, github_service, ignored_languages, config.language_summary_top)
+    language_summary = render_language_summary(language_totals)
     resume_snapshot = extract_resume_snapshot(resume_path)
 
     readme = load_readme(README_PATH)
@@ -239,7 +238,7 @@ def run_update() -> None:
         readme,
         RESUME_SKILLS_START_MARKER,
         RESUME_SKILLS_END_MARKER,
-        render_resume_skills(resume_snapshot.skills, EMPTY_RESUME_SKILLS_MESSAGE),
+        render_skill_icons(language_totals, resume_snapshot.skills, EMPTY_RESUME_SKILLS_MESSAGE),
     )
 
     save_readme(README_PATH, readme)

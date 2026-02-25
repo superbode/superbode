@@ -47,7 +47,7 @@ RESUME_SKILLS_END_MARKER = "<!-- RESUME_SKILLS:end -->"
 EMPTY_CURRENT_PROJECTS_MESSAGE = "_No repositories updated within the last month._"
 EMPTY_PAST_PROJECTS_MESSAGE = "_No repositories older than one month found._"
 EMPTY_RESUME_EXPERIENCE_MESSAGE = "_No experience entries extracted from resume yet._"
-EMPTY_RESUME_SKILLS_MESSAGE = "_No skill categories extracted from resume yet._"
+EMPTY_RESUME_SKILLS_MESSAGE = "_No skill icons available yet._"
 
 # Owner label templates for different GitHub owner types.
 ROLE_OWNER = "Owner"
