@@ -2,9 +2,8 @@ name: Update README Projects
 
 on:
   schedule:
-    # Runs daily at 06:00 UTC
     - cron: "0 6 * * *"
-  workflow_dispatch: # Allow manual trigger
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -29,7 +28,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN || secrets.GITHUB_TOKEN }}
           GITHUB_USERNAME: superbode
-          # EXCLUDE_PRIVATE_REPOS: "sensitive-repo1,secret-project"  # Uncomment and configure as needed
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
@@ -37,7 +35,7 @@ jobs:
           git fetch origin
           git pull --rebase origin "${GITHUB_REF_NAME:-main}"
 
-          python scripts/update_projects.py
+          PYTHONPATH=scripts python -m project_updater
 
           git add README.md
           if git diff --cached --quiet; then

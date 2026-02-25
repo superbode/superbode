@@ -82,6 +82,10 @@
 ## 📊 GitHub Stats
 
 <p align="center">
+  <img src="https://github-readme-streak-stats.herokuapp.com/?user=superbode&theme=tokyonight&hide_border=true&cache_seconds=86400" alt="GitHub Streak" />
+</p>
+
+<p align="center">
   <img src="https://github-readme-stats-sigma-five.vercel.app/api?username=superbode&show_icons=true&theme=tokyonight&hide_border=true&cache_seconds=86400" alt="Bode's GitHub Stats" height="185" />
 </p>
 
@@ -99,10 +103,6 @@
 - **JavaScript:** 2.4%
 - **PHP:** 2.3%
 <!-- LANGUAGE_SUMMARY:end -->
-
-<p align="center">
-  <img src="https://github-readme-streak-stats.herokuapp.com/?user=superbode&theme=tokyonight&hide_border=true&cache_seconds=86400" alt="GitHub Streak" />
-</p>
 
 ---
 
