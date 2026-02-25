@@ -73,5 +73,5 @@ jobs:
             echo "No changes to README.md — skipping commit."
           else
             git commit -m "chore: auto-update README from repos and resume [skip ci]"
-            git push origin "HEAD:${GITHUB_REF_NAME:-main}"
+            git push --force-with-lease origin "HEAD:${GITHUB_REF_NAME:-main}"
           fi
