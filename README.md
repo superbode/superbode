@@ -95,11 +95,25 @@
 ## 🚀 Current Projects
 
 <!-- CURRENT_PROJECTS:start -->
-- [s26-ikigai](https://github.com/Clemson-Capstone/s26-ikigai) - s26-ikigai contains implementation details project structure and key development artifacts used recently. - Uses: TypeScript, JavaScript, CSS, Python - Updated 3 hours ago
-- [Curiosity](https://github.com/Walhalla7/Curiosity) - Short description of the project - Survival Horror - Current development goal Low-level Items Mechanics. - Uses: Not specified - Updated 23 hours ago
-- [website](https://github.com/9by9-sudoku/website) - Repository for the 9x9project s website files. with clear project. - Uses: HTML, SCSS, Less, PHP - Updated 1 day ago
-- [Physics](https://github.com/superbode/Physics) - A small particle-in-a-box physics demo implemented in C++ using OpenGL FreeGLUT. - Uses: C++, C, Makefile - Updated 4 days ago
-- [solvepath-analysis](https://github.com/9by9-sudoku/solvepath-analysis) - This is the repository for the solvepath analysis section of the class and where the. - Uses: JavaScript, MATLAB, CSS, Python - Updated 8 days ago
+**[s26-ikigai](https://github.com/Clemson-Capstone/s26-ikigai)** - s26-ikigai focuses on software engineering delivering practical features and maintainable project structure for consistent development.
+- **Uses:** TypeScript, JavaScript, CSS, Python, Dockerfile, HTML
+- Updated 3 hours ago
+
+**[Curiosity](https://github.com/Walhalla7/Curiosity)** - Curiosity focuses on automation tooling delivering course project implementation for consistent development workflows.
+- **Uses:** Not specified
+- Updated 1 day ago
+
+**[website](https://github.com/9by9-sudoku/website)** - website focuses on web development delivering course project implementation for consistent development workflows.
+- **Uses:** HTML, SCSS, Less, PHP, JavaScript, Hack, CSS
+- Updated 1 day ago
+
+**[Physics](https://github.com/superbode/Physics)** - Physics focuses on technical simulation delivering course project implementation for consistent development workflows.
+- **Uses:** C++, C, Makefile
+- Updated 4 days ago
+
+**[solvepath-analysis](https://github.com/9by9-sudoku/solvepath-analysis)** - solvepath-analysis focuses on analytical computing delivering course project implementation for consistent development workflows.
+- **Uses:** JavaScript, MATLAB, CSS, Python, HTML, Shell
+- Updated 8 days ago
 <!-- CURRENT_PROJECTS:end -->
 
 ---
@@ -107,9 +121,41 @@
 ## 🗄️ Past Projects
 
 <!-- PAST_PROJECTS:start -->
+**[CanTrip](https://github.com/JohnkGitt/CanTrip)** - CanTrip focuses on software engineering delivering practical features and maintainable project structure for consistent development.
+- **Uses:** Python
+- Updated 2 months ago
+
+**[cpsc-3300-p2](https://github.com/coolguycaden/cpsc-3300-p2)** - cpsc-3300-p2 focuses on software engineering delivering practical features and maintainable project structure for consistent development.
+- **Uses:** C++, Makefile
+- Updated 3 months ago
+
+**[CPSC4110-SP25-Team7](https://github.com/sveaej/CPSC4110-SP25-Team7)** - CPSC4110-SP25-Team7 focuses on software engineering delivering practical features and maintainable project structure for consistent development.
+- **Uses:** ShaderLab, C#, Mathematica
+- Updated 10 months ago
+
+**[CPSC3720.1-S25-Team12](https://github.com/CPSC3720S25-ClassRepos/CPSC3720.1-S25-Team12)** - CPSC3720.1-S25-Team12 focuses on software engineering delivering practical features and maintainable project structure for consistent development.
+- **Uses:** Python
+- Updated 10 months ago
+
+**[CPSC3720-Team12](https://github.com/LumpyTacos/CPSC3720-Team12)** - CPSC3720-Team12 focuses on software engineering delivering practical features and maintainable project structure for consistent development.
+- **Uses:** Python
+- Updated 10 months ago
+
 **[3720-learn-git](https://github.com/superbode/3720-learn-git)** - 3720-learn-git focuses on software engineering delivering course project implementation for consistent development workflows.
 - **Uses:** Not specified
 - Updated 11 months ago
+
+**[SudokuSolver](https://github.com/9by9-sudoku/SudokuSolver)** - SudokuSolver focuses on web development delivering practical features and maintainable project structure for consistent development.
+- **Uses:** C#, JavaScript, Shell
+- Updated 1 year ago
+
+**[cyberpunk-game](https://github.com/isaac-fletcher/cyberpunk-game)** - cyberpunk-game focuses on interactive application delivering practical features and maintainable project structure for consistent development.
+- **Uses:** ShaderLab, C#, HLSL
+- Updated 2 years ago
+
+**[puzzle-vault](https://github.com/9by9-sudoku/puzzle-vault)** - puzzle-vault focuses on software engineering delivering practical features and maintainable project structure for consistent development.
+- **Uses:** JavaScript, TypeScript, CSS
+- Updated 2 years ago
 <!-- PAST_PROJECTS:end -->
 
 ---
