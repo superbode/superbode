@@ -27,6 +27,7 @@ GITHUB_USERNAME = os.environ.get("GITHUB_USERNAME", "superbode")
 EXCLUDE_PRIVATE_REPOS = set(os.environ.get("EXCLUDE_PRIVATE_REPOS", "").split(",")) if os.environ.get("EXCLUDE_PRIVATE_REPOS") else set()
 README_PATH = os.path.join(os.path.dirname(__file__), "..", "README.md")
 RECENT_DAYS = 30  # repos pushed within this many days are "current"
+USES_CAP = 10
 
 
 def github_headers():
@@ -139,6 +140,53 @@ def normalize_description(repo_name: str, raw_text: str) -> str:
     return sentence
 
 
+def ai_style_description(repo: dict, context_text: str) -> str:
+    """Generate a concise, one-sentence AI-style description (10-15 words)."""
+    repo_name = repo.get("name", "This project")
+    lowered = (context_text or "").lower()
+
+    topic_rules = [
+        (["game", "unity", "shader", "simulation"], "interactive application"),
+        (["web", "site", "frontend", "ui", "html", "css"], "web development"),
+        (["analysis", "data", "matlab", "research"], "analytical computing"),
+        (["physics", "opengl", "render"], "technical simulation"),
+        (["api", "backend", "server", "service"], "backend engineering"),
+        (["automation", "script", "tooling"], "automation tooling"),
+    ]
+
+    topic = "software engineering"
+    for keys, label in topic_rules:
+        if any(key in lowered for key in keys) or any(key in repo_name.lower() for key in keys):
+            topic = label
+            break
+
+    objective_rules = [
+        (["class", "course", "assignment", "project"], "course project implementation"),
+        (["demo", "prototype"], "prototype features"),
+        (["portfolio", "profile"], "portfolio presentation"),
+    ]
+
+    objective = "practical features and maintainable project structure"
+    for keys, label in objective_rules:
+        if any(key in lowered for key in keys):
+            objective = label
+            break
+
+    sentence = f"{repo_name} focuses on {topic}, delivering {objective} for consistent development workflows."
+    words = re.findall(r"[A-Za-z0-9+#.-]+", sentence)
+
+    if len(words) > 15:
+        words = words[:15]
+    if len(words) < 10:
+        filler = ["with", "clear", "scope", "and", "organized", "implementation", "details"]
+        words.extend(filler[: 10 - len(words)])
+
+    sentence = " ".join(words)
+    if not sentence.endswith("."):
+        sentence += "."
+    return sentence
+
+
 def fetch_readme_text(full_name: str) -> str:
     url = f"https://api.github.com/repos/{full_name}/readme"
     response = requests.get(url, headers=github_headers(), timeout=30)
@@ -170,24 +218,23 @@ def fetch_readme_text(full_name: str) -> str:
     return " ".join(lines)
 
 
-def fetch_languages(repo: dict) -> list:
+def fetch_language_usage(repo: dict) -> list:
     url = repo.get("languages_url")
     if not url:
         primary = repo.get("language")
-        return [primary] if primary else []
+        return [(primary, 1)] if primary else []
 
     response = requests.get(url, headers=github_headers(), timeout=30)
     if response.status_code != 200:
         primary = repo.get("language")
-        return [primary] if primary else []
+        return [(primary, 1)] if primary else []
 
     languages = response.json()
     if not isinstance(languages, dict) or not languages:
         primary = repo.get("language")
-        return [primary] if primary else []
+        return [(primary, 1)] if primary else []
 
-    top = sorted(languages.items(), key=lambda item: item[1], reverse=True)[:4]
-    return [name for name, _ in top]
+    return sorted(languages.items(), key=lambda item: item[1], reverse=True)
 
 
 def infer_frameworks(text: str) -> list:
@@ -204,31 +251,63 @@ def infer_frameworks(text: str) -> list:
         "laravel": "Laravel",
         "express": "Express",
         "node": "Node.js",
+        "microservice": "Microservices",
+        "microservices": "Microservices",
+        "mvc": "MVC",
+        "rest": "REST API",
+        "graphql": "GraphQL",
+        "docker": "Docker",
+        "kubernetes": "Kubernetes",
+        "azure": "Azure",
         "unity": "Unity",
         "shaderlab": "ShaderLab",
     }
 
-    found = []
+    scores = {}
     lowered = (text or "").lower()
     for key, value in keywords.items():
-        if key in lowered and value not in found:
-            found.append(value)
-    return found
+        count = lowered.count(key)
+        if count > 0:
+            scores[value] = scores.get(value, 0) + count
+
+    ranked = sorted(scores.items(), key=lambda item: item[1], reverse=True)
+    return ranked
 
 
-def repo_summary(repo: dict) -> str:
+def build_repo_context(repo: dict) -> str:
     readme_text = fetch_readme_text(repo["full_name"])
-    base_text = readme_text or (repo.get("description") or "")
-    return normalize_description(repo["name"], base_text)
+    base_text = " ".join(
+        part for part in [repo.get("description") or "", readme_text] if part
+    )
+    return clean_text(base_text)
 
 
-def repo_uses(repo: dict, summary_text: str) -> str:
-    languages = fetch_languages(repo)
-    frameworks = infer_frameworks(summary_text)
+def repo_summary(repo: dict, context_text: str) -> str:
+    return ai_style_description(repo, context_text)
+
+
+def repo_uses(repo: dict, context_text: str) -> str:
+    language_usage = fetch_language_usage(repo)
+    framework_usage = infer_frameworks(context_text)
+
     merged = []
-    for item in languages + frameworks:
-        if item and item not in merged:
-            merged.append(item)
+    seen = set()
+
+    for language, _ in language_usage:
+        if language and language not in seen:
+            merged.append(language)
+            seen.add(language)
+        if len(merged) >= USES_CAP:
+            break
+
+    if len(merged) < USES_CAP:
+        for framework, _ in framework_usage:
+            if framework and framework not in seen:
+                merged.append(framework)
+                seen.add(framework)
+            if len(merged) >= USES_CAP:
+                break
+
     return ", ".join(merged) if merged else "Not specified"
 
 
@@ -237,15 +316,20 @@ def repo_line(repo: dict) -> str:
     url = repo["html_url"]
     pushed_at = datetime.fromisoformat(repo["pushed_at"].replace("Z", "+00:00"))
     rel = relative_time(pushed_at)
-    summary = repo_summary(repo)
-    uses = repo_uses(repo, summary)
-    return f"- [{name}]({url}) - {summary} - Uses: {uses} - Updated {rel}"
+    context_text = build_repo_context(repo)
+    summary = repo_summary(repo, context_text)
+    uses = repo_uses(repo, context_text)
+    return (
+        f"**[{name}]({url})** - {summary}\n"
+        f"- **Uses:** {uses}\n"
+        f"- Updated {rel}"
+    )
 
 
 def build_section(repos: list, empty_msg: str) -> str:
     if not repos:
         return empty_msg
-    return "\n".join(repo_line(r) for r in repos)
+    return "\n\n".join(repo_line(r) for r in repos)
 
 
 def replace_section(content: str, start_marker: str, end_marker: str, new_body: str) -> str:
@@ -297,11 +381,18 @@ def main():
 
     unique_repos = {}
     for repo in filtered_repos:
-        repo_id = repo.get("id")
-        if repo_id is None:
+        name_key = (repo.get("name") or "").strip().lower()
+        if not name_key:
             continue
-        if repo_id not in unique_repos:
-            unique_repos[repo_id] = repo
+        existing = unique_repos.get(name_key)
+        if existing is None:
+            unique_repos[name_key] = repo
+            continue
+
+        existing_pushed = existing.get("pushed_at", "")
+        current_pushed = repo.get("pushed_at", "")
+        if current_pushed > existing_pushed:
+            unique_repos[name_key] = repo
 
     all_repos = list(unique_repos.values())
     print(f"After deduplication: {len(all_repos)} repositories included")

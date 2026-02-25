@@ -92,7 +92,7 @@
 
 ---
 
-## 🚀 Current Projects <sub>(Updated within the last month)</sub>
+## 🚀 Current Projects
 
 <!-- CURRENT_PROJECTS:start -->
 _No repositories updated within the last month._
@@ -100,10 +100,12 @@ _No repositories updated within the last month._
 
 ---
 
-## 🗄️ Past Projects <sub>(Not updated in over one month)</sub>
+## 🗄️ Past Projects
 
 <!-- PAST_PROJECTS:start -->
-- [3720-learn-git](https://github.com/superbode/3720-learn-git) - Setting up git Make sure to sign in with github before starting this assignment. - Uses: Not specified - Updated 11 months ago
+**[3720-learn-git](https://github.com/superbode/3720-learn-git)** - 3720-learn-git focuses on software engineering delivering course project implementation for consistent development workflows.
+- **Uses:** Not specified
+- Updated 11 months ago
 <!-- PAST_PROJECTS:end -->
 
 ---
