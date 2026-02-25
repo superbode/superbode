@@ -95,7 +95,7 @@
 ## 🚀 Current Projects <sub>(Active or Notable)</sub>
 
 <!-- CURRENT_PROJECTS:start -->
-_No recently active public repositories found — check back soon!_
+- **[CanTrip](https://github.com/JohnkGitt/CanTrip)** — `Python` — _Updated 2 months ago_
 <!-- CURRENT_PROJECTS:end -->
 
 ---
@@ -103,7 +103,7 @@ _No recently active public repositories found — check back soon!_
 ## 🗄️ Past Projects
 
 <!-- PAST_PROJECTS:start -->
-_No past public repositories found yet._
+- **[CPSC3720-Team12](https://github.com/LumpyTacos/CPSC3720-Team12)** — `Python` — _Updated 10 months ago_
 <!-- PAST_PROJECTS:end -->
 
 ---
