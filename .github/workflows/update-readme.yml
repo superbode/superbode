@@ -37,9 +37,6 @@ jobs:
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
 
-          git fetch origin
-          git pull --rebase origin "${GITHUB_REF_NAME:-main}"
-
           PYTHONPATH=scripts python -m project_updater
 
           git add README.md
@@ -47,5 +44,5 @@ jobs:
             echo "No changes to README.md — skipping commit."
           else
             git commit -m "chore: auto-update README from repos and resume [skip ci]"
-            git push
+            git push origin "HEAD:${GITHUB_REF_NAME:-main}"
           fi
