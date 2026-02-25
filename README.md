@@ -96,25 +96,6 @@
 
 <!-- CURRENT_PROJECTS:start -->
 _No repositories updated within the last month._
-**[s26-ikigai](https://github.com/Clemson-Capstone/s26-ikigai)** - s26-ikigai focuses on software engineering delivering practical features and maintainable project structure for consistent development.
-- **Uses:** TypeScript, JavaScript, CSS, Python, Dockerfile, HTML
-- Updated 3 hours ago
-
-**[Curiosity](https://github.com/Walhalla7/Curiosity)** - Curiosity focuses on automation tooling delivering course project implementation for consistent development workflows.
-- **Uses:** Not specified
-- Updated 1 day ago
-
-**[website](https://github.com/9by9-sudoku/website)** - website focuses on web development delivering course project implementation for consistent development workflows.
-- **Uses:** HTML, SCSS, Less, PHP, JavaScript, Hack, CSS
-- Updated 1 day ago
-
-**[Physics](https://github.com/superbode/Physics)** - Physics focuses on technical simulation delivering course project implementation for consistent development workflows.
-- **Uses:** C++, C, Makefile
-- Updated 4 days ago
-
-**[solvepath-analysis](https://github.com/9by9-sudoku/solvepath-analysis)** - solvepath-analysis focuses on analytical computing delivering course project implementation for consistent development workflows.
-- **Uses:** JavaScript, MATLAB, CSS, Python, HTML, Shell
-- Updated 8 days ago
 <!-- CURRENT_PROJECTS:end -->
 
 ---
@@ -122,42 +103,9 @@ _No repositories updated within the last month._
 ## 🗄️ Past Projects
 
 <!-- PAST_PROJECTS:start -->
-**[3720-learn-git](https://github.com/superbode/3720-learn-git)** - 3720-learn-git is a software project with clear goals and practical implementation details.
-**[CanTrip](https://github.com/JohnkGitt/CanTrip)** - CanTrip focuses on software engineering delivering practical features and maintainable project structure for consistent development.
-- **Uses:** Python
-- Updated 2 months ago
-
-**[cpsc-3300-p2](https://github.com/coolguycaden/cpsc-3300-p2)** - cpsc-3300-p2 focuses on software engineering delivering practical features and maintainable project structure for consistent development.
-- **Uses:** C++, Makefile
-- Updated 3 months ago
-
-**[CPSC4110-SP25-Team7](https://github.com/sveaej/CPSC4110-SP25-Team7)** - CPSC4110-SP25-Team7 focuses on software engineering delivering practical features and maintainable project structure for consistent development.
-- **Uses:** ShaderLab, C#, Mathematica
-- Updated 10 months ago
-
-**[CPSC3720.1-S25-Team12](https://github.com/CPSC3720S25-ClassRepos/CPSC3720.1-S25-Team12)** - CPSC3720.1-S25-Team12 focuses on software engineering delivering practical features and maintainable project structure for consistent development.
-- **Uses:** Python
-- Updated 10 months ago
-
-**[CPSC3720-Team12](https://github.com/LumpyTacos/CPSC3720-Team12)** - CPSC3720-Team12 focuses on software engineering delivering practical features and maintainable project structure for consistent development.
-- **Uses:** Python
-- Updated 10 months ago
-
-**[3720-learn-git](https://github.com/superbode/3720-learn-git)** - 3720-learn-git focuses on software engineering delivering course project implementation for consistent development workflows.
+**[3720-learn-git](https://github.com/superbode/3720-learn-git)** - A class assignment focused on learning GitHub workflows and version control basics.
 - **Uses:** Not specified
 - Updated 11 months ago
-
-**[SudokuSolver](https://github.com/9by9-sudoku/SudokuSolver)** - SudokuSolver focuses on web development delivering practical features and maintainable project structure for consistent development.
-- **Uses:** C#, JavaScript, Shell
-- Updated 1 year ago
-
-**[cyberpunk-game](https://github.com/isaac-fletcher/cyberpunk-game)** - cyberpunk-game focuses on interactive application delivering practical features and maintainable project structure for consistent development.
-- **Uses:** ShaderLab, C#, HLSL
-- Updated 2 years ago
-
-**[puzzle-vault](https://github.com/9by9-sudoku/puzzle-vault)** - puzzle-vault focuses on software engineering delivering practical features and maintainable project structure for consistent development.
-- **Uses:** JavaScript, TypeScript, CSS
-- Updated 2 years ago
 <!-- PAST_PROJECTS:end -->
 
 ---

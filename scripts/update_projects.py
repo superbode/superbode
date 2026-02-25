@@ -30,9 +30,13 @@ README_PATH = os.path.join(os.path.dirname(__file__), "..", "README.md")
 DESCRIPTION_OVERRIDES_PATH = os.path.join(
     os.path.dirname(__file__), "repo_description_overrides.json"
 )
+IGNORE_REPOS_PATH = os.path.join(
+    os.path.dirname(__file__), "repo_ignore_list.json"
+)
 RECENT_DAYS = 30  # repos pushed within this many days are "current"
 USES_CAP = 10
 DESCRIPTION_OVERRIDES = {}
+IGNORED_REPOS = set()
 
 
 def github_headers():
@@ -129,6 +133,20 @@ def load_description_overrides() -> dict:
         return {str(key).strip().lower(): str(value).strip() for key, value in data.items() if str(value).strip()}
     except Exception:
         return {}
+
+
+def load_ignored_repos() -> set:
+    if not os.path.exists(IGNORE_REPOS_PATH):
+        return set()
+
+    try:
+        with open(IGNORE_REPOS_PATH, "r", encoding="utf-8") as fh:
+            data = json.load(fh)
+        if not isinstance(data, list):
+            return set()
+        return {str(item).strip().lower() for item in data if str(item).strip()}
+    except Exception:
+        return set()
 
 
 def split_sentences(text: str) -> list:
@@ -394,13 +412,16 @@ def replace_section(content: str, start_marker: str, end_marker: str, new_body: 
 
 
 def main():
-    global DESCRIPTION_OVERRIDES
+    global DESCRIPTION_OVERRIDES, IGNORED_REPOS
     DESCRIPTION_OVERRIDES = load_description_overrides()
+    IGNORED_REPOS = load_ignored_repos()
 
     repo_access = "public and private" if GITHUB_TOKEN else "public"
     print(f"Fetching {repo_access} repos for {GITHUB_USERNAME} …")
     if DESCRIPTION_OVERRIDES:
         print(f"Loaded description overrides: {len(DESCRIPTION_OVERRIDES)}")
+    if IGNORED_REPOS:
+        print(f"Loaded ignored repos: {len(IGNORED_REPOS)}")
     if EXCLUDE_PRIVATE_REPOS:
         print(f"Excluding private repos: {', '.join(EXCLUDE_PRIVATE_REPOS)}")
     if not GITHUB_TOKEN:
@@ -422,6 +443,12 @@ def main():
     # Be much more inclusive - only exclude if explicitly excluded or truly minimal profile
     filtered_repos = []
     for repo in all_repos:
+        repo_name = (repo.get("name") or "").strip().lower()
+
+        if repo_name in IGNORED_REPOS:
+            print(f"Skipping ignored repo: {repo.get('name')}")
+            continue
+
         # Only exclude profile repo if it's clearly just a minimal template
         if (repo["name"] == GITHUB_USERNAME and 
             repo.get("stargazers_count", 0) == 0 and 
