@@ -95,7 +95,11 @@
 ## 🚀 Current Projects
 
 <!-- CURRENT_PROJECTS:start -->
-_No repositories updated within the last month._
+- [s26-ikigai](https://github.com/Clemson-Capstone/s26-ikigai) - s26-ikigai contains implementation details project structure and key development artifacts used recently. - Uses: TypeScript, JavaScript, CSS, Python - Updated 3 hours ago
+- [Curiosity](https://github.com/Walhalla7/Curiosity) - Short description of the project - Survival Horror - Current development goal Low-level Items Mechanics. - Uses: Not specified - Updated 23 hours ago
+- [website](https://github.com/9by9-sudoku/website) - Repository for the 9x9project s website files. with clear project. - Uses: HTML, SCSS, Less, PHP - Updated 1 day ago
+- [Physics](https://github.com/superbode/Physics) - A small particle-in-a-box physics demo implemented in C++ using OpenGL FreeGLUT. - Uses: C++, C, Makefile - Updated 4 days ago
+- [solvepath-analysis](https://github.com/9by9-sudoku/solvepath-analysis) - This is the repository for the solvepath analysis section of the class and where the. - Uses: JavaScript, MATLAB, CSS, Python - Updated 8 days ago
 <!-- CURRENT_PROJECTS:end -->
 
 ---
