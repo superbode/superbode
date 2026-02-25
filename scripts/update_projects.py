@@ -16,6 +16,7 @@ Environment variables:
 import os
 import re
 import sys
+import json
 import base64
 from datetime import datetime, timezone, timedelta
 
@@ -26,8 +27,12 @@ GITHUB_TOKEN = os.environ.get("GITHUB_TOKEN", "")
 GITHUB_USERNAME = os.environ.get("GITHUB_USERNAME", "superbode")
 EXCLUDE_PRIVATE_REPOS = set(os.environ.get("EXCLUDE_PRIVATE_REPOS", "").split(",")) if os.environ.get("EXCLUDE_PRIVATE_REPOS") else set()
 README_PATH = os.path.join(os.path.dirname(__file__), "..", "README.md")
+DESCRIPTION_OVERRIDES_PATH = os.path.join(
+    os.path.dirname(__file__), "repo_description_overrides.json"
+)
 RECENT_DAYS = 30  # repos pushed within this many days are "current"
 USES_CAP = 10
+DESCRIPTION_OVERRIDES = {}
 
 
 def github_headers():
@@ -112,79 +117,114 @@ def clean_text(text: str) -> str:
     return cleaned
 
 
-def first_sentence(text: str) -> str:
+def load_description_overrides() -> dict:
+    if not os.path.exists(DESCRIPTION_OVERRIDES_PATH):
+        return {}
+
+    try:
+        with open(DESCRIPTION_OVERRIDES_PATH, "r", encoding="utf-8") as fh:
+            data = json.load(fh)
+        if not isinstance(data, dict):
+            return {}
+        return {str(key).strip().lower(): str(value).strip() for key, value in data.items() if str(value).strip()}
+    except Exception:
+        return {}
+
+
+def split_sentences(text: str) -> list:
     if not text:
-        return ""
-    sentence = re.split(r"(?<=[.!?])\s+", text, maxsplit=1)[0].strip()
-    return sentence
+        return []
+    parts = re.split(r"(?<=[.!?])\s+", text)
+    return [part.strip() for part in parts if part.strip()]
 
 
-def normalize_description(repo_name: str, raw_text: str) -> str:
-    default = (
-        f"{repo_name} contains implementation details, project structure, and key development artifacts used recently."
-    )
-    source = first_sentence(clean_text(raw_text)) or default
-    words = re.findall(r"[A-Za-z0-9+#.-]+", source)
-
-    if len(words) > 15:
-        words = words[:15]
-
-    if len(words) < 10:
-        filler = ["with", "clear", "project", "goals", "and", "organized", "code", "for", "practical", "use"]
-        needed = 10 - len(words)
-        words.extend(filler[:needed])
-
-    sentence = " ".join(words).strip()
-    if not sentence.endswith("."):
-        sentence += "."
-    return sentence
-
-
-def ai_style_description(repo: dict, context_text: str) -> str:
-    """Generate a concise, one-sentence AI-style description (10-15 words)."""
-    repo_name = repo.get("name", "This project")
-    lowered = (context_text or "").lower()
-
-    topic_rules = [
-        (["game", "unity", "shader", "simulation"], "interactive application"),
-        (["web", "site", "frontend", "ui", "html", "css"], "web development"),
-        (["analysis", "data", "matlab", "research"], "analytical computing"),
-        (["physics", "opengl", "render"], "technical simulation"),
-        (["api", "backend", "server", "service"], "backend engineering"),
-        (["automation", "script", "tooling"], "automation tooling"),
-    ]
-
-    topic = "software engineering"
-    for keys, label in topic_rules:
-        if any(key in lowered for key in keys) or any(key in repo_name.lower() for key in keys):
-            topic = label
-            break
-
-    objective_rules = [
-        (["class", "course", "assignment", "project"], "course project implementation"),
-        (["demo", "prototype"], "prototype features"),
-        (["portfolio", "profile"], "portfolio presentation"),
-    ]
-
-    objective = "practical features and maintainable project structure"
-    for keys, label in objective_rules:
-        if any(key in lowered for key in keys):
-            objective = label
-            break
-
-    sentence = f"{repo_name} focuses on {topic}, delivering {objective} for consistent development workflows."
+def clamp_sentence(sentence: str, max_words: int = 24) -> str:
     words = re.findall(r"[A-Za-z0-9+#.-]+", sentence)
 
-    if len(words) > 15:
-        words = words[:15]
-    if len(words) < 10:
-        filler = ["with", "clear", "scope", "and", "organized", "implementation", "details"]
-        words.extend(filler[: 10 - len(words)])
+    for size in range(6, 1, -1):
+        if len(words) >= size * 2 and words[:size] == words[size:size * 2]:
+            words = words[:size] + words[size * 2:]
+            break
 
-    sentence = " ".join(words)
-    if not sentence.endswith("."):
-        sentence += "."
-    return sentence
+    if len(words) > max_words:
+        words = words[:max_words]
+    if not words:
+        return ""
+    clamped = " ".join(words)
+    if not clamped.endswith("."):
+        clamped += "."
+    return clamped
+
+
+def sentence_quality_score(sentence: str) -> int:
+    lowered = sentence.lower()
+    words = re.findall(r"[A-Za-z0-9+#.-]+", sentence)
+    if len(words) < 7:
+        return -100
+
+    bad_patterns = [
+        "installation",
+        "contributing",
+        "license",
+        "make sure to sign in",
+        "before starting this assignment",
+        "assignment",
+        "setup",
+        "contributors list",
+        "username",
+        "please go through this link",
+        "------------",
+        "focuses on software engineering",
+        "development workflows",
+        "contains implementation details",
+        "table of contents",
+        "badge",
+    ]
+    if any(pattern in lowered for pattern in bad_patterns):
+        return -50
+
+    score = 0
+    good_keywords = [
+        "is",
+        "builds",
+        "provides",
+        "implements",
+        "allows",
+        "application",
+        "tool",
+        "platform",
+        "simulator",
+        "game",
+        "analy",
+    ]
+    for key in good_keywords:
+        if key in lowered:
+            score += 8
+
+    score += max(0, 20 - abs(14 - len(words)))
+    return score
+
+
+def choose_best_sentence(*texts: str) -> str:
+    candidates = []
+    for text in texts:
+        cleaned = clean_text(text)
+        candidates.extend(split_sentences(cleaned))
+
+    if not candidates:
+        return ""
+
+    ranked = sorted(candidates, key=sentence_quality_score, reverse=True)
+    best = ranked[0]
+    if sentence_quality_score(best) < 0:
+        return ""
+    return clamp_sentence(best)
+
+
+def fallback_description(repo: dict) -> str:
+    name = repo.get("name", "This repository")
+    primary = repo.get("language") or "software"
+    return f"{name} is a {primary} project with clear goals and practical implementation details."
 
 
 def fetch_readme_text(full_name: str) -> str:
@@ -212,7 +252,7 @@ def fetch_readme_text(full_name: str) -> str:
         if stripped.startswith(("#", "![", "[![", "<img", "<p align")):
             continue
         lines.append(stripped)
-        if len(lines) >= 4:
+        if len(lines) >= 30:
             break
 
     return " ".join(lines)
@@ -283,7 +323,16 @@ def build_repo_context(repo: dict) -> str:
 
 
 def repo_summary(repo: dict, context_text: str) -> str:
-    return ai_style_description(repo, context_text)
+    override = DESCRIPTION_OVERRIDES.get((repo.get("name") or "").strip().lower())
+    if override:
+        return clamp_sentence(override)
+
+    about = clean_text(repo.get("description") or "")
+    if about and sentence_quality_score(about) >= 0:
+        return clamp_sentence(about, max_words=18)
+
+    best = choose_best_sentence(context_text)
+    return best or fallback_description(repo)
 
 
 def repo_uses(repo: dict, context_text: str) -> str:
@@ -345,8 +394,13 @@ def replace_section(content: str, start_marker: str, end_marker: str, new_body: 
 
 
 def main():
+    global DESCRIPTION_OVERRIDES
+    DESCRIPTION_OVERRIDES = load_description_overrides()
+
     repo_access = "public and private" if GITHUB_TOKEN else "public"
     print(f"Fetching {repo_access} repos for {GITHUB_USERNAME} …")
+    if DESCRIPTION_OVERRIDES:
+        print(f"Loaded description overrides: {len(DESCRIPTION_OVERRIDES)}")
     if EXCLUDE_PRIVATE_REPOS:
         print(f"Excluding private repos: {', '.join(EXCLUDE_PRIVATE_REPOS)}")
     if not GITHUB_TOKEN:
