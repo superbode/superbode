@@ -209,7 +209,7 @@ def main():
             pushed_date > cutoff or  # Recent activity (120 days)
             repo.get("stargazers_count", 0) > 0 or  # Has stars
             repo.get("forks_count", 0) > 0 or  # Has forks  
-            bool(repo.get("description", "").strip()) or  # Has description
+            bool((repo.get("description") or "").strip()) or  # Has description
             repo.get("private") == True or  # Include private repos as current
             repo.get("fork") == True  # Include forks as current (user has worked on them)
         )
