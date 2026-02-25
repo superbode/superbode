@@ -42,7 +42,7 @@
 <!-- RESUME_SKILLS:start -->
 <p align="center"><strong>Languages</strong></p>
 <p align="center">
-  <img src="https://skillicons.dev/icons?i=cs,cpp,c,java,python,html,css,js,php&theme=dark" alt="Languages" />
+  <img src="https://skillicons.dev/icons?i=cs,html,python,cpp,ts,js,php,css,c&theme=dark" alt="Languages" />
 </p>
 
 <p align="center"><strong>Tools & Platforms</strong></p>
@@ -59,7 +59,16 @@
 > Note: This breakdown reflects only languages detected in repositories on this GitHub profile, so it does not include coding work done outside GitHub.
 
 <!-- LANGUAGE_SUMMARY:start -->
-_No language data available yet._
+- **C#:** 37.4%
+- **HTML:** 15.4%
+- **Python:** 13.2%
+- **C++:** 8.8%
+- **SCSS:** 5.9%
+- **TypeScript:** 5.8%
+- **JavaScript:** 5.2%
+- **PHP:** 4.9%
+- **CSS:** 3.2%
+- **C:** 0.3%
 <!-- LANGUAGE_SUMMARY:end -->
 
   </td>
@@ -93,7 +102,6 @@ _No language data available yet._
 ## 🚀 Current Projects
 
 <!-- CURRENT_PROJECTS:start -->
-_No repositories updated within the last month._
 **[Curiosity](https://github.com/Walhalla7/Curiosity)** - An indie Unreal Engine 5 horror game built by a small Clemson development team.
 - **Languages:** Not specified
 - **Contributors:** 2
@@ -152,12 +160,6 @@ _No repositories updated within the last month._
 - **Languages:** C++, Makefile
 - **Contributors:** 3
 - **Organization/Owner:** Owner (coolguycaden)
-- **Role:** Contributor/Collaborator
-
-**[CPSC3720-Team12](https://github.com/LumpyTacos/CPSC3720-Team12)** - CPSC3720-Team12 is a Python project with clear goals and practical implementation details.
-- **Languages:** Python
-- **Contributors:** 2
-- **Organization/Owner:** Owner (LumpyTacos)
 - **Role:** Contributor/Collaborator
 
 **[3720-learn-git](https://github.com/superbode/3720-learn-git)** - A class assignment focused on learning GitHub workflows and version control basics.
