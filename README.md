@@ -60,11 +60,29 @@
 
 ## 💼 Professional Experience
 <!-- RESUME_EXPERIENCE:start -->
-- ITRON, INC. West Union, SC — R&D Firmware Tester Intern May 2023 – December 2024
-- SCHOOL OF COMPUTING Clemson, SC — Computer Science Teaching Assistant August 2022 – May 2023
-- U.S. ARMY RESERVES Fort Sill, OK; Fort Eisenhower, GA; Greenville, SC — Signal Support Systems Specialist (25U) November 2019 – Present
-- CLEMSON HOUSING Clemson, SC — Residential Community Mentor August 2023 – May 2026
-- KROGER’S Henrico, VA — Courtesy Clerk September 2018 – September 2021
+### ITRON, INC. West Union, SC — R&D Firmware Tester Intern — May 2023 – December 2024
+- Automated multi-differential upgrade testing on legacy and modern electric meters, reducing manual time from 8 hours to under 1 hour.
+- Communicated dozens of bug solutions and several testing suites in stand-up meetings.
+- Designed and executed test cases for features like battery mitigation and multi-differential upgrades.
+
+### SCHOOL OF COMPUTING Clemson, SC — Computer Science Teaching Assistant — August 2022 – May 2023
+- Provided one-on-one and group coding assistance to 200+ students in advanced Computer Science coursework.
+- Led lab sections, graded assignments/ quizzes/code, and delivered feedback to reinforce core principles of software design, methodology, and best practices.
+- Collaborated with the Undergraduate Program Coordinator to support curriculum needs.
+
+### U.S. ARMY RESERVES Fort Sill, OK; Fort Eisenhower, GA; Greenville, SC — Signal Support Systems Specialist (25U) — November 2019 – Present
+- Established and maintained secure (Secret-level) and unencrypted communication networks across 350+ radio systems.
+- Adapted rapidly to mission-critical technical challenges, ensuring reliable communications support for Army Corps of Engineers training and operations.
+- Troubleshot and resolved complex signal issues, contributing to successful mission execution in diverse locations.
+
+### CLEMSON HOUSING Clemson, SC — Residential Community Mentor — August 2023 – May 2026
+- Advise 180+ floor residents with on-campus resources to aid academic, personal, or wellness related needs.
+- Organize and execute community-building events for 1800+ residents to foster engagement and a supportive living environment.
+
+### KROGER’S Henrico, VA — Courtesy Clerk — September 2018 – September 2021
+- Created a positive customer experience through bagging and scanning items.
+- Serviced 400+ customers per week.
+- Aided separate departments in stocking, cleaning, and organizing.
 <!-- RESUME_EXPERIENCE:end -->
 
 ---
@@ -83,16 +101,6 @@
 > Note: This breakdown reflects only languages detected in repositories on this GitHub profile, so it does not include coding work done outside GitHub.
 
 <!-- LANGUAGE_SUMMARY:start -->
-- **C#:** 37.4%
-- **HTML:** 15.4%
-- **Python:** 13.2%
-- **C++:** 8.7%
-- **SCSS:** 5.9%
-- **TypeScript:** 5.8%
-- **JavaScript:** 5.2%
-- **PHP:** 4.9%
-- **CSS:** 3.2%
-- **C:** 0.3%
 _No language data available yet._
 <!-- LANGUAGE_SUMMARY:end -->
 

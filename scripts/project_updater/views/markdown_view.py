@@ -4,7 +4,7 @@
 #                projects and language stats.
 
 from typing import List
-from ..models import RepoPresentation
+from ..models import RepoPresentation, ResumeExperienceEntry
 
 NO_LANGUAGE_DATA_MESSAGE = "_No language data available yet._"
 REPO_BLOCK_TEMPLATE = (
@@ -15,6 +15,7 @@ REPO_BLOCK_TEMPLATE = (
     "- **Role:** {role}"
 )
 LANGUAGE_LINE_TEMPLATE = "- **{language}:** {percent:.1f}%"
+RESUME_EXPERIENCE_TITLE_TEMPLATE = "### {title}"
 RESUME_EXPERIENCE_LINE_TEMPLATE = "- {line}"
 RESUME_SKILL_LINE_TEMPLATE = "- **{category}:** {items}"
 
@@ -57,10 +58,18 @@ def render_language_summary(language_totals: List[tuple]) -> str:
 
 # This function does render extracted resume experience lines.
 # It emits bullet points or an empty-state message.
-def render_resume_experience(lines: List[str], empty_message: str) -> str:
-    if not lines:
+def render_resume_experience(experiences: List[ResumeExperienceEntry], empty_message: str) -> str:
+    if not experiences:
         return empty_message
-    return "\n".join(RESUME_EXPERIENCE_LINE_TEMPLATE.format(line=line) for line in lines)
+
+    blocks = []
+    for experience in experiences:
+        lines = [RESUME_EXPERIENCE_TITLE_TEMPLATE.format(title=experience.title_line)]
+        if experience.highlights:
+            lines.extend(RESUME_EXPERIENCE_LINE_TEMPLATE.format(line=item) for item in experience.highlights)
+        blocks.append("\n".join(lines))
+
+    return "\n\n".join(blocks)
 
 # This function does render extracted resume skill categories.
 # It emits category bullets or an empty-state message.

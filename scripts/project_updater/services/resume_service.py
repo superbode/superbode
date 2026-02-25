@@ -5,7 +5,7 @@
 import os
 import re
 from typing import Dict, List, Optional
-from ..models import ResumeSnapshot
+from ..models import ResumeExperienceEntry, ResumeSnapshot
 
 try:
     from pypdf import PdfReader
@@ -78,10 +78,20 @@ SKILL_CATEGORY_LABELS = {
 }
 
 DEFAULT_SKILL_ORDER = ["Languages", "Tools", "Platforms", "Frameworks", "Databases"]
+MAX_HIGHLIGHTS_PER_ROLE = 3
+MIN_HIGHLIGHT_LENGTH = 24
 
 def _normalize_line(text: str) -> str:
-    value = (text or "").replace("\u2022", "-").replace("•", "-").strip()
+    value = (
+        (text or "")
+        .replace("\u2022", "-")
+        .replace("•", "-")
+        .replace("◼", "")
+        .replace("■", "")
+        .strip()
+    )
     value = PUNCT_SPACING_PATTERN.sub(r"\1", value)
+    value = value.replace(" -level", "-level")
     value = re.sub(r"\s+", " ", value)
     return value
 
@@ -124,42 +134,91 @@ def _extract_combined_sections(lines: List[str], start_headings: tuple, end_head
             combined.extend(section_lines)
     return combined
 
-def _extract_experience_lines(lines: List[str]) -> List[str]:
+def _format_date_range(text: str) -> str:
+    if not text:
+        return ""
+    return re.sub(r"\s{2,}", " – ", text).strip()
+
+def _build_highlights(lines: List[str]) -> List[str]:
+    highlights: List[str] = []
+    for line in lines:
+        normalized = line.strip()
+        if not normalized:
+            continue
+        if normalized.startswith("-"):
+            normalized = normalized[1:].strip()
+
+        if highlights and normalized and normalized[0].islower():
+            highlights[-1] = f"{highlights[-1]} {normalized}"
+            continue
+
+        if len(normalized) < MIN_HIGHLIGHT_LENGTH:
+            continue
+        highlights.append(normalized)
+
+        if len(highlights) >= MAX_HIGHLIGHTS_PER_ROLE:
+            break
+
+    return highlights
+
+def _extract_experience_entries(lines: List[str]) -> List[ResumeExperienceEntry]:
     section = _extract_combined_sections(lines, EXPERIENCE_START_HEADINGS, EXPERIENCE_END_HEADINGS)
     source = section if section else lines
 
-    entries: List[str] = []
+    entries: List[ResumeExperienceEntry] = []
     for index, line in enumerate(source):
-        if DATE_RANGE_PATTERN.search(line):
-            entry = line
-            previous = source[index - 1] if index > 0 else ""
-            if previous and not previous.startswith("-") and not DATE_RANGE_PATTERN.search(previous) and not _is_heading(previous):
-                entry = f"{previous} — {entry}"
-            if entry.startswith("-"):
-                entry = entry[1:].strip()
-            if len(entry) >= 10:
-                entries.append(entry)
-        if len(entries) >= 8:
-            break
+        date_match = DATE_RANGE_PATTERN.search(line)
+        if not date_match:
+            continue
+
+        date_text = _format_date_range(date_match.group(0))
+        role_text = line.replace(date_match.group(0), "").strip(" -–")
+
+        previous = source[index - 1] if index > 0 else ""
+        title_segments: List[str] = []
+        if previous and not _is_heading(previous) and not DATE_RANGE_PATTERN.search(previous):
+            title_segments.append(previous)
+        if role_text:
+            title_segments.append(role_text)
+        title_segments.append(date_text)
+
+        title_line = " — ".join(part.strip() for part in title_segments if part and part.strip())
+        if len(title_line) < 10:
+            continue
+
+        detail_lines: List[str] = []
+        cursor = index + 1
+        while cursor < len(source):
+            candidate = source[cursor]
+            if DATE_RANGE_PATTERN.search(candidate):
+                break
+            if _is_heading(candidate):
+                break
+            if candidate.isupper() and len(candidate.split()) <= 12:
+                break
+            detail_lines.append(candidate)
+            cursor += 1
+
+        entries.append(ResumeExperienceEntry(title_line=title_line, highlights=_build_highlights(detail_lines)))
 
     if entries:
-        deduped: List[str] = []
+        deduped: List[ResumeExperienceEntry] = []
         seen = set()
         for item in entries:
-            key = item.lower()
+            key = item.title_line.lower()
             if key in seen:
                 continue
             deduped.append(item)
             seen.add(key)
         return deduped
 
-    fallback: List[str] = []
+    fallback: List[ResumeExperienceEntry] = []
     for line in section:
         if len(line) < 16:
             continue
         if line.startswith("-"):
             continue
-        fallback.append(line)
+        fallback.append(ResumeExperienceEntry(title_line=line, highlights=[]))
         if len(fallback) >= 6:
             break
     return fallback
@@ -224,6 +283,6 @@ def extract_resume_snapshot(pdf_path: str) -> ResumeSnapshot:
                 text_lines.append(normalized)
 
     return ResumeSnapshot(
-        experiences=_extract_experience_lines(text_lines),
+        experiences=_extract_experience_entries(text_lines),
         skills=_extract_skills(text_lines),
     )

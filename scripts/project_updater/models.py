@@ -25,6 +25,11 @@ class UpdateConfig:
     language_summary_top: int = DEFAULT_LANGUAGE_SUMMARY_TOP
 
 @dataclass
+class ResumeExperienceEntry:
+    title_line: str
+    highlights: List[str]
+
+@dataclass
 class ResumeSnapshot:
-    experiences: List[str]
+    experiences: List[ResumeExperienceEntry]
     skills: Dict[str, List[str]]
