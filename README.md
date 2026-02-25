@@ -82,8 +82,8 @@
 ## 📊 GitHub Stats
 
 <p align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=superbode&show_icons=true&theme=tokyonight&hide_border=true&count_private=true&include_all_commits=true&cache_seconds=86400" alt="Bode's GitHub Stats" height="165" />
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=superbode&layout=compact&theme=tokyonight&hide_border=true&langs_count=8&cache_seconds=86400" alt="Top Languages" height="165" />
+  <img src="https://github-readme-stats-sigma-five.vercel.app/api?username=superbode&show_icons=true&theme=tokyonight&hide_border=true&cache_seconds=86400" alt="Bode's GitHub Stats" height="165" />
+  <img src="https://github-readme-stats-sigma-five.vercel.app/api/top-langs/?username=superbode&layout=compact&theme=tokyonight&hide_border=true&langs_count=8&cache_seconds=86400" alt="Top Languages" height="165" />
 </p>
 
 <p align="center">

@@ -437,16 +437,13 @@ def repo_line(repo: dict) -> str:
         owner_label = f"Owner ({owner})"
 
     role = "Owner" if owner.lower() == GITHUB_USERNAME.lower() else "Contributor/Collaborator"
-    stars = repo.get("stargazers_count", 0)
-    forks = repo.get("forks_count", 0)
 
     return (
         f"**[{name}]({url})** - {summary}\n"
         f"- **Languages:** {languages}\n"
         f"- **Contributors:** {contributors}\n"
         f"- **Organization/Owner:** {owner_label}\n"
-        f"- **Role:** {role}\n"
-        f"- **Stars/Forks:** {stars}/{forks}"
+        f"- **Role:** {role}"
     )
 
 
