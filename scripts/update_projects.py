@@ -219,11 +219,6 @@ def main():
         elif len(past_repos) < MAX_PAST:
             past_repos.append(repo)
     
-    print(f\"  Found {len(all_repos)} total repositories\")
-            current_repos.append(repo)
-        elif len(past_repos) < MAX_PAST:
-            past_repos.append(repo)
-
     print(f"  Found {len(all_repos)} total repositories")
     print(f"  Current (recent or notable): {len(current_repos)} repos")
     print(f"  Past: {len(past_repos)} repos")
