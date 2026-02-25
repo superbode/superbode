@@ -95,7 +95,20 @@
 ## 🚀 Current Projects <sub>(Active or Notable)</sub>
 
 <!-- CURRENT_PROJECTS:start -->
-- **[CanTrip](https://github.com/JohnkGitt/CanTrip)** — `Python` — _Updated 2 months ago_
+- **[s26-ikigai](https://github.com/Clemson-Capstone/s26-ikigai)** 🔒 – `TypeScript` – _Updated 3 hours ago_
+- **[Curiosity](https://github.com/Walhalla7/Curiosity)** 🔒 – `N/A` ⭐ 1 – _Updated 23 hours ago_
+- **[website](https://github.com/9by9-sudoku/website)** – Repository for the 9x9project's website files. 🔒 – `HTML` – _Updated 1 day ago_
+- **[Physics](https://github.com/superbode/Physics)** – Includes an evolution of a simple physics encoded in C++. 🔒 – `C++` – _Updated 4 days ago_
+- **[solvepath-analysis](https://github.com/9by9-sudoku/solvepath-analysis)** – This is the repository for the solvepath analysis section of the class, and where the code used to produce results is stored. 🔒 – `JavaScript` – _Updated 8 days ago_
+- **[CanTrip](https://github.com/JohnkGitt/CanTrip)** – `Python` – _Updated 2 months ago_
+- **[cpsc-3300-p2](https://github.com/coolguycaden/cpsc-3300-p2)** 🔒 – `C++` – _Updated 3 months ago_
+- **[CPSC4110-SP25-Team7](https://github.com/sveaej/CPSC4110-SP25-Team7)** – A repository for CPSC 4110 Team 7's Fishing Simulator 🔒 – `ShaderLab` – _Updated 10 months ago_
+- **[CPSC3720.1-S25-Team12](https://github.com/CPSC3720S25-ClassRepos/CPSC3720.1-S25-Team12)** 🔒 – `Python` – _Updated 10 months ago_
+- **[3720-learn-git](https://github.com/superbode/3720-learn-git)** – Setting up git  🍴 – `N/A` – _Updated 11 months ago_
+- **[SudokuSolver](https://github.com/9by9-sudoku/SudokuSolver)** 🔒 – `C#` – _Updated 1 year ago_
+- **[cyberpunk-game](https://github.com/isaac-fletcher/cyberpunk-game)** – CPSC 4820 Cyberpunk Game 🔒 – `ShaderLab` – _Updated 2 years ago_
+- **[cyberpunk-game](https://github.com/superbode/cyberpunk-game)** – CPSC 4820 Cyberpunk Game 🔒 – `N/A` – _Updated 2 years ago_
+- **[puzzle-vault](https://github.com/9by9-sudoku/puzzle-vault)** 🔒 – `JavaScript` ⭐ 1 – _Updated 2 years ago_
 <!-- CURRENT_PROJECTS:end -->
 
 ---
@@ -103,7 +116,7 @@
 ## 🗄️ Past Projects
 
 <!-- PAST_PROJECTS:start -->
-- **[CPSC3720-Team12](https://github.com/LumpyTacos/CPSC3720-Team12)** — `Python` — _Updated 10 months ago_
+- **[CPSC3720-Team12](https://github.com/LumpyTacos/CPSC3720-Team12)** – `Python` – _Updated 10 months ago_
 <!-- PAST_PROJECTS:end -->
 
 ---
