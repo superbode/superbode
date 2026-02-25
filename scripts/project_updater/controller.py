@@ -50,7 +50,7 @@ from .config import (
 from .models import RepoPresentation, UpdateConfig
 from .services.description_service import clean_text, select_description, select_languages
 from .services.github_service import GitHubService
-from .services.readme_service import load_readme, replace_section, save_readme
+from .services.readme_service import load_readme, remove_duplicate_sections, replace_section, save_readme
 from .services.resume_service import extract_resume_snapshot
 from .views.markdown_view import (
     render_language_summary,
@@ -259,5 +259,16 @@ def run_update() -> None:
         render_other_tools(resume_snapshot.skills, skill_icon_overrides, EMPTY_OTHER_TOOLS_MESSAGE),
     )
 
+    readme = remove_duplicate_sections(
+        readme,
+        [
+            LANGUAGE_SUMMARY_START_MARKER,
+            CURRENT_PROJECTS_START_MARKER,
+            PAST_PROJECTS_START_MARKER,
+            RESUME_SKILLS_START_MARKER,
+            OTHER_TOOLS_START_MARKER,
+            RESUME_EXPERIENCE_START_MARKER,
+        ],
+    )
     save_readme(README_PATH, readme)
     print("README.md updated successfully.")

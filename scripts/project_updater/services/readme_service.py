@@ -5,11 +5,13 @@
 
 import re
 import sys
+from typing import Iterable, Set
 
 SECTION_PATTERN_TEMPLATE = r"({start})\n.*?({end})"
 SECTION_REPLACEMENT_TEMPLATE = r"\1\n{body}\n\2"
 MISSING_MARKER_WARNING_TEMPLATE = "WARNING: marker pair not found: {marker!r}"
 DUPLICATE_MARKER_WARNING_TEMPLATE = "WARNING: duplicate marker pairs found for {marker!r}; collapsing to first occurrence"
+DUPLICATE_SECTION_WARNING_TEMPLATE = "WARNING: duplicate generated heading found for {heading!r}; removing extra blocks"
 
 # This function does replace a marker-delimited README block.
 # It preserves surrounding content and warns if markers are missing.
@@ -46,3 +48,39 @@ def load_readme(path: str) -> str:
 def save_readme(path: str, content: str) -> None:
     with open(path, "w", encoding="utf-8") as file_handle:
         file_handle.write(content)
+
+def _collect_generated_headings(content: str, start_markers: Iterable[str]) -> Set[str]:
+    headings: Set[str] = set()
+    for marker in start_markers:
+        marker_pos = content.find(marker)
+        if marker_pos < 0:
+            continue
+        preceding_headings = list(re.finditer(r"^## .+$", content[:marker_pos], flags=re.MULTILINE))
+        if preceding_headings:
+            headings.add(preceding_headings[-1].group(0).strip())
+    return headings
+
+# This function does remove duplicate generated heading sections.
+# It infers headings from marker locations and removes repeated later blocks.
+def remove_duplicate_sections(content: str, start_markers: Iterable[str]) -> str:
+    updated = content
+    generated_headings = _collect_generated_headings(updated, start_markers)
+
+    for heading in generated_headings:
+        matches = list(re.finditer(rf"^{re.escape(heading)}$", updated, flags=re.MULTILINE))
+        if len(matches) <= 1:
+            continue
+
+        print(DUPLICATE_SECTION_WARNING_TEMPLATE.format(heading=heading), file=sys.stderr)
+        for duplicate in reversed(matches[1:]):
+            start = duplicate.start()
+            next_heading = re.search(r"^## ", updated[duplicate.end():], flags=re.MULTILINE)
+            end = duplicate.end() + next_heading.start() if next_heading else len(updated)
+
+            prefix_match = re.search(r"\n---\n\n$", updated[:start])
+            if prefix_match:
+                start = prefix_match.start()
+
+            updated = updated[:start] + updated[end:]
+
+    return re.sub(r"\n{3,}", "\n\n", updated)
