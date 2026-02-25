@@ -37,6 +37,7 @@ RECENT_DAYS = 30  # repos pushed within this many days are "current"
 USES_CAP = 10
 DESCRIPTION_OVERRIDES = {}
 IGNORED_REPOS = set()
+CONTRIBUTOR_COUNT_CACHE = {}
 
 
 def github_headers():
@@ -378,18 +379,74 @@ def repo_uses(repo: dict, context_text: str) -> str:
     return ", ".join(merged) if merged else "Not specified"
 
 
+def parse_last_page_from_link_header(link_header: str) -> int:
+    if not link_header:
+        return 0
+    match = re.search(r"[?&]page=(\d+)>;\s*rel=\"last\"", link_header)
+    if not match:
+        return 0
+    try:
+        return int(match.group(1))
+    except ValueError:
+        return 0
+
+
+def fetch_contributor_count(repo: dict) -> int:
+    repo_id = repo.get("id")
+    if repo_id in CONTRIBUTOR_COUNT_CACHE:
+        return CONTRIBUTOR_COUNT_CACHE[repo_id]
+
+    full_name = repo.get("full_name", "")
+    if not full_name:
+        return 0
+
+    url = f"https://api.github.com/repos/{full_name}/contributors?per_page=1&anon=true"
+    response = requests.get(url, headers=github_headers(), timeout=30)
+    if response.status_code != 200:
+        CONTRIBUTOR_COUNT_CACHE[repo_id] = 0
+        return 0
+
+    last_page = parse_last_page_from_link_header(response.headers.get("Link", ""))
+    if last_page > 0:
+        CONTRIBUTOR_COUNT_CACHE[repo_id] = last_page
+        return last_page
+
+    try:
+        data = response.json()
+        count = len(data) if isinstance(data, list) else 0
+    except Exception:
+        count = 0
+
+    CONTRIBUTOR_COUNT_CACHE[repo_id] = count
+    return count
+
+
 def repo_line(repo: dict) -> str:
     name = repo["name"]
     url = repo["html_url"]
-    pushed_at = datetime.fromisoformat(repo["pushed_at"].replace("Z", "+00:00"))
-    rel = relative_time(pushed_at)
     context_text = build_repo_context(repo)
     summary = repo_summary(repo, context_text)
-    uses = repo_uses(repo, context_text)
+    languages = repo_uses(repo, context_text)
+    contributors = fetch_contributor_count(repo)
+
+    owner = (repo.get("owner") or {}).get("login") or "Unknown"
+    owner_type = (repo.get("owner") or {}).get("type") or "User"
+    if owner_type.lower() == "organization":
+        owner_label = f"Organization ({owner})"
+    else:
+        owner_label = f"Owner ({owner})"
+
+    role = "Owner" if owner.lower() == GITHUB_USERNAME.lower() else "Contributor/Collaborator"
+    stars = repo.get("stargazers_count", 0)
+    forks = repo.get("forks_count", 0)
+
     return (
         f"**[{name}]({url})** - {summary}\n"
-        f"- **Uses:** {uses}\n"
-        f"- Updated {rel}"
+        f"- **Languages:** {languages}\n"
+        f"- **Contributors:** {contributors}\n"
+        f"- **Organization/Owner:** {owner_label}\n"
+        f"- **Role:** {role}\n"
+        f"- **Stars/Forks:** {stars}/{forks}"
     )
 
 
