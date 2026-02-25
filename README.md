@@ -46,7 +46,7 @@
 
 <p align="center"><strong>Tools & Platforms</strong></p>
 <p align="center">
-  <img src="https://skillicons.dev/icons?i=visualstudio,idea,git,vscode,azure,figma,postman,trello&theme=dark" alt="Tools & Platforms" />
+  <img src="https://skillicons.dev/icons?i=visualstudio,vscode,git,idea,azure,docker,figma,postman&theme=dark" alt="Tools & Platforms" />
 </p>
 
 ---
@@ -82,12 +82,12 @@
 ## 📊 GitHub Stats
 
 <p align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=superbode&show_icons=true&theme=radical&hide_border=true&count_private=true&include_all_commits=true" alt="Bode's GitHub Stats" height="165" />
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=superbode&layout=compact&theme=radical&hide_border=true&langs_count=8" alt="Top Languages" height="165" />
+  <img src="https://github-readme-stats.vercel.app/api?username=superbode&show_icons=true&theme=tokyonight&hide_border=true&count_private=true&include_all_commits=true&cache_seconds=86400" alt="Bode's GitHub Stats" height="165" />
+  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=superbode&layout=compact&theme=tokyonight&hide_border=true&langs_count=8&cache_seconds=86400" alt="Top Languages" height="165" />
 </p>
 
 <p align="center">
-  <img src="https://streak-stats.demolab.com?user=superbode&theme=radical&hide_border=true" alt="GitHub Streak" />
+  <img src="https://github-readme-streak-stats.herokuapp.com/?user=superbode&theme=tokyonight&hide_border=true&cache_seconds=86400" alt="GitHub Streak" />
 </p>
 
 ---
@@ -95,7 +95,7 @@
 ## 🚀 Current Projects <sub>(Active in last 3 weeks)</sub>
 
 <!-- CURRENT_PROJECTS:start -->
-_No recently active public repositories found — check back soon!_
+- **[3720-learn-git](https://github.com/superbode/3720-learn-git)** — Setting up git  — `N/A` — _Updated 11 months ago_
 <!-- CURRENT_PROJECTS:end -->
 
 ---
@@ -103,7 +103,7 @@ _No recently active public repositories found — check back soon!_
 ## 🗄️ Past Projects
 
 <!-- PAST_PROJECTS:start -->
-- **[3720-learn-git](https://github.com/superbode/3720-learn-git)** — Setting up git  — `N/A` — _Updated 11 months ago_
+_No past public repositories found yet._
 <!-- PAST_PROJECTS:end -->
 
 ---

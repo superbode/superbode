@@ -19,7 +19,7 @@ from dateutil import relativedelta
 GITHUB_TOKEN = os.environ.get("GITHUB_TOKEN", "")
 GITHUB_USERNAME = os.environ.get("GITHUB_USERNAME", "superbode")
 README_PATH = os.path.join(os.path.dirname(__file__), "..", "README.md")
-RECENT_DAYS = 21  # repos pushed within this many days are "current"
+RECENT_DAYS = 90  # repos pushed within this many days are "current" (increased from 21)
 MAX_CURRENT = 6
 MAX_PAST = 10
 
@@ -116,16 +116,26 @@ def main():
     cutoff = datetime.now(timezone.utc) - timedelta(days=RECENT_DAYS)
     # Exclude the profile README repo itself
     all_repos = [r for r in all_repos if r["name"] != GITHUB_USERNAME]
-
-    current_repos = [
-        r for r in all_repos
-        if datetime.fromisoformat(r["pushed_at"].replace("Z", "+00:00")) > cutoff
-    ][:MAX_CURRENT]
-
-    past_repos = [
-        r for r in all_repos
-        if datetime.fromisoformat(r["pushed_at"].replace("Z", "+00:00")) <= cutoff
-    ][:MAX_PAST]
+    
+    # Include repos with recent activity OR interesting projects
+    current_repos = []
+    past_repos = []
+    
+    for repo in all_repos:
+        pushed_date = datetime.fromisoformat(repo["pushed_at"].replace("Z", "+00:00"))
+        
+        # Check if repo is "current" (recent OR has meaningful activity)
+        is_current = (
+            pushed_date > cutoff or  # Recent activity
+            repo.get("stargazers_count", 0) > 0 or  # Has stars
+            repo.get("forks_count", 0) > 0 or  # Has forks  
+            repo.get("description", "").strip()  # Has description
+        )
+        
+        if is_current and len(current_repos) < MAX_CURRENT:
+            current_repos.append(repo)
+        elif len(past_repos) < MAX_PAST:
+            past_repos.append(repo)
 
     print(f"  Current (last {RECENT_DAYS}d): {len(current_repos)} repos")
     print(f"  Past: {len(past_repos)} repos")
