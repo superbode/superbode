@@ -25,9 +25,9 @@ GITHUB_TOKEN = os.environ.get("GITHUB_TOKEN", "")
 GITHUB_USERNAME = os.environ.get("GITHUB_USERNAME", "superbode")
 EXCLUDE_PRIVATE_REPOS = set(os.environ.get("EXCLUDE_PRIVATE_REPOS", "").split(",")) if os.environ.get("EXCLUDE_PRIVATE_REPOS") else set()
 README_PATH = os.path.join(os.path.dirname(__file__), "..", "README.md")
-RECENT_DAYS = 90  # repos pushed within this many days are "current" (increased from 21)
-MAX_CURRENT = 6
-MAX_PAST = 10
+RECENT_DAYS = 120  # repos pushed within this many days are "current"
+MAX_CURRENT = 20  # Show more current projects
+MAX_PAST = 25     # Show more past projects
 
 
 def github_headers():
@@ -41,33 +41,47 @@ def fetch_repos():
     repos = []
     page = 1
     
-    # Determine repo type based on token availability
-    repo_type = "all" if GITHUB_TOKEN else "public"
-    
+    # Use /user/repos to get ALL repos the authenticated user has access to
+    # This includes owned, collaborated, organization, and forked repos
+    if GITHUB_TOKEN:
+        # Authenticated endpoint - gets ALL accessible repos including private ones
+        base_url = "https://api.github.com/user/repos"
+        print("🔑 Using authenticated /user/repos endpoint")
+    else:
+        # Fallback to public repos only
+        base_url = f"https://api.github.com/users/{GITHUB_USERNAME}/repos"
+        print("⚠️  Using public-only /users/{username}/repos endpoint")
+        
     while True:
-        url = (
-            f"https://api.github.com/users/{GITHUB_USERNAME}/repos"
-            f"?sort=pushed&direction=desc&per_page=100&page={page}&type={repo_type}"
-        )
+        url = f"{base_url}?sort=pushed&direction=desc&per_page=100&page={page}"
+        if not GITHUB_TOKEN:
+            url += "&type=public"
+        
         response = requests.get(url, headers=github_headers(), timeout=30)
         response.raise_for_status()
         data = response.json()
         if not data:
             break
         
-        # Filter out excluded private repos
+        print(f"📄 Page {page}: Found {len(data)} repositories")
+        
+        # Only filter out explicitly excluded private repos
         filtered_repos = []
         for repo in data:
-            # Skip excluded private repos
+            # Skip excluded private repos only
             if repo["private"] and repo["name"] in EXCLUDE_PRIVATE_REPOS:
+                print(f"⏭️  Skipping excluded private repo: {repo['name']}")
                 continue
-            # Skip forks unless they have significant activity
-            if repo.get("fork") and repo.get("stargazers_count", 0) == 0 and repo.get("forks_count", 0) == 0:
-                continue
+            # Include ALL other repos (owned, forks, collaborations, etc.)
             filtered_repos.append(repo)
         
         repos.extend(filtered_repos)
         page += 1
+        
+        # Safety limit to avoid infinite loops
+        if page > 10:
+            break
+            
     return repos
 
 
@@ -95,20 +109,33 @@ def repo_line(repo: dict) -> str:
     stars = repo.get("stargazers_count", 0)
     forks = repo.get("forks_count", 0)
     is_private = repo.get("private", False)
+    is_fork = repo.get("fork", False)
     pushed_at = datetime.fromisoformat(repo["pushed_at"].replace("Z", "+00:00"))
     rel = relative_time(pushed_at)
 
     parts = [f"- **[{name}]({url})**"]
+    
     if description:
-        parts.append(f"— {description}")
+        parts.append(f"– {description}")
+        
+    # Add indicators
+    indicators = []
     if is_private:
-        parts.append("🔒")
-    parts.append(f"— `{language}`")
-    if stars:
+        indicators.append("🔒")
+    if is_fork:
+        indicators.append("🍴")
+    
+    if indicators:
+        parts.append(" ".join(indicators))
+        
+    parts.append(f"– `{language}`")
+    
+    if stars > 0:
         parts.append(f"⭐ {stars}")
-    if forks:
-        parts.append(f"🍴 {forks}")
-    parts.append(f"— _Updated {rel}_")
+    if forks > 0:
+        parts.append(f"🔗 {forks}")
+        
+    parts.append(f"– _Updated {rel}_")
     return " ".join(parts)
 
 
@@ -151,36 +178,48 @@ def main():
     print(f"\\n📊 Raw API response: {len(all_repos)} repositories")
 
     cutoff = datetime.now(timezone.utc) - timedelta(days=RECENT_DAYS)
-    # Only exclude the profile README repo if it's just a basic profile repo
-    # (allow it if it has stars, forks, or significant recent activity)
+    # Be much more inclusive - only exclude if explicitly excluded or truly minimal profile
     filtered_repos = []
     for repo in all_repos:
-        # Only exclude profile repo if it's clearly just a basic README with no activity
+        # Only exclude profile repo if it's clearly just a minimal template
         if (repo["name"] == GITHUB_USERNAME and 
             repo.get("stargazers_count", 0) == 0 and 
             repo.get("forks_count", 0) == 0 and
-            not (repo.get("description") or "").strip()):
+            not (repo.get("description") or "").strip() and
+            repo.get("size", 0) < 50):  # Very small indicates minimal content
+            print(f"⏭️  Skipping minimal profile repo: {repo['name']}")
             continue
         filtered_repos.append(repo)
     
+    print(f"📋 After filtering: {len(filtered_repos)} repositories included")
     all_repos = filtered_repos
     
-    # Include repos with recent activity OR interesting projects
+    # Sort by most recent push date
+    all_repos.sort(key=lambda r: r["pushed_at"], reverse=True)
+    
+    # Much more inclusive categorization - we want to show ALL repos
     current_repos = []
     past_repos = []
     
     for repo in all_repos:
         pushed_date = datetime.fromisoformat(repo["pushed_at"].replace("Z", "+00:00"))
         
-        # Check if repo is "current" (recent activity OR has meaningful engagement)
+        # Very inclusive criteria for "current" projects  
         is_current = (
-            pushed_date > cutoff or  # Recent activity (within 90 days)
+            pushed_date > cutoff or  # Recent activity (120 days)
             repo.get("stargazers_count", 0) > 0 or  # Has stars
             repo.get("forks_count", 0) > 0 or  # Has forks  
-            (repo.get("description") and len(repo.get("description", "")) > 20)  # Has meaningful description
+            bool(repo.get("description", "").strip()) or  # Has description
+            repo.get("private") == True or  # Include private repos as current
+            repo.get("fork") == True  # Include forks as current (user has worked on them)
         )
         
         if is_current and len(current_repos) < MAX_CURRENT:
+            current_repos.append(repo)
+        elif len(past_repos) < MAX_PAST:
+            past_repos.append(repo)
+    
+    print(f\"  Found {len(all_repos)} total repositories\")
             current_repos.append(repo)
         elif len(past_repos) < MAX_PAST:
             past_repos.append(repo)
