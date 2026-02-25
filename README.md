@@ -95,24 +95,23 @@
 ## 🚀 Current Projects
 
 <!-- CURRENT_PROJECTS:start -->
-_No repositories updated within the last month._
-**[s26-ikigai](https://github.com/Clemson-Capstone/s26-ikigai)** - s26-ikigai focuses on software engineering delivering practical features and maintainable project structure for consistent development.
+**[s26-ikigai](https://github.com/Clemson-Capstone/s26-ikigai)** - s26-ikigai is a TypeScript project with clear goals and practical implementation details.
 - **Uses:** TypeScript, JavaScript, CSS, Python, Dockerfile, HTML
 - Updated 3 hours ago
 
-**[Curiosity](https://github.com/Walhalla7/Curiosity)** - Curiosity focuses on automation tooling delivering course project implementation for consistent development workflows.
+**[Curiosity](https://github.com/Walhalla7/Curiosity)** - Ensure startup map is set if applicable - Edit Project Settings Maps Modes Game Default Map --- Content Blueprints Actors Held Items Old Presets.
 - **Uses:** Not specified
 - Updated 1 day ago
 
-**[website](https://github.com/9by9-sudoku/website)** - website focuses on web development delivering course project implementation for consistent development workflows.
+**[website](https://github.com/9by9-sudoku/website)** - Repository for the 9x9project s website files.
 - **Uses:** HTML, SCSS, Less, PHP, JavaScript, Hack, CSS
 - Updated 1 day ago
 
-**[Physics](https://github.com/superbode/Physics)** - Physics focuses on technical simulation delivering course project implementation for consistent development workflows.
+**[Physics](https://github.com/superbode/Physics)** - Includes an evolution of a simple physics encoded in C++.
 - **Uses:** C++, C, Makefile
 - Updated 4 days ago
 
-**[solvepath-analysis](https://github.com/9by9-sudoku/solvepath-analysis)** - solvepath-analysis focuses on analytical computing delivering course project implementation for consistent development workflows.
+**[solvepath-analysis](https://github.com/9by9-sudoku/solvepath-analysis)** - This is the repository for the solvepath analysis section of the class and where the code used to.
 - **Uses:** JavaScript, MATLAB, CSS, Python, HTML, Shell
 - Updated 8 days ago
 <!-- CURRENT_PROJECTS:end -->
@@ -122,40 +121,39 @@ _No repositories updated within the last month._
 ## 🗄️ Past Projects
 
 <!-- PAST_PROJECTS:start -->
-**[3720-learn-git](https://github.com/superbode/3720-learn-git)** - 3720-learn-git is a software project with clear goals and practical implementation details.
-**[CanTrip](https://github.com/JohnkGitt/CanTrip)** - CanTrip focuses on software engineering delivering practical features and maintainable project structure for consistent development.
+**[CanTrip](https://github.com/JohnkGitt/CanTrip)** - This has been fixed - Added Menu.py - This file adds an object that builds menus. This is used to create the Main Menu.
 - **Uses:** Python
 - Updated 2 months ago
 
-**[cpsc-3300-p2](https://github.com/coolguycaden/cpsc-3300-p2)** - cpsc-3300-p2 focuses on software engineering delivering practical features and maintainable project structure for consistent development.
+**[cpsc-3300-p2](https://github.com/coolguycaden/cpsc-3300-p2)** - - Update Once Update is called the View knows the Model has changed.
 - **Uses:** C++, Makefile
 - Updated 3 months ago
 
-**[CPSC4110-SP25-Team7](https://github.com/sveaej/CPSC4110-SP25-Team7)** - CPSC4110-SP25-Team7 focuses on software engineering delivering practical features and maintainable project structure for consistent development.
+**[CPSC4110-SP25-Team7](https://github.com/sveaej/CPSC4110-SP25-Team7)** - A repository for CPSC 4110 Team 7 s Fishing Simulator.
 - **Uses:** ShaderLab, C#, Mathematica
 - Updated 10 months ago
 
-**[CPSC3720.1-S25-Team12](https://github.com/CPSC3720S25-ClassRepos/CPSC3720.1-S25-Team12)** - CPSC3720.1-S25-Team12 focuses on software engineering delivering practical features and maintainable project structure for consistent development.
+**[CPSC3720.1-S25-Team12](https://github.com/CPSC3720S25-ClassRepos/CPSC3720.1-S25-Team12)** - CPSC3720.1-S25-Team12 is a Python project with clear goals and practical implementation details.
 - **Uses:** Python
 - Updated 10 months ago
 
-**[CPSC3720-Team12](https://github.com/LumpyTacos/CPSC3720-Team12)** - CPSC3720-Team12 focuses on software engineering delivering practical features and maintainable project structure for consistent development.
+**[CPSC3720-Team12](https://github.com/LumpyTacos/CPSC3720-Team12)** - CPSC3720-Team12 is a Python project with clear goals and practical implementation details.
 - **Uses:** Python
 - Updated 10 months ago
 
-**[3720-learn-git](https://github.com/superbode/3720-learn-git)** - 3720-learn-git focuses on software engineering delivering course project implementation for consistent development workflows.
+**[3720-learn-git](https://github.com/superbode/3720-learn-git)** - 3720-learn-git is a software project with clear goals and practical implementation details.
 - **Uses:** Not specified
 - Updated 11 months ago
 
-**[SudokuSolver](https://github.com/9by9-sudoku/SudokuSolver)** - SudokuSolver focuses on web development delivering practical features and maintainable project structure for consistent development.
+**[SudokuSolver](https://github.com/9by9-sudoku/SudokuSolver)** - Join the Puzzle Plaza Discord Check out my YouTube Join my Patreon Join my YouTube.
 - **Uses:** C#, JavaScript, Shell
 - Updated 1 year ago
 
-**[cyberpunk-game](https://github.com/isaac-fletcher/cyberpunk-game)** - cyberpunk-game focuses on interactive application delivering practical features and maintainable project structure for consistent development.
+**[cyberpunk-game](https://github.com/isaac-fletcher/cyberpunk-game)** - cyberpunk-game is a ShaderLab project with clear goals and practical implementation details.
 - **Uses:** ShaderLab, C#, HLSL
 - Updated 2 years ago
 
-**[puzzle-vault](https://github.com/9by9-sudoku/puzzle-vault)** - puzzle-vault focuses on software engineering delivering practical features and maintainable project structure for consistent development.
+**[puzzle-vault](https://github.com/9by9-sudoku/puzzle-vault)** - puzzle-vault is a JavaScript project with clear goals and practical implementation details.
 - **Uses:** JavaScript, TypeScript, CSS
 - Updated 2 years ago
 <!-- PAST_PROJECTS:end -->
