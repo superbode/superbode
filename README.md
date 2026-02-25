@@ -104,6 +104,24 @@ _No language data available yet._
   <img src="https://github-readme-stats-sigma-five.vercel.app/api?username=superbode&show_icons=true&theme=tokyonight&hide_border=true&cache_seconds=86400" alt="Bode's GitHub Stats" height="185" />
 </p>
 
+### Language Breakdown (Included Repositories)
+> Note: This breakdown reflects only languages detected in repositories on this GitHub profile, so it does not include coding work done outside GitHub.
+
+<!-- LANGUAGE_SUMMARY:start -->
+- **C#:** 37.2%
+- **HTML:** 15.4%
+- **Python:** 13.6%
+- **C++:** 8.7%
+- **SCSS:** 5.8%
+- **TypeScript:** 5.8%
+- **JavaScript:** 5.2%
+- **PHP:** 4.8%
+- **CSS:** 3.2%
+- **C:** 0.3%
+<!-- LANGUAGE_SUMMARY:end -->
+
+---
+
 ## 🚀 Current Projects
 
 <!-- CURRENT_PROJECTS:start -->
