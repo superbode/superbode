@@ -92,7 +92,16 @@
 ### Language Breakdown (Included Repositories)
 
 <!-- LANGUAGE_SUMMARY:start -->
-_No language data available yet._
+- **ShaderLab:** 52.3%
+- **C#:** 17.4%
+- **HTML:** 7.2%
+- **Python:** 6.2%
+- **C++:** 4.1%
+- **SCSS:** 2.7%
+- **Less:** 2.7%
+- **TypeScript:** 2.7%
+- **JavaScript:** 2.4%
+- **PHP:** 2.3%
 <!-- LANGUAGE_SUMMARY:end -->
 
 <p align="center">
@@ -104,7 +113,6 @@ _No language data available yet._
 ## 🚀 Current Projects
 
 <!-- CURRENT_PROJECTS:start -->
-_No repositories updated within the last month._
 **[s26-ikigai](https://github.com/Clemson-Capstone/s26-ikigai)** - Supports Ikigai Gardens by connecting South Carolina churches and volunteers to grow food and combat insecurity.
 - **Languages:** TypeScript, JavaScript, CSS, Python, Dockerfile, HTML
 - **Contributors:** 5
