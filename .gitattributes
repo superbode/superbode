@@ -1,0 +1,2 @@
+# Auto-merge README changes to avoid manual conflict resolution on generated sections.
+README.md merge=union
