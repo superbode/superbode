@@ -92,18 +92,18 @@
 
 ---
 
-## 🚀 Current Projects <sub>(Active or Notable)</sub>
+## 🚀 Current Projects <sub>(Updated within the last month)</sub>
 
 <!-- CURRENT_PROJECTS:start -->
-- **[CanTrip](https://github.com/JohnkGitt/CanTrip)** — `Python` — _Updated 2 months ago_
+_No repositories updated within the last month._
 <!-- CURRENT_PROJECTS:end -->
 
 ---
 
-## 🗄️ Past Projects
+## 🗄️ Past Projects <sub>(Not updated in over one month)</sub>
 
 <!-- PAST_PROJECTS:start -->
-- **[CPSC3720-Team12](https://github.com/LumpyTacos/CPSC3720-Team12)** — `Python` — _Updated 10 months ago_
+- [3720-learn-git](https://github.com/superbode/3720-learn-git) - Setting up git Make sure to sign in with github before starting this assignment. - Uses: Not specified - Updated 11 months ago
 <!-- PAST_PROJECTS:end -->
 
 ---

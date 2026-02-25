@@ -16,6 +16,7 @@ Environment variables:
 import os
 import re
 import sys
+import base64
 from datetime import datetime, timezone, timedelta
 
 import requests
@@ -25,9 +26,7 @@ GITHUB_TOKEN = os.environ.get("GITHUB_TOKEN", "")
 GITHUB_USERNAME = os.environ.get("GITHUB_USERNAME", "superbode")
 EXCLUDE_PRIVATE_REPOS = set(os.environ.get("EXCLUDE_PRIVATE_REPOS", "").split(",")) if os.environ.get("EXCLUDE_PRIVATE_REPOS") else set()
 README_PATH = os.path.join(os.path.dirname(__file__), "..", "README.md")
-RECENT_DAYS = 120  # repos pushed within this many days are "current"
-MAX_CURRENT = 20  # Show more current projects
-MAX_PAST = 25     # Show more past projects
+RECENT_DAYS = 30  # repos pushed within this many days are "current"
 
 
 def github_headers():
@@ -46,11 +45,11 @@ def fetch_repos():
     if GITHUB_TOKEN:
         # Authenticated endpoint - gets ALL accessible repos including private ones
         base_url = "https://api.github.com/user/repos"
-        print("🔑 Using authenticated /user/repos endpoint")
+        print("Using authenticated /user/repos endpoint")
     else:
         # Fallback to public repos only
         base_url = f"https://api.github.com/users/{GITHUB_USERNAME}/repos"
-        print("⚠️  Using public-only /users/{username}/repos endpoint")
+        print("Using public-only /users/{username}/repos endpoint")
         
     while True:
         url = f"{base_url}?sort=pushed&direction=desc&per_page=100&page={page}"
@@ -63,14 +62,14 @@ def fetch_repos():
         if not data:
             break
         
-        print(f"📄 Page {page}: Found {len(data)} repositories")
+        print(f"Page {page}: Found {len(data)} repositories")
         
         # Only filter out explicitly excluded private repos
         filtered_repos = []
         for repo in data:
             # Skip excluded private repos only
             if repo["private"] and repo["name"] in EXCLUDE_PRIVATE_REPOS:
-                print(f"⏭️  Skipping excluded private repo: {repo['name']}")
+                print(f"Skipping excluded private repo: {repo['name']}")
                 continue
             # Include ALL other repos (owned, forks, collaborations, etc.)
             filtered_repos.append(repo)
@@ -101,42 +100,146 @@ def relative_time(dt: datetime) -> str:
     return "just now"
 
 
+def clean_text(text: str) -> str:
+    cleaned = text or ""
+    cleaned = re.sub(r"!\[[^\]]*\]\([^)]*\)", " ", cleaned)
+    cleaned = re.sub(r"\[([^\]]+)\]\([^)]*\)", r"\1", cleaned)
+    cleaned = re.sub(r"`+", "", cleaned)
+    cleaned = re.sub(r"<[^>]+>", " ", cleaned)
+    cleaned = re.sub(r"^[#>*\-\s]+", "", cleaned, flags=re.MULTILINE)
+    cleaned = re.sub(r"\s+", " ", cleaned).strip()
+    return cleaned
+
+
+def first_sentence(text: str) -> str:
+    if not text:
+        return ""
+    sentence = re.split(r"(?<=[.!?])\s+", text, maxsplit=1)[0].strip()
+    return sentence
+
+
+def normalize_description(repo_name: str, raw_text: str) -> str:
+    default = (
+        f"{repo_name} contains implementation details, project structure, and key development artifacts used recently."
+    )
+    source = first_sentence(clean_text(raw_text)) or default
+    words = re.findall(r"[A-Za-z0-9+#.-]+", source)
+
+    if len(words) > 15:
+        words = words[:15]
+
+    if len(words) < 10:
+        filler = ["with", "clear", "project", "goals", "and", "organized", "code", "for", "practical", "use"]
+        needed = 10 - len(words)
+        words.extend(filler[:needed])
+
+    sentence = " ".join(words).strip()
+    if not sentence.endswith("."):
+        sentence += "."
+    return sentence
+
+
+def fetch_readme_text(full_name: str) -> str:
+    url = f"https://api.github.com/repos/{full_name}/readme"
+    response = requests.get(url, headers=github_headers(), timeout=30)
+    if response.status_code != 200:
+        return ""
+
+    data = response.json()
+    content = data.get("content", "")
+    encoding = data.get("encoding", "")
+    if not content or encoding != "base64":
+        return ""
+
+    try:
+        decoded = base64.b64decode(content).decode("utf-8", errors="ignore")
+    except Exception:
+        return ""
+
+    lines = []
+    for line in decoded.splitlines():
+        stripped = line.strip()
+        if not stripped:
+            continue
+        if stripped.startswith(("#", "![", "[![", "<img", "<p align")):
+            continue
+        lines.append(stripped)
+        if len(lines) >= 4:
+            break
+
+    return " ".join(lines)
+
+
+def fetch_languages(repo: dict) -> list:
+    url = repo.get("languages_url")
+    if not url:
+        primary = repo.get("language")
+        return [primary] if primary else []
+
+    response = requests.get(url, headers=github_headers(), timeout=30)
+    if response.status_code != 200:
+        primary = repo.get("language")
+        return [primary] if primary else []
+
+    languages = response.json()
+    if not isinstance(languages, dict) or not languages:
+        primary = repo.get("language")
+        return [primary] if primary else []
+
+    top = sorted(languages.items(), key=lambda item: item[1], reverse=True)[:4]
+    return [name for name, _ in top]
+
+
+def infer_frameworks(text: str) -> list:
+    keywords = {
+        "react": "React",
+        "next.js": "Next.js",
+        "nextjs": "Next.js",
+        "vue": "Vue",
+        "angular": "Angular",
+        "django": "Django",
+        "flask": "Flask",
+        "fastapi": "FastAPI",
+        "spring": "Spring",
+        "laravel": "Laravel",
+        "express": "Express",
+        "node": "Node.js",
+        "unity": "Unity",
+        "shaderlab": "ShaderLab",
+    }
+
+    found = []
+    lowered = (text or "").lower()
+    for key, value in keywords.items():
+        if key in lowered and value not in found:
+            found.append(value)
+    return found
+
+
+def repo_summary(repo: dict) -> str:
+    readme_text = fetch_readme_text(repo["full_name"])
+    base_text = readme_text or (repo.get("description") or "")
+    return normalize_description(repo["name"], base_text)
+
+
+def repo_uses(repo: dict, summary_text: str) -> str:
+    languages = fetch_languages(repo)
+    frameworks = infer_frameworks(summary_text)
+    merged = []
+    for item in languages + frameworks:
+        if item and item not in merged:
+            merged.append(item)
+    return ", ".join(merged) if merged else "Not specified"
+
+
 def repo_line(repo: dict) -> str:
     name = repo["name"]
     url = repo["html_url"]
-    description = repo.get("description") or ""
-    language = repo.get("language") or "N/A"
-    stars = repo.get("stargazers_count", 0)
-    forks = repo.get("forks_count", 0)
-    is_private = repo.get("private", False)
-    is_fork = repo.get("fork", False)
     pushed_at = datetime.fromisoformat(repo["pushed_at"].replace("Z", "+00:00"))
     rel = relative_time(pushed_at)
-
-    parts = [f"- **[{name}]({url})**"]
-    
-    if description:
-        parts.append(f"– {description}")
-        
-    # Add indicators
-    indicators = []
-    if is_private:
-        indicators.append("🔒")
-    if is_fork:
-        indicators.append("🍴")
-    
-    if indicators:
-        parts.append(" ".join(indicators))
-        
-    parts.append(f"– `{language}`")
-    
-    if stars > 0:
-        parts.append(f"⭐ {stars}")
-    if forks > 0:
-        parts.append(f"🔗 {forks}")
-        
-    parts.append(f"– _Updated {rel}_")
-    return " ".join(parts)
+    summary = repo_summary(repo)
+    uses = repo_uses(repo, summary)
+    return f"- [{name}]({url}) - {summary} - Uses: {uses} - Updated {rel}"
 
 
 def build_section(repos: list, empty_msg: str) -> str:
@@ -163,8 +266,8 @@ def main():
     if EXCLUDE_PRIVATE_REPOS:
         print(f"Excluding private repos: {', '.join(EXCLUDE_PRIVATE_REPOS)}")
     if not GITHUB_TOKEN:
-        print("⚠️  No GITHUB_TOKEN found - only public repos will be shown")
-        print("   Set PERSONAL_ACCESS_TOKEN in repository secrets to include private repos")
+        print("No GITHUB_TOKEN found - only public repos will be shown")
+        print("Set PERSONAL_ACCESS_TOKEN in repository secrets to include private repos")
     
     try:
         all_repos = fetch_repos()
@@ -175,7 +278,7 @@ def main():
         sys.exit(1)
     
     # Debug: Show raw repo count before filtering
-    print(f"\\n📊 Raw API response: {len(all_repos)} repositories")
+    print(f"\nRaw API response: {len(all_repos)} repositories")
 
     cutoff = datetime.now(timezone.utc) - timedelta(days=RECENT_DAYS)
     # Be much more inclusive - only exclude if explicitly excluded or truly minimal profile
@@ -187,54 +290,50 @@ def main():
             repo.get("forks_count", 0) == 0 and
             not (repo.get("description") or "").strip() and
             repo.get("size", 0) < 50):  # Very small indicates minimal content
-            print(f"⏭️  Skipping minimal profile repo: {repo['name']}")
+            print(f"Skipping minimal profile repo: {repo['name']}")
             continue
         filtered_repos.append(repo)
-    
-    print(f"📋 After filtering: {len(filtered_repos)} repositories included")
-    all_repos = filtered_repos
+    print(f"After filtering: {len(filtered_repos)} repositories included")
+
+    unique_repos = {}
+    for repo in filtered_repos:
+        repo_id = repo.get("id")
+        if repo_id is None:
+            continue
+        if repo_id not in unique_repos:
+            unique_repos[repo_id] = repo
+
+    all_repos = list(unique_repos.values())
+    print(f"After deduplication: {len(all_repos)} repositories included")
     
     # Sort by most recent push date
     all_repos.sort(key=lambda r: r["pushed_at"], reverse=True)
     
-    # Much more inclusive categorization - we want to show ALL repos
     current_repos = []
     past_repos = []
     
     for repo in all_repos:
         pushed_date = datetime.fromisoformat(repo["pushed_at"].replace("Z", "+00:00"))
         
-        # Very inclusive criteria for "current" projects  
-        is_current = (
-            pushed_date > cutoff or  # Recent activity (120 days)
-            repo.get("stargazers_count", 0) > 0 or  # Has stars
-            repo.get("forks_count", 0) > 0 or  # Has forks  
-            bool((repo.get("description") or "").strip()) or  # Has description
-            repo.get("private") == True or  # Include private repos as current
-            repo.get("fork") == True  # Include forks as current (user has worked on them)
-        )
-        
-        if is_current and len(current_repos) < MAX_CURRENT:
+        if pushed_date >= cutoff:
             current_repos.append(repo)
-        elif len(past_repos) < MAX_PAST:
+        else:
             past_repos.append(repo)
     
     print(f"  Found {len(all_repos)} total repositories")
-    print(f"  Current (recent or notable): {len(current_repos)} repos")
+    print(f"  Current (updated within {RECENT_DAYS} days): {len(current_repos)} repos")
     print(f"  Past: {len(past_repos)} repos")
     
     # Debug: Show what repos were found
     if current_repos:
         print("\nCurrent repos:")
         for repo in current_repos:
-            privacy = "🔒" if repo.get("private") else "🌍"
-            print(f"  {privacy} {repo['name']} - {repo.get('language', 'N/A')} - Updated {relative_time(datetime.fromisoformat(repo['pushed_at'].replace('Z', '+00:00')))}")
+            print(f"  {repo['name']} - {repo.get('language', 'N/A')} - Updated {relative_time(datetime.fromisoformat(repo['pushed_at'].replace('Z', '+00:00')))}")
     
     if past_repos:
         print("\nPast repos:")
         for repo in past_repos[:3]:  # Show first 3
-            privacy = "🔒" if repo.get("private") else "🌍"
-            print(f"  {privacy} {repo['name']} - {repo.get('language', 'N/A')} - Updated {relative_time(datetime.fromisoformat(repo['pushed_at'].replace('Z', '+00:00')))}")
+            print(f"  {repo['name']} - {repo.get('language', 'N/A')} - Updated {relative_time(datetime.fromisoformat(repo['pushed_at'].replace('Z', '+00:00')))}")
 
     with open(README_PATH, "r", encoding="utf-8") as fh:
         readme = fh.read()
@@ -245,7 +344,7 @@ def main():
         "<!-- CURRENT_PROJECTS:end -->",
         build_section(
             current_repos,
-            "_No recently active public repositories found — check back soon!_",
+            "_No repositories updated within the last month._",
         ),
     )
 
@@ -253,7 +352,7 @@ def main():
         readme,
         "<!-- PAST_PROJECTS:start -->",
         "<!-- PAST_PROJECTS:end -->",
-        build_section(past_repos, "_No past public repositories found yet._"),
+        build_section(past_repos, "_No repositories older than one month found._"),
     )
 
     with open(README_PATH, "w", encoding="utf-8") as fh:
