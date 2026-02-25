@@ -44,6 +44,7 @@ from .config import (
     load_description_overrides,
     load_ignored_languages,
     load_ignored_repos,
+    load_skill_icon_overrides,
     resolve_resume_path,
 )
 from .models import RepoPresentation, UpdateConfig
@@ -129,6 +130,7 @@ def run_update() -> None:
     overrides = load_description_overrides()
     ignored_repos = load_ignored_repos()
     ignored_languages = load_ignored_languages()
+    skill_icon_overrides = load_skill_icon_overrides()
     excluded_private_repos = {
         item.strip().lower()
         for item in os.environ.get(ENV_EXCLUDE_PRIVATE_REPOS, "").split(",")
@@ -142,6 +144,12 @@ def run_update() -> None:
         print(f"Loaded ignored repos: {len(ignored_repos)}")
     if ignored_languages:
         print(f"Loaded ignored languages: {len(ignored_languages)}")
+    if skill_icon_overrides.get("languages") or skill_icon_overrides.get("tools"):
+        print(
+            "Loaded skill icon overrides: "
+            f"{len(skill_icon_overrides.get('languages', {}))} language, "
+            f"{len(skill_icon_overrides.get('tools', {}))} tool"
+        )
     if excluded_private_repos:
         print(f"Loaded excluded private repos: {len(excluded_private_repos)}")
     if not config.github_token:
@@ -242,13 +250,13 @@ def run_update() -> None:
         readme,
         RESUME_SKILLS_START_MARKER,
         RESUME_SKILLS_END_MARKER,
-        render_skill_icons(language_totals, resume_snapshot.skills, EMPTY_RESUME_SKILLS_MESSAGE),
+        render_skill_icons(language_totals, resume_snapshot.skills, skill_icon_overrides, EMPTY_RESUME_SKILLS_MESSAGE),
     )
     readme = replace_section(
         readme,
         OTHER_TOOLS_START_MARKER,
         OTHER_TOOLS_END_MARKER,
-        render_other_tools(resume_snapshot.skills, EMPTY_OTHER_TOOLS_MESSAGE),
+        render_other_tools(resume_snapshot.skills, skill_icon_overrides, EMPTY_OTHER_TOOLS_MESSAGE),
     )
 
     save_readme(README_PATH, readme)

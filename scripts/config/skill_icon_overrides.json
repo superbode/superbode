@@ -1,0 +1,22 @@
+{
+  "languages": {
+    "typescript": "ts"
+  },
+  "tools": {
+    "azure devops": "azure",
+    "vs code": "vscode"
+  },
+  "tool_candidates": {
+    "jira": [
+      "jira",
+      "atlassian"
+    ],
+    "trello": [
+      "trello"
+    ],
+    "lucid": [
+      "lucidchart",
+      "lucid"
+    ]
+  }
+}

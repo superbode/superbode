@@ -52,8 +52,6 @@ TOOL_PLATFORM_ICON_MAP = {
     "github": "github",
     "azure": "azure",
     "azure devops": "azure",
-    "jira": "jira",
-    "trello": "trello",
     "figma": "figma",
     "docker": "docker",
     "postman": "postman",
@@ -120,6 +118,16 @@ def _collect_tools_platform_icons_and_other(skills: dict) -> tuple[List[str], Li
 
     return _dedupe_keep_order(icon_ids), others
 
+def _merge_override_map(base_map: dict, override_map: dict) -> dict:
+    merged = dict(base_map)
+    for source, icon in (override_map or {}).items():
+        source_key = (source or "").strip().lower()
+        icon_value = (icon or "").strip().lower()
+        if not source_key or not icon_value:
+            continue
+        merged[source_key] = icon_value
+    return merged
+
 # This function does render one repository markdown block.
 # It includes summary, languages, contributors, and ownership data.
 def render_repo_block(repo: RepoPresentation) -> str:
@@ -180,22 +188,34 @@ def render_resume_experience(experiences: List[ResumeExperienceEntry], empty_mes
 
 # This function does render dynamic skills icon blocks.
 # It derives language icons from language summary data and tools/platform icons from resume skills.
-def render_skill_icons(language_totals: List[tuple], skills: dict, empty_message: str) -> str:
+def render_skill_icons(language_totals: List[tuple], skills: dict, icon_overrides: dict, empty_message: str) -> str:
+    language_map = _merge_override_map(LANGUAGE_ICON_MAP, (icon_overrides or {}).get("languages", {}))
+    tool_map = _merge_override_map(TOOL_PLATFORM_ICON_MAP, (icon_overrides or {}).get("tools", {}))
+
     language_icon_ids = []
     for language, _ in language_totals:
-        icon_id = LANGUAGE_ICON_MAP.get((language or "").strip().lower())
+        icon_id = language_map.get((language or "").strip().lower())
         if icon_id:
             language_icon_ids.append(icon_id)
 
     if not language_icon_ids:
         for language in skills.get("Languages", []):
-            icon_id = LANGUAGE_ICON_MAP.get((language or "").strip().lower())
+            icon_id = language_map.get((language or "").strip().lower())
             if icon_id:
                 language_icon_ids.append(icon_id)
 
     language_icon_ids = _dedupe_keep_order(language_icon_ids)
 
-    tools_platform_icon_ids, _ = _collect_tools_platform_icons_and_other(skills)
+    tools_platform_sources = []
+    for category in ("Tools", "Platforms", "Frameworks"):
+        tools_platform_sources.extend(skills.get(category, []))
+
+    tools_platform_icon_ids = []
+    for item in _dedupe_keep_order(tools_platform_sources):
+        icon_id = tool_map.get((item or "").strip().lower())
+        if icon_id:
+            tools_platform_icon_ids.append(icon_id)
+    tools_platform_icon_ids = _dedupe_keep_order(tools_platform_icon_ids)
 
     language_row = _render_icon_row("Languages", language_icon_ids, "Languages")
     tools_row = _render_icon_row("Tools & Platforms", tools_platform_icon_ids, "Tools & Platforms")
@@ -207,8 +227,18 @@ def render_skill_icons(language_totals: List[tuple], skills: dict, empty_message
 
 # This function does render non-icon-mapped tools/platforms from resume data.
 # It returns a bullet list intended to sit alongside language breakdown.
-def render_other_tools(skills: dict, empty_message: str) -> str:
-    _, other_tools = _collect_tools_platform_icons_and_other(skills)
+def render_other_tools(skills: dict, icon_overrides: dict, empty_message: str) -> str:
+    tool_map = _merge_override_map(TOOL_PLATFORM_ICON_MAP, (icon_overrides or {}).get("tools", {}))
+
+    tools_platform_sources = []
+    for category in ("Tools", "Platforms", "Frameworks"):
+        tools_platform_sources.extend(skills.get(category, []))
+
+    other_tools = []
+    for item in _dedupe_keep_order(tools_platform_sources):
+        if not tool_map.get((item or "").strip().lower()):
+            other_tools.append(item)
+
     if not other_tools:
         return empty_message
     return "\n".join(OTHER_TOOLS_LINE_TEMPLATE.format(tool=item) for item in other_tools)

@@ -72,6 +72,7 @@ CONFIG_DIR = os.path.join(SCRIPTS_DIR, "config")
 DESCRIPTION_OVERRIDES_PATH = os.path.join(CONFIG_DIR, "repo_description_overrides.json")
 IGNORE_REPOS_PATH = os.path.join(CONFIG_DIR, "repo_ignore_list.json")
 IGNORE_LANGUAGES_PATH = os.path.join(CONFIG_DIR, "language_ignore_list.json")
+SKILL_ICON_OVERRIDES_PATH = os.path.join(CONFIG_DIR, "skill_icon_overrides.json")
 DEFAULT_RESUME_FILENAME = "Bode Hooker Resume.pdf"
 
 def resolve_resume_path() -> str:
@@ -120,3 +121,30 @@ def load_ignored_languages() -> Set[str]:
     if not isinstance(data, list):
         return set()
     return {str(item).strip().lower() for item in data if str(item).strip()}
+
+# This function does load skill icon override mappings.
+# It returns normalized lowercase source -> icon id maps for languages and tools.
+def load_skill_icon_overrides() -> Dict[str, Dict[str, str]]:
+    data = _load_json(SKILL_ICON_OVERRIDES_PATH)
+    if not isinstance(data, dict):
+        return {"languages": {}, "tools": {}}
+
+    raw_languages = data.get("languages")
+    raw_tools = data.get("tools")
+
+    def _normalize_mapping(raw_value) -> Dict[str, str]:
+        if not isinstance(raw_value, dict):
+            return {}
+        normalized: Dict[str, str] = {}
+        for source_label, icon_id in raw_value.items():
+            source = str(source_label).strip().lower()
+            target = str(icon_id).strip().lower()
+            if not source or not target:
+                continue
+            normalized[source] = target
+        return normalized
+
+    return {
+        "languages": _normalize_mapping(raw_languages),
+        "tools": _normalize_mapping(raw_tools),
+    }

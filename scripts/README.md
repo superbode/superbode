@@ -80,6 +80,13 @@ The updater now follows an MVC-inspired structure:
 - List of language names to exclude from generated language breakdown.
 - Matched case-insensitively.
 
+### `skill_icon_overrides.json`
+- Maps extracted skill labels to `skillicons.dev` icon IDs.
+- Keys are matched case-insensitively.
+- Supports two objects: `languages` and `tools`.
+- Overrides are applied before fallback to default in-code mappings.
+- Optional `tool_candidates` can store trial icon IDs (ignored by updater until moved into `tools`).
+
 ---
 
 ## Typical Flow
