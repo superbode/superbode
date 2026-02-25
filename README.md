@@ -92,16 +92,16 @@
 ### Language Breakdown (Included Repositories)
 
 <!-- LANGUAGE_SUMMARY:start -->
-- **C#:** 36.4%
-- **HTML:** 15.0%
-- **Python:** 14.4%
+- **C#:** 36.5%
+- **HTML:** 15.1%
+- **Python:** 14.5%
 - **C++:** 8.5%
 - **SCSS:** 5.7%
 - **TypeScript:** 5.6%
 - **JavaScript:** 5.1%
 - **PHP:** 4.7%
 - **CSS:** 3.1%
-- **Hack:** 1.3%
+- **Mathematica:** 1.1%
 <!-- LANGUAGE_SUMMARY:end -->
 
 ---
