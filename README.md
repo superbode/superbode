@@ -40,11 +40,20 @@
 ## 🛠️ Skills
 
 <!-- RESUME_SKILLS:start -->
+<p align="center"><strong>Languages</strong></p>
+<p align="center">
+  <img src="https://skillicons.dev/icons?i=cs,cpp,c,java,python,html,css,js,php&theme=dark" alt="Languages" />
+</p>
+
 <p align="center"><strong>Tools & Platforms</strong></p>
 <p align="center">
   <img src="https://skillicons.dev/icons?i=visualstudio,idea,git,github,vscode,azure,jira,trello,figma&theme=dark" alt="Tools & Platforms" />
 </p>
 <!-- RESUME_SKILLS:end -->
+
+<table>
+  <tr>
+    <td valign="top" width="60%">
 
 ### Language Breakdown (Included Repositories)
 > Note: This breakdown reflects only languages detected in repositories on this GitHub profile, so it does not include coding work done outside GitHub.
@@ -52,6 +61,50 @@
 <!-- LANGUAGE_SUMMARY:start -->
 _No language data available yet._
 <!-- LANGUAGE_SUMMARY:end -->
+
+  </td>
+  <td valign="top" width="40%">
+
+### Other Tools
+<!-- OTHER_TOOLS:start -->
+- Lucid
+<!-- OTHER_TOOLS:end -->
+
+  </td>
+  </tr>
+</table>
+
+---
+
+## 📊 GitHub Stats
+
+<p align="center">
+  <img src="https://github-readme-streak-stats.herokuapp.com/?user=superbode&theme=tokyonight&hide_border=true&cache_seconds=86400" alt="GitHub Streak" />
+</p>
+
+<p align="center">
+  <img src="https://github-readme-stats-sigma-five.vercel.app/api?username=superbode&show_icons=true&theme=tokyonight&hide_border=true&cache_seconds=86400" alt="Bode's GitHub Stats" height="185" />
+</p>
+
+---
+
+## 🚀 Current Projects
+
+<!-- CURRENT_PROJECTS:start -->
+_No repositories updated within the last month._
+<!-- CURRENT_PROJECTS:end -->
+
+---
+
+## 🗄️ Past Projects
+
+<!-- PAST_PROJECTS:start -->
+**[3720-learn-git](https://github.com/superbode/3720-learn-git)** - A class assignment focused on learning GitHub workflows and version control basics.
+- **Languages:** Not specified
+- **Contributors:** 1
+- **Organization/Owner:** Owner (superbode)
+- **Role:** Owner
+<!-- PAST_PROJECTS:end -->
 
 ---
 
@@ -91,54 +144,6 @@ _No language data available yet._
 - Serviced 400+ customers per week.
 - Aided separate departments in stocking, cleaning, and organizing.
 <!-- RESUME_EXPERIENCE:end -->
-
----
-
-## 📊 GitHub Stats
-
-<p align="center">
-  <img src="https://github-readme-streak-stats.herokuapp.com/?user=superbode&theme=tokyonight&hide_border=true&cache_seconds=86400" alt="GitHub Streak" />
-</p>
-
-<p align="center">
-  <img src="https://github-readme-stats-sigma-five.vercel.app/api?username=superbode&show_icons=true&theme=tokyonight&hide_border=true&cache_seconds=86400" alt="Bode's GitHub Stats" height="185" />
-</p>
-
-### Language Breakdown (Included Repositories)
-> Note: This breakdown reflects only languages detected in repositories on this GitHub profile, so it does not include coding work done outside GitHub.
-
-<!-- LANGUAGE_SUMMARY:start -->
-- **C#:** 37.2%
-- **HTML:** 15.4%
-- **Python:** 13.6%
-- **C++:** 8.7%
-- **SCSS:** 5.8%
-- **TypeScript:** 5.8%
-- **JavaScript:** 5.2%
-- **PHP:** 4.8%
-- **CSS:** 3.2%
-- **C:** 0.3%
-<!-- LANGUAGE_SUMMARY:end -->
-
----
-
-## 🚀 Current Projects
-
-<!-- CURRENT_PROJECTS:start -->
-_No repositories updated within the last month._
-<!-- CURRENT_PROJECTS:end -->
-
----
-
-## 🗄️ Past Projects
-
-<!-- PAST_PROJECTS:start -->
-**[3720-learn-git](https://github.com/superbode/3720-learn-git)** - A class assignment focused on learning GitHub workflows and version control basics.
-- **Languages:** Not specified
-- **Contributors:** 1
-- **Organization/Owner:** Owner (superbode)
-- **Role:** Owner
-<!-- PAST_PROJECTS:end -->
 
 ---
 

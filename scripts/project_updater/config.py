@@ -42,12 +42,15 @@ RESUME_EXPERIENCE_START_MARKER = "<!-- RESUME_EXPERIENCE:start -->"
 RESUME_EXPERIENCE_END_MARKER = "<!-- RESUME_EXPERIENCE:end -->"
 RESUME_SKILLS_START_MARKER = "<!-- RESUME_SKILLS:start -->"
 RESUME_SKILLS_END_MARKER = "<!-- RESUME_SKILLS:end -->"
+OTHER_TOOLS_START_MARKER = "<!-- OTHER_TOOLS:start -->"
+OTHER_TOOLS_END_MARKER = "<!-- OTHER_TOOLS:end -->"
 
 # Messages and templates for README content and logging.
 EMPTY_CURRENT_PROJECTS_MESSAGE = "_No repositories updated within the last month._"
 EMPTY_PAST_PROJECTS_MESSAGE = "_No repositories older than one month found._"
 EMPTY_RESUME_EXPERIENCE_MESSAGE = "_No experience entries extracted from resume yet._"
 EMPTY_RESUME_SKILLS_MESSAGE = "_No skill icons available yet._"
+EMPTY_OTHER_TOOLS_MESSAGE = "_No additional tools found._"
 
 # Owner label templates for different GitHub owner types.
 ROLE_OWNER = "Owner"

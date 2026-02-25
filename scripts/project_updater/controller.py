@@ -17,6 +17,7 @@ from .config import (
     EMPTY_CURRENT_PROJECTS_MESSAGE,
     EMPTY_PAST_PROJECTS_MESSAGE,
     EMPTY_RESUME_EXPERIENCE_MESSAGE,
+    EMPTY_OTHER_TOOLS_MESSAGE,
     EMPTY_RESUME_SKILLS_MESSAGE,
     ENV_EXCLUDE_PRIVATE_REPOS,
     ENV_GITHUB_TOKEN,
@@ -25,6 +26,8 @@ from .config import (
     LANGUAGE_SUMMARY_START_MARKER,
     MIN_PROFILE_REPO_SIZE,
     NO_GITHUB_TOKEN_MESSAGE,
+    OTHER_TOOLS_END_MARKER,
+    OTHER_TOOLS_START_MARKER,
     OWNER_LABEL_ORGANIZATION_TEMPLATE,
     OWNER_LABEL_USER_TEMPLATE,
     OWNER_TYPE_ORGANIZATION,
@@ -50,6 +53,7 @@ from .services.readme_service import load_readme, replace_section, save_readme
 from .services.resume_service import extract_resume_snapshot
 from .views.markdown_view import (
     render_language_summary,
+    render_other_tools,
     render_repo_section,
     render_resume_experience,
     render_skill_icons,
@@ -239,6 +243,12 @@ def run_update() -> None:
         RESUME_SKILLS_START_MARKER,
         RESUME_SKILLS_END_MARKER,
         render_skill_icons(language_totals, resume_snapshot.skills, EMPTY_RESUME_SKILLS_MESSAGE),
+    )
+    readme = replace_section(
+        readme,
+        OTHER_TOOLS_START_MARKER,
+        OTHER_TOOLS_END_MARKER,
+        render_other_tools(resume_snapshot.skills, EMPTY_OTHER_TOOLS_MESSAGE),
     )
 
     save_readme(README_PATH, readme)

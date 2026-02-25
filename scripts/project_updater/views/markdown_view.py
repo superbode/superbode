@@ -42,10 +42,12 @@ LANGUAGE_ICON_MAP = {
 
 TOOL_PLATFORM_ICON_MAP = {
     "visual studio": "visualstudio",
+    "vs": "visualstudio",
     "vs code": "vscode",
     "vscode": "vscode",
     "intellij idea": "idea",
     "intellij": "idea",
+    "pycharm": "pycharm",
     "git": "git",
     "github": "github",
     "azure": "azure",
@@ -63,6 +65,7 @@ ICON_IMAGE_TEMPLATE = (
     '  <img src="https://skillicons.dev/icons?i={icons}&theme=dark" alt="{alt}" />\n'
     '</p>'
 )
+OTHER_TOOLS_LINE_TEMPLATE = "- {tool}"
 
 def _split_experience_title(title_line: str) -> tuple[str, str, str]:
     parts = [part.strip() for part in (title_line or "").split(" — ") if part.strip()]
@@ -100,6 +103,22 @@ def _render_icon_row(title: str, icon_ids: List[str], alt: str) -> str:
             ICON_IMAGE_TEMPLATE.format(icons=",".join(icon_ids), alt=alt),
         ]
     )
+
+def _collect_tools_platform_icons_and_other(skills: dict) -> tuple[List[str], List[str]]:
+    tools_platform_sources = []
+    for category in ("Tools", "Platforms", "Frameworks"):
+        tools_platform_sources.extend(skills.get(category, []))
+
+    icon_ids = []
+    others = []
+    for item in _dedupe_keep_order(tools_platform_sources):
+        icon_id = TOOL_PLATFORM_ICON_MAP.get((item or "").strip().lower())
+        if icon_id:
+            icon_ids.append(icon_id)
+        else:
+            others.append(item)
+
+    return _dedupe_keep_order(icon_ids), others
 
 # This function does render one repository markdown block.
 # It includes summary, languages, contributors, and ownership data.
@@ -167,18 +186,16 @@ def render_skill_icons(language_totals: List[tuple], skills: dict, empty_message
         icon_id = LANGUAGE_ICON_MAP.get((language or "").strip().lower())
         if icon_id:
             language_icon_ids.append(icon_id)
+
+    if not language_icon_ids:
+        for language in skills.get("Languages", []):
+            icon_id = LANGUAGE_ICON_MAP.get((language or "").strip().lower())
+            if icon_id:
+                language_icon_ids.append(icon_id)
+
     language_icon_ids = _dedupe_keep_order(language_icon_ids)
 
-    tools_platform_sources = []
-    for category in ("Tools", "Platforms", "Frameworks"):
-        tools_platform_sources.extend(skills.get(category, []))
-
-    tools_platform_icon_ids = []
-    for item in tools_platform_sources:
-        icon_id = TOOL_PLATFORM_ICON_MAP.get((item or "").strip().lower())
-        if icon_id:
-            tools_platform_icon_ids.append(icon_id)
-    tools_platform_icon_ids = _dedupe_keep_order(tools_platform_icon_ids)
+    tools_platform_icon_ids, _ = _collect_tools_platform_icons_and_other(skills)
 
     language_row = _render_icon_row("Languages", language_icon_ids, "Languages")
     tools_row = _render_icon_row("Tools & Platforms", tools_platform_icon_ids, "Tools & Platforms")
@@ -187,3 +204,11 @@ def render_skill_icons(language_totals: List[tuple], skills: dict, empty_message
     if not rows:
         return empty_message
     return "\n\n".join(rows)
+
+# This function does render non-icon-mapped tools/platforms from resume data.
+# It returns a bullet list intended to sit alongside language breakdown.
+def render_other_tools(skills: dict, empty_message: str) -> str:
+    _, other_tools = _collect_tools_platform_icons_and_other(skills)
+    if not other_tools:
+        return empty_message
+    return "\n".join(OTHER_TOOLS_LINE_TEMPLATE.format(tool=item) for item in other_tools)
