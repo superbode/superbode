@@ -92,16 +92,16 @@
 ### Language Breakdown (Included Repositories)
 
 <!-- LANGUAGE_SUMMARY:start -->
-- **ShaderLab:** 52.3%
-- **C#:** 17.4%
-- **HTML:** 7.2%
-- **Python:** 6.2%
-- **C++:** 4.1%
-- **SCSS:** 2.7%
-- **Less:** 2.7%
-- **TypeScript:** 2.7%
-- **JavaScript:** 2.4%
-- **PHP:** 2.3%
+- **C#:** 36.4%
+- **HTML:** 15.0%
+- **Python:** 14.4%
+- **C++:** 8.5%
+- **SCSS:** 5.7%
+- **TypeScript:** 5.6%
+- **JavaScript:** 5.1%
+- **PHP:** 4.7%
+- **CSS:** 3.1%
+- **Hack:** 1.3%
 <!-- LANGUAGE_SUMMARY:end -->
 
 ---
@@ -109,7 +109,12 @@
 ## 🚀 Current Projects
 
 <!-- CURRENT_PROJECTS:start -->
-_No repositories updated within the last month._
+**[superbode](https://github.com/superbode/superbode)** - August 2022 May 2023 Clemson SC - Provided one-on-one and group coding assistance to 200+ students in advanced Computer Science courses.
+- **Languages:** Python, Unity
+- **Contributors:** 3
+- **Organization/Owner:** Owner (superbode)
+- **Role:** Owner
+
 **[s26-ikigai](https://github.com/Clemson-Capstone/s26-ikigai)** - Supports Ikigai Gardens by connecting South Carolina churches and volunteers to grow food and combat insecurity.
 - **Languages:** TypeScript, JavaScript, CSS, Python, Dockerfile, HTML
 - **Contributors:** 5
@@ -140,11 +145,47 @@ _No repositories updated within the last month._
 ## 🗄️ Past Projects
 
 <!-- PAST_PROJECTS:start -->
+**[CanTrip](https://github.com/JohnkGitt/CanTrip)** - A PyGame adventure where CANRobot escapes a facility after gaining self-awareness.
+- **Languages:** Python
+- **Contributors:** 3
+- **Organization/Owner:** Owner (JohnkGitt)
+- **Role:** Contributor/Collaborator
+
+**[cpsc-3300-p2](https://github.com/coolguycaden/cpsc-3300-p2)** - Simulates MIPS instruction execution using a virtual register file and memory model.
+- **Languages:** C++, Makefile
+- **Contributors:** 3
+- **Organization/Owner:** Owner (coolguycaden)
+- **Role:** Contributor/Collaborator
+
+**[CPSC4110-SP25-Team7](https://github.com/sveaej/CPSC4110-SP25-Team7)** - A repository for CPSC 4110 Team 7 s Fishing Simulator.
+- **Languages:** ShaderLab, C#, Mathematica
+- **Contributors:** 4
+- **Organization/Owner:** Owner (sveaej)
+- **Role:** Contributor/Collaborator
+
+**[CPSC3720.1-S25-Team12](https://github.com/CPSC3720S25-ClassRepos/CPSC3720.1-S25-Team12)** - Builds and tests API functionality using Postman YAML AWS Lambda and DynamoDB.
+- **Languages:** Python
+- **Contributors:** 3
+- **Organization/Owner:** Organization (CPSC3720S25-ClassRepos)
+- **Role:** Contributor/Collaborator
+
+**[CPSC3720-Team12](https://github.com/LumpyTacos/CPSC3720-Team12)** - CPSC3720-Team12 is a Python project with clear goals and practical implementation details.
+- **Languages:** Python
+- **Contributors:** 2
+- **Organization/Owner:** Owner (LumpyTacos)
+- **Role:** Contributor/Collaborator
+
 **[3720-learn-git](https://github.com/superbode/3720-learn-git)** - A class assignment focused on learning GitHub workflows and version control basics.
 - **Languages:** Not specified
 - **Contributors:** 1
 - **Organization/Owner:** Owner (superbode)
 - **Role:** Owner
+
+**[cyberpunk-game](https://github.com/isaac-fletcher/cyberpunk-game)** - A two-player 2D Unity puzzle game set in a run-down cyberpunk city.
+- **Languages:** ShaderLab, C#, HLSL
+- **Contributors:** 7
+- **Organization/Owner:** Owner (isaac-fletcher)
+- **Role:** Contributor/Collaborator
 <!-- PAST_PROJECTS:end -->
 
 ---
