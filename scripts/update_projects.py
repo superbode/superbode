@@ -33,11 +33,15 @@ DESCRIPTION_OVERRIDES_PATH = os.path.join(
 IGNORE_REPOS_PATH = os.path.join(
     os.path.dirname(__file__), "repo_ignore_list.json"
 )
+IGNORE_LANGUAGES_PATH = os.path.join(
+    os.path.dirname(__file__), "language_ignore_list.json"
+)
 RECENT_DAYS = 30  # repos pushed within this many days are "current"
 USES_CAP = 10
 LANGUAGE_SUMMARY_TOP = 10
 DESCRIPTION_OVERRIDES = {}
 IGNORED_REPOS = set()
+IGNORED_LANGUAGES = set()
 CONTRIBUTOR_COUNT_CACHE = {}
 LANGUAGE_USAGE_CACHE = {}
 
@@ -144,6 +148,20 @@ def load_ignored_repos() -> set:
 
     try:
         with open(IGNORE_REPOS_PATH, "r", encoding="utf-8") as fh:
+            data = json.load(fh)
+        if not isinstance(data, list):
+            return set()
+        return {str(item).strip().lower() for item in data if str(item).strip()}
+    except Exception:
+        return set()
+
+
+def load_ignored_languages() -> set:
+    if not os.path.exists(IGNORE_LANGUAGES_PATH):
+        return set()
+
+    try:
+        with open(IGNORE_LANGUAGES_PATH, "r", encoding="utf-8") as fh:
             data = json.load(fh)
         if not isinstance(data, list):
             return set()
@@ -318,6 +336,8 @@ def build_language_summary(repos: list, top_n: int = LANGUAGE_SUMMARY_TOP) -> st
     for repo in repos:
         for language, byte_count in fetch_language_usage(repo):
             if not language:
+                continue
+            if language.strip().lower() in IGNORED_LANGUAGES:
                 continue
             language_totals[language] = language_totals.get(language, 0) + int(byte_count or 0)
 
@@ -508,9 +528,10 @@ def replace_section(content: str, start_marker: str, end_marker: str, new_body: 
 
 
 def main():
-    global DESCRIPTION_OVERRIDES, IGNORED_REPOS
+    global DESCRIPTION_OVERRIDES, IGNORED_REPOS, IGNORED_LANGUAGES
     DESCRIPTION_OVERRIDES = load_description_overrides()
     IGNORED_REPOS = load_ignored_repos()
+    IGNORED_LANGUAGES = load_ignored_languages()
 
     repo_access = "public and private" if GITHUB_TOKEN else "public"
     print(f"Fetching {repo_access} repos for {GITHUB_USERNAME} …")
@@ -518,6 +539,8 @@ def main():
         print(f"Loaded description overrides: {len(DESCRIPTION_OVERRIDES)}")
     if IGNORED_REPOS:
         print(f"Loaded ignored repos: {len(IGNORED_REPOS)}")
+    if IGNORED_LANGUAGES:
+        print(f"Loaded ignored languages: {len(IGNORED_LANGUAGES)}")
     if EXCLUDE_PRIVATE_REPOS:
         print(f"Excluding private repos: {', '.join(EXCLUDE_PRIVATE_REPOS)}")
     if not GITHUB_TOKEN:
