@@ -63,11 +63,11 @@
 - **HTML:** 15.1%
 - **Python:** 12.6%
 - **C++:** 8.6%
-- **TypeScript:** 6.8%
+- **TypeScript:** 6.9%
 - **JavaScript:** 6.0%
 - **SCSS:** 5.8%
 - **PHP:** 4.8%
-- **CSS:** 3.3%
+- **CSS:** 3.4%
 - **C:** 0.3%
 <!-- LANGUAGE_SUMMARY:end -->
 
