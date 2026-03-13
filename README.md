@@ -114,17 +114,17 @@
 - **Organization/Owner:** Organization (9by9-sudoku)
 - **Role:** Contributor/Collaborator
 
-**[s26-ikigai](https://github.com/Clemson-Capstone/s26-ikigai)** - Supports Ikigai Gardens by connecting South Carolina churches and volunteers to grow food and combat insecurity.
-- **Languages:** TypeScript, JavaScript, CSS, Python, Dockerfile, HTML
-- **Contributors:** 5
-- **Organization/Owner:** Organization (Clemson-Capstone)
-- **Role:** Contributor/Collaborator
-
 **[Physics](https://github.com/superbode/Physics)** - Includes an evolution of a simple physics encoded in C++.
 - **Languages:** C++, C, Makefile
 - **Contributors:** 2
 - **Organization/Owner:** Owner (superbode)
 - **Role:** Owner
+
+**[s26-ikigai](https://github.com/Clemson-Capstone/s26-ikigai)** - Supports Ikigai Gardens by connecting South Carolina churches and volunteers to grow food and combat insecurity.
+- **Languages:** TypeScript, JavaScript, CSS, Python, Dockerfile, HTML
+- **Contributors:** 5
+- **Organization/Owner:** Organization (Clemson-Capstone)
+- **Role:** Contributor/Collaborator
 <!-- CURRENT_PROJECTS:end -->
 
 ---
