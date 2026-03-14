@@ -42,7 +42,7 @@
 <!-- RESUME_SKILLS:start -->
 <p align="center"><strong>Languages</strong></p>
 <p align="center">
-  <img src="https://skillicons.dev/icons?i=cs,html,python,ts,js,cpp,php,css,c&theme=dark" alt="Languages" />
+  <img src="https://skillicons.dev/icons?i=cs,html,python,cpp,ts,js,php,css,c&theme=dark" alt="Languages" />
 </p>
 
 <p align="center"><strong>Tools & Platforms</strong></p>
@@ -59,16 +59,16 @@
 > Note: This breakdown reflects only languages detected in repositories on this GitHub profile, so it does not include coding work done outside GitHub.
 
 <!-- LANGUAGE_SUMMARY:start -->
-- **C#:** 34.0%
-- **HTML:** 14.0%
-- **Python:** 11.7%
-- **TypeScript:** 9.6%
-- **JavaScript:** 8.4%
-- **C++:** 8.0%
-- **SCSS:** 5.3%
-- **PHP:** 4.4%
-- **CSS:** 4.2%
-- **C:** 0.3%
+- **C#:** 33.2%
+- **HTML:** 13.7%
+- **Python:** 11.5%
+- **C++:** 9.9%
+- **TypeScript:** 9.4%
+- **JavaScript:** 8.2%
+- **SCSS:** 5.2%
+- **PHP:** 4.3%
+- **CSS:** 4.1%
+- **C:** 0.4%
 <!-- LANGUAGE_SUMMARY:end -->
 
   </td>
@@ -115,7 +115,7 @@
 - **Role:** Contributor/Collaborator
 
 **[Physics](https://github.com/superbode/Physics)** - Includes an evolution of a simple physics encoded in C++.
-- **Languages:** C++, C, Makefile
+- **Languages:** C++, C, Makefile, Angular, Spring, REST API
 - **Contributors:** 2
 - **Organization/Owner:** Owner (superbode)
 - **Role:** Owner
