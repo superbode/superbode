@@ -42,7 +42,7 @@
 <!-- RESUME_SKILLS:start -->
 <p align="center"><strong>Languages</strong></p>
 <p align="center">
-  <img src="https://skillicons.dev/icons?i=cs,js,html,ts,python,cpp,css,php,c&theme=dark" alt="Languages" />
+  <img src="https://skillicons.dev/icons?i=cpp,cs,js,html,ts,python,css,php&theme=dark" alt="Languages" />
 </p>
 
 <p align="center"><strong>Tools & Platforms</strong></p>
@@ -59,16 +59,16 @@
 > Note: This breakdown reflects only languages detected in repositories on this GitHub profile, so it does not include coding work done outside GitHub.
 
 <!-- LANGUAGE_SUMMARY:start -->
-- **C#:** 30.6%
-- **JavaScript:** 12.8%
-- **HTML:** 12.6%
-- **TypeScript:** 11.1%
-- **Python:** 10.5%
-- **C++:** 9.1%
-- **SCSS:** 4.8%
-- **CSS:** 4.1%
-- **PHP:** 4.0%
-- **C:** 0.4%
+- **C++:** 24.7%
+- **C#:** 23.2%
+- **JavaScript:** 14.8%
+- **HTML:** 9.6%
+- **TypeScript:** 9.4%
+- **Python:** 8.0%
+- **SCSS:** 3.6%
+- **CSS:** 3.3%
+- **PHP:** 3.0%
+- **Makefile:** 0.3%
 <!-- LANGUAGE_SUMMARY:end -->
 
   </td>
@@ -115,13 +115,13 @@
 - **Role:** Contributor/Collaborator
 
 **[Physics](https://github.com/superbode/Physics)** - Includes an evolution of a simple physics encoded in C++.
-- **Languages:** C++, C, Makefile, Angular, Spring, REST API
+- **Languages:** C++, Makefile, Angular, Spring, REST API
 - **Contributors:** 2
 - **Organization/Owner:** Owner (superbode)
 - **Role:** Owner
 
 **[s26-ikigai](https://github.com/Clemson-Capstone/s26-ikigai)** - Supports Ikigai Gardens by connecting South Carolina churches and volunteers to grow food and combat insecurity.
-- **Languages:** TypeScript, JavaScript, CSS, Python, Dockerfile, HTML
+- **Languages:** JavaScript, TypeScript, CSS, Python, Dockerfile, HTML
 - **Contributors:** 5
 - **Organization/Owner:** Organization (Clemson-Capstone)
 - **Role:** Contributor/Collaborator
