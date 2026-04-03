@@ -42,7 +42,7 @@
 <!-- RESUME_SKILLS:start -->
 <p align="center"><strong>Languages</strong></p>
 <p align="center">
-  <img src="https://skillicons.dev/icons?i=cpp,cs,js,html,ts,python,css,php&theme=dark" alt="Languages" />
+  <img src="https://skillicons.dev/icons?i=cpp,cs,js,ts,html,python,css,php,c&theme=dark" alt="Languages" />
 </p>
 
 <p align="center"><strong>Tools & Platforms</strong></p>
@@ -59,16 +59,16 @@
 > Note: This breakdown reflects only languages detected in repositories on this GitHub profile, so it does not include coding work done outside GitHub.
 
 <!-- LANGUAGE_SUMMARY:start -->
-- **C++:** 24.7%
-- **C#:** 23.2%
-- **JavaScript:** 14.8%
-- **HTML:** 9.6%
-- **TypeScript:** 9.4%
-- **Python:** 8.0%
+- **C++:** 24.2%
+- **C#:** 22.7%
+- **JavaScript:** 15.3%
+- **TypeScript:** 10.1%
+- **HTML:** 9.4%
+- **Python:** 7.8%
 - **SCSS:** 3.6%
-- **CSS:** 3.3%
+- **CSS:** 3.4%
 - **PHP:** 3.0%
-- **Makefile:** 0.3%
+- **C:** 0.6%
 <!-- LANGUAGE_SUMMARY:end -->
 
   </td>
@@ -125,6 +125,12 @@
 - **Contributors:** 5
 - **Organization/Owner:** Organization (Clemson-Capstone)
 - **Role:** Contributor/Collaborator
+
+**[OS](https://github.com/superbode/OS)** - This project simulates CPU scheduling algorithms to demonstrate how different scheduling policies affect task execution response times and wait times.
+- **Languages:** C, Makefile
+- **Contributors:** 2
+- **Organization/Owner:** Owner (superbode)
+- **Role:** Owner
 <!-- CURRENT_PROJECTS:end -->
 
 ---
