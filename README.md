@@ -59,16 +59,16 @@
 > Note: This breakdown reflects only languages detected in repositories on this GitHub profile, so it does not include coding work done outside GitHub.
 
 <!-- LANGUAGE_SUMMARY:start -->
-- **C++:** 25.4%
-- **C#:** 22.3%
-- **JavaScript:** 15.1%
-- **TypeScript:** 9.9%
-- **HTML:** 9.2%
-- **Python:** 7.7%
-- **SCSS:** 3.5%
-- **CSS:** 3.4%
-- **PHP:** 2.9%
-- **C:** 0.6%
+- **C++:** 24.0%
+- **C#:** 21.1%
+- **JavaScript:** 17.0%
+- **TypeScript:** 11.3%
+- **HTML:** 8.7%
+- **Python:** 7.3%
+- **CSS:** 4.0%
+- **SCSS:** 3.3%
+- **PHP:** 2.7%
+- **C:** 0.5%
 <!-- LANGUAGE_SUMMARY:end -->
 
   </td>
