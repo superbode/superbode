@@ -59,16 +59,16 @@
 > Note: This breakdown reflects only languages detected in repositories on this GitHub profile, so it does not include coding work done outside GitHub.
 
 <!-- LANGUAGE_SUMMARY:start -->
-- **C++:** 22.2%
-- **C#:** 19.5%
-- **JavaScript:** 16.0%
-- **TypeScript:** 16.0%
-- **HTML:** 8.1%
+- **C++:** 22.0%
+- **C#:** 19.3%
+- **JavaScript:** 15.8%
+- **TypeScript:** 15.8%
+- **HTML:** 8.0%
 - **Python:** 6.7%
-- **CSS:** 5.4%
-- **SCSS:** 3.1%
+- **CSS:** 5.3%
+- **SCSS:** 3.0%
 - **PHP:** 2.5%
-- **C:** 0.5%
+- **C:** 1.5%
 <!-- LANGUAGE_SUMMARY:end -->
 
   </td>
@@ -126,7 +126,7 @@
 - **Organization/Owner:** Organization (Clemson-Capstone)
 - **Role:** Contributor/Collaborator
 
-**[OS](https://github.com/superbode/OS)** - This project simulates CPU scheduling algorithms to demonstrate how different scheduling policies affect task execution response times and wait times.
+**[OS](https://github.com/superbode/OS)** - OS is a C project with clear goals and practical implementation details.
 - **Languages:** C, Makefile
 - **Contributors:** 2
 - **Organization/Owner:** Owner (superbode)
