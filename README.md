@@ -59,14 +59,14 @@
 > Note: This breakdown reflects only languages detected in repositories on this GitHub profile, so it does not include coding work done outside GitHub.
 
 <!-- LANGUAGE_SUMMARY:start -->
-- **C++:** 21.0%
-- **C#:** 18.4%
-- **JavaScript:** 17.3%
-- **TypeScript:** 17.0%
-- **HTML:** 7.6%
-- **Python:** 6.4%
-- **CSS:** 5.6%
-- **SCSS:** 2.9%
+- **C++:** 22.2%
+- **C#:** 18.1%
+- **JavaScript:** 17.0%
+- **TypeScript:** 16.7%
+- **HTML:** 7.5%
+- **Python:** 6.3%
+- **CSS:** 5.5%
+- **SCSS:** 2.8%
 - **PHP:** 2.4%
 - **C:** 1.4%
 <!-- LANGUAGE_SUMMARY:end -->
@@ -108,17 +108,17 @@
 - **Organization/Owner:** Owner (Walhalla7)
 - **Role:** Contributor/Collaborator
 
-**[website](https://github.com/9by9-sudoku/website)** - Repository for the 9x9project s website files.
-- **Languages:** HTML, SCSS, Less, PHP, JavaScript, Hack, CSS
-- **Contributors:** 5
-- **Organization/Owner:** Organization (9by9-sudoku)
-- **Role:** Contributor/Collaborator
-
 **[Physics](https://github.com/superbode/Physics)** - Includes an evolution of a simple physics encoded in C++.
 - **Languages:** C++, Makefile, Angular, Spring, REST API
 - **Contributors:** 2
 - **Organization/Owner:** Owner (superbode)
 - **Role:** Owner
+
+**[website](https://github.com/9by9-sudoku/website)** - Repository for the 9x9project s website files.
+- **Languages:** HTML, SCSS, Less, PHP, JavaScript, Hack, CSS
+- **Contributors:** 5
+- **Organization/Owner:** Organization (9by9-sudoku)
+- **Role:** Contributor/Collaborator
 
 **[s26-ikigai](https://github.com/Clemson-Capstone/s26-ikigai)** - Supports Ikigai Gardens by connecting South Carolina churches and volunteers to grow food and combat insecurity.
 - **Languages:** TypeScript, JavaScript, CSS, Python, Dockerfile, HTML, Unity, Node.js, Docker, React
