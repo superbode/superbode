@@ -60,12 +60,12 @@
 
 <!-- LANGUAGE_SUMMARY:start -->
 - **TypeScript:** 22.3%
-- **C++:** 22.3%
-- **JavaScript:** 16.3%
+- **C++:** 22.2%
+- **JavaScript:** 16.5%
 - **C#:** 15.8%
 - **HTML:** 6.5%
 - **CSS:** 5.5%
-- **Python:** 5.5%
+- **Python:** 5.4%
 - **SCSS:** 2.5%
 - **PHP:** 2.1%
 - **C:** 1.2%
