@@ -125,12 +125,6 @@
 - **Contributors:** 5
 - **Organization/Owner:** Organization (Clemson-Capstone)
 - **Role:** Contributor/Collaborator
-
-**[OS](https://github.com/superbode/OS)** - OS is a C project with clear goals and practical implementation details.
-- **Languages:** C, Makefile
-- **Contributors:** 2
-- **Organization/Owner:** Owner (superbode)
-- **Role:** Owner
 <!-- CURRENT_PROJECTS:end -->
 
 ---
@@ -167,6 +161,12 @@
 - **Contributors:** 3
 - **Organization/Owner:** Owner (coolguycaden)
 - **Role:** Contributor/Collaborator
+
+**[OS](https://github.com/superbode/OS)** - OS is a C project with clear goals and practical implementation details.
+- **Languages:** C, Makefile
+- **Contributors:** 2
+- **Organization/Owner:** Owner (superbode)
+- **Role:** Owner
 
 **[3720-learn-git](https://github.com/superbode/3720-learn-git)** - A class assignment focused on learning GitHub workflows and version control basics.
 - **Languages:** Not specified
