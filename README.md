@@ -108,12 +108,6 @@
 - **Organization/Owner:** Owner (Walhalla7)
 - **Role:** Contributor/Collaborator
 
-**[Physics](https://github.com/superbode/Physics)** - Includes an evolution of a simple physics encoded in C++.
-- **Languages:** C++, Makefile, Angular, Spring, REST API
-- **Contributors:** 2
-- **Organization/Owner:** Owner (superbode)
-- **Role:** Owner
-
 **[website](https://github.com/9by9-sudoku/website)** - Repository for the 9x9project s website files.
 - **Languages:** HTML, SCSS, Less, PHP, JavaScript, Hack, CSS
 - **Contributors:** 5
@@ -137,6 +131,12 @@
 - **Contributors:** 4
 - **Organization/Owner:** Owner (sveaej)
 - **Role:** Contributor/Collaborator
+
+**[Physics](https://github.com/superbode/Physics)** - Includes an evolution of a simple physics encoded in C++.
+- **Languages:** C++, Makefile, Angular, Spring, REST API
+- **Contributors:** 2
+- **Organization/Owner:** Owner (superbode)
+- **Role:** Owner
 
 **[CanTrip](https://github.com/JohnkGitt/CanTrip)** - A PyGame adventure where CANRobot escapes a facility after gaining self-awareness.
 - **Languages:** Python
