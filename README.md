@@ -108,12 +108,6 @@
 - **Organization/Owner:** Owner (Walhalla7)
 - **Role:** Contributor/Collaborator
 
-**[website](https://github.com/9by9-sudoku/website)** - Repository for the 9x9project s website files.
-- **Languages:** HTML, SCSS, Less, PHP, JavaScript, Hack, CSS
-- **Contributors:** 5
-- **Organization/Owner:** Organization (9by9-sudoku)
-- **Role:** Contributor/Collaborator
-
 **[s26-ikigai](https://github.com/Clemson-Capstone/s26-ikigai)** - Supports Ikigai Gardens by connecting South Carolina churches and volunteers to grow food and combat insecurity.
 - **Languages:** TypeScript, JavaScript, CSS, Python, Dockerfile, HTML, Unity, Node.js, Docker, React
 - **Contributors:** 5
@@ -137,6 +131,12 @@
 - **Contributors:** 2
 - **Organization/Owner:** Owner (superbode)
 - **Role:** Owner
+
+**[website](https://github.com/9by9-sudoku/website)** - Repository for the 9x9project s website files.
+- **Languages:** HTML, SCSS, Less, PHP, JavaScript, Hack, CSS
+- **Contributors:** 5
+- **Organization/Owner:** Organization (9by9-sudoku)
+- **Role:** Contributor/Collaborator
 
 **[CanTrip](https://github.com/JohnkGitt/CanTrip)** - A PyGame adventure where CANRobot escapes a facility after gaining self-awareness.
 - **Languages:** Python
