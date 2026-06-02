@@ -107,12 +107,6 @@
 - **Contributors:** 2
 - **Organization/Owner:** Owner (Walhalla7)
 - **Role:** Contributor/Collaborator
-
-**[s26-ikigai](https://github.com/Clemson-Capstone/s26-ikigai)** - Supports Ikigai Gardens by connecting South Carolina churches and volunteers to grow food and combat insecurity.
-- **Languages:** TypeScript, JavaScript, CSS, Python, Dockerfile, HTML, Unity, Node.js, Docker, React
-- **Contributors:** 5
-- **Organization/Owner:** Organization (Clemson-Capstone)
-- **Role:** Contributor/Collaborator
 <!-- CURRENT_PROJECTS:end -->
 
 ---
@@ -148,6 +142,12 @@
 - **Languages:** ShaderLab, C#, HLSL
 - **Contributors:** 7
 - **Organization/Owner:** Owner (isaac-fletcher)
+- **Role:** Contributor/Collaborator
+
+**[s26-ikigai](https://github.com/Clemson-Capstone/s26-ikigai)** - Supports Ikigai Gardens by connecting South Carolina churches and volunteers to grow food and combat insecurity.
+- **Languages:** TypeScript, JavaScript, CSS, Python, Dockerfile, HTML, Unity, Node.js, Docker, React
+- **Contributors:** 5
+- **Organization/Owner:** Organization (Clemson-Capstone)
 - **Role:** Contributor/Collaborator
 
 **[CPSC3720.1-S25-Team12](https://github.com/CPSC3720S25-ClassRepos/CPSC3720.1-S25-Team12)** - Builds and tests API functionality using Postman YAML AWS Lambda and DynamoDB.
