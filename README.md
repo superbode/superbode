@@ -104,7 +104,7 @@
 <!-- CURRENT_PROJECTS:start -->
 **[Curiosity](https://github.com/Walhalla7/Curiosity)** - An indie Unreal Engine 5 horror game built by a small Clemson development team.
 - **Languages:** Not specified
-- **Contributors:** 0
+- **Contributors:** 2
 - **Organization/Owner:** Owner (Walhalla7)
 - **Role:** Contributor/Collaborator
 <!-- CURRENT_PROJECTS:end -->
