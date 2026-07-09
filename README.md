@@ -60,11 +60,11 @@
 
 <!-- LANGUAGE_SUMMARY:start -->
 - **TypeScript:** 22.3%
-- **C++:** 22.2%
+- **C++:** 22.1%
 - **JavaScript:** 16.5%
-- **C#:** 15.8%
+- **C#:** 15.7%
 - **HTML:** 6.5%
-- **CSS:** 5.5%
+- **CSS:** 5.6%
 - **Python:** 5.4%
 - **SCSS:** 2.5%
 - **PHP:** 2.0%
@@ -108,6 +108,18 @@
 - **Organization/Owner:** Owner (Walhalla7)
 - **Role:** Contributor/Collaborator
 
+**[genshin-edits-portfolio](https://github.com/superbode/genshin-edits-portfolio)** - A portfolio of edits of Genshin Impact characters produced by Mary Grace.
+- **Languages:** CSS, TypeScript, JavaScript, HTML
+- **Contributors:** 1
+- **Organization/Owner:** Owner (superbode)
+- **Role:** Owner
+
+**[s26-ikigai](https://github.com/Clemson-Capstone/s26-ikigai)** - Supports Ikigai Gardens by connecting South Carolina churches and volunteers to grow food and combat insecurity.
+- **Languages:** TypeScript, JavaScript, CSS, Python, Dockerfile, HTML, Unity, Node.js, Docker, React
+- **Contributors:** 6
+- **Organization/Owner:** Organization (Clemson-Capstone)
+- **Role:** Contributor/Collaborator
+
 **[htmlcss-business-card](https://github.com/superbode/htmlcss-business-card)** - name Scrim-s027ic2 description https scrimba.com learn-html-and-css-c0p 01u scripts start vite dev vite build vite build preview vite preview dependencies vite latest devDependencies.
 - **Languages:** JavaScript, CSS
 - **Contributors:** 1
@@ -148,12 +160,6 @@
 - **Languages:** ShaderLab, C#, HLSL
 - **Contributors:** 7
 - **Organization/Owner:** Owner (isaac-fletcher)
-- **Role:** Contributor/Collaborator
-
-**[s26-ikigai](https://github.com/Clemson-Capstone/s26-ikigai)** - Supports Ikigai Gardens by connecting South Carolina churches and volunteers to grow food and combat insecurity.
-- **Languages:** TypeScript, JavaScript, CSS, Python, Dockerfile, HTML, Unity, Node.js, Docker, React
-- **Contributors:** 5
-- **Organization/Owner:** Organization (Clemson-Capstone)
 - **Role:** Contributor/Collaborator
 
 **[CPSC3720.1-S25-Team12](https://github.com/CPSC3720S25-ClassRepos/CPSC3720.1-S25-Team12)** - Builds and tests API functionality using Postman YAML AWS Lambda and DynamoDB.
