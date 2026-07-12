@@ -59,12 +59,12 @@
 > Note: This breakdown reflects only languages detected in repositories on this GitHub profile, so it does not include coding work done outside GitHub.
 
 <!-- LANGUAGE_SUMMARY:start -->
-- **TypeScript:** 22.3%
-- **C++:** 22.1%
+- **TypeScript:** 22.5%
+- **C++:** 22.0%
 - **JavaScript:** 16.5%
-- **C#:** 15.7%
+- **C#:** 15.6%
 - **HTML:** 6.5%
-- **CSS:** 5.6%
+- **CSS:** 5.8%
 - **Python:** 5.4%
 - **SCSS:** 2.5%
 - **PHP:** 2.0%
@@ -109,7 +109,7 @@
 - **Role:** Contributor/Collaborator
 
 **[genshin-edits-portfolio](https://github.com/superbode/genshin-edits-portfolio)** - A portfolio of edits of Genshin Impact characters produced by Mary Grace.
-- **Languages:** CSS, TypeScript, JavaScript, HTML
+- **Languages:** TypeScript, CSS, JavaScript, HTML, React
 - **Contributors:** 1
 - **Organization/Owner:** Owner (superbode)
 - **Role:** Owner
