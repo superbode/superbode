@@ -59,13 +59,13 @@
 > Note: This breakdown reflects only languages detected in repositories on this GitHub profile, so it does not include coding work done outside GitHub.
 
 <!-- LANGUAGE_SUMMARY:start -->
-- **TypeScript:** 22.5%
-- **C++:** 21.9%
-- **JavaScript:** 16.5%
-- **C#:** 15.6%
-- **HTML:** 6.5%
-- **CSS:** 5.9%
-- **Python:** 5.4%
+- **TypeScript:** 22.6%
+- **C++:** 21.8%
+- **JavaScript:** 16.7%
+- **C#:** 15.5%
+- **HTML:** 6.4%
+- **CSS:** 6.0%
+- **Python:** 5.3%
 - **SCSS:** 2.4%
 - **PHP:** 2.0%
 - **C:** 1.2%
@@ -123,6 +123,12 @@
 **[htmlcss-business-card](https://github.com/superbode/htmlcss-business-card)** - name Scrim-s027ic2 description https scrimba.com learn-html-and-css-c0p 01u scripts start vite dev vite build vite build preview vite preview dependencies vite latest devDependencies.
 - **Languages:** JavaScript, CSS
 - **Contributors:** 1
+- **Organization/Owner:** Owner (superbode)
+- **Role:** Owner
+
+**[scrimba-quizzical](https://github.com/superbode/scrimba-quizzical)** - A React website built in HTML CSS and React.js that present a short randomly generated quiz of 10.
+- **Languages:** JavaScript, CSS, HTML, React
+- **Contributors:** 2
 - **Organization/Owner:** Owner (superbode)
 - **Role:** Owner
 <!-- CURRENT_PROJECTS:end -->
