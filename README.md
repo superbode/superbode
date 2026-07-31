@@ -120,12 +120,6 @@
 - **Organization/Owner:** Organization (Clemson-Capstone)
 - **Role:** Contributor/Collaborator
 
-**[htmlcss-business-card](https://github.com/superbode/htmlcss-business-card)** - name Scrim-s027ic2 description https scrimba.com learn-html-and-css-c0p 01u scripts start vite dev vite build vite build preview vite preview dependencies vite latest devDependencies.
-- **Languages:** JavaScript, CSS
-- **Contributors:** 1
-- **Organization/Owner:** Owner (superbode)
-- **Role:** Owner
-
 **[scrimba-quizzical](https://github.com/superbode/scrimba-quizzical)** - A React website built in HTML CSS and React.js that present a short randomly generated quiz of 10.
 - **Languages:** JavaScript, CSS, HTML, React
 - **Contributors:** 2
@@ -173,6 +167,12 @@
 - **Contributors:** 3
 - **Organization/Owner:** Organization (CPSC3720S25-ClassRepos)
 - **Role:** Contributor/Collaborator
+
+**[htmlcss-business-card](https://github.com/superbode/htmlcss-business-card)** - name Scrim-s027ic2 description https scrimba.com learn-html-and-css-c0p 01u scripts start vite dev vite build vite build preview vite preview dependencies vite latest devDependencies.
+- **Languages:** JavaScript, CSS
+- **Contributors:** 1
+- **Organization/Owner:** Owner (superbode)
+- **Role:** Owner
 
 **[cpsc-3300-p2](https://github.com/coolguycaden/cpsc-3300-p2)** - Simulates MIPS instruction execution using a virtual register file and memory model.
 - **Languages:** C++, Makefile
