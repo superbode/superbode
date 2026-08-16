@@ -61,10 +61,10 @@
 <!-- LANGUAGE_SUMMARY:start -->
 - **TypeScript:** 23.2%
 - **C++:** 21.5%
-- **JavaScript:** 16.7%
+- **JavaScript:** 16.8%
 - **C#:** 15.3%
-- **HTML:** 6.4%
-- **CSS:** 6.1%
+- **HTML:** 6.3%
+- **CSS:** 6.0%
 - **Python:** 5.3%
 - **SCSS:** 2.4%
 - **PHP:** 2.0%
@@ -108,12 +108,6 @@
 - **Organization/Owner:** Owner (Walhalla7)
 - **Role:** Contributor/Collaborator
 
-**[genshin-edits-portfolio](https://github.com/superbode/genshin-edits-portfolio)** - A portfolio of edits of Genshin Impact characters produced by Mary Grace.
-- **Languages:** TypeScript, CSS, JavaScript, HTML, React
-- **Contributors:** 1
-- **Organization/Owner:** Owner (superbode)
-- **Role:** Owner
-
 **[s26-ikigai](https://github.com/Clemson-Capstone/s26-ikigai)** - Supports Ikigai Gardens by connecting South Carolina churches and volunteers to grow food and combat insecurity.
 - **Languages:** TypeScript, JavaScript, CSS, Python, Dockerfile, HTML, Unity, Node.js, Docker, React
 - **Contributors:** 6
@@ -155,6 +149,12 @@
 - **Contributors:** 3
 - **Organization/Owner:** Owner (JohnkGitt)
 - **Role:** Contributor/Collaborator
+
+**[genshin-edits-portfolio](https://github.com/superbode/genshin-edits-portfolio)** - A portfolio of edits of Genshin Impact characters produced by Mary Grace.
+- **Languages:** TypeScript, CSS, JavaScript, HTML, React
+- **Contributors:** 1
+- **Organization/Owner:** Owner (superbode)
+- **Role:** Owner
 
 **[cyberpunk-game](https://github.com/isaac-fletcher/cyberpunk-game)** - A two-player 2D Unity puzzle game set in a run-down cyberpunk city.
 - **Languages:** ShaderLab, C#, HLSL
