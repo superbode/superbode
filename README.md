@@ -113,12 +113,6 @@
 - **Contributors:** 6
 - **Organization/Owner:** Organization (Clemson-Capstone)
 - **Role:** Contributor/Collaborator
-
-**[scrimba-quizzical](https://github.com/superbode/scrimba-quizzical)** - A React website built in HTML CSS and React.js that present a short randomly generated quiz of 10.
-- **Languages:** JavaScript, CSS, HTML, React
-- **Contributors:** 2
-- **Organization/Owner:** Owner (superbode)
-- **Role:** Owner
 <!-- CURRENT_PROJECTS:end -->
 
 ---
@@ -182,6 +176,12 @@
 
 **[OS](https://github.com/superbode/OS)** - OS is a C project with clear goals and practical implementation details.
 - **Languages:** C, Makefile
+- **Contributors:** 2
+- **Organization/Owner:** Owner (superbode)
+- **Role:** Owner
+
+**[scrimba-quizzical](https://github.com/superbode/scrimba-quizzical)** - A React website built in HTML CSS and React.js that present a short randomly generated quiz of 10.
+- **Languages:** JavaScript, CSS, HTML, React
 - **Contributors:** 2
 - **Organization/Owner:** Owner (superbode)
 - **Role:** Owner
