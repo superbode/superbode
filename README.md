@@ -42,7 +42,7 @@
 <!-- RESUME_SKILLS:start -->
 <p align="center"><strong>Languages</strong></p>
 <p align="center">
-  <img src="https://skillicons.dev/icons?i=ts,cpp,js,cs,html,css,python,php,c&theme=dark" alt="Languages" />
+  <img src="https://skillicons.dev/icons?i=ts,cpp,js,cs,css,html,python,php,c&theme=dark" alt="Languages" />
 </p>
 
 <p align="center"><strong>Tools & Platforms</strong></p>
@@ -59,14 +59,14 @@
 > Note: This breakdown reflects only languages detected in repositories on this GitHub profile, so it does not include coding work done outside GitHub.
 
 <!-- LANGUAGE_SUMMARY:start -->
-- **TypeScript:** 23.8%
-- **C++:** 21.1%
+- **TypeScript:** 23.9%
+- **C++:** 21.0%
 - **JavaScript:** 17.1%
-- **C#:** 15.0%
+- **C#:** 14.9%
+- **CSS:** 6.3%
 - **HTML:** 6.2%
-- **CSS:** 6.2%
-- **Python:** 5.2%
-- **SCSS:** 2.4%
+- **Python:** 5.1%
+- **SCSS:** 2.3%
 - **PHP:** 1.9%
 - **C:** 1.2%
 <!-- LANGUAGE_SUMMARY:end -->
