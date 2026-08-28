@@ -59,16 +59,16 @@
 > Note: This breakdown reflects only languages detected in repositories on this GitHub profile, so it does not include coding work done outside GitHub.
 
 <!-- LANGUAGE_SUMMARY:start -->
-- **TypeScript:** 23.9%
-- **C++:** 21.0%
-- **JavaScript:** 17.1%
-- **C#:** 14.9%
-- **CSS:** 6.3%
-- **HTML:** 6.2%
-- **Python:** 5.1%
-- **SCSS:** 2.3%
-- **PHP:** 1.9%
-- **C:** 1.2%
+- **TypeScript:** 29.5%
+- **C++:** 19.2%
+- **JavaScript:** 15.9%
+- **C#:** 13.6%
+- **CSS:** 6.6%
+- **HTML:** 5.7%
+- **Python:** 4.7%
+- **SCSS:** 2.1%
+- **PHP:** 1.8%
+- **C:** 1.1%
 <!-- LANGUAGE_SUMMARY:end -->
 
   </td>
@@ -109,7 +109,7 @@
 - **Role:** Contributor/Collaborator
 
 **[s26-ikigai](https://github.com/Clemson-Capstone/s26-ikigai)** - Supports Ikigai Gardens by connecting South Carolina churches and volunteers to grow food and combat insecurity.
-- **Languages:** TypeScript, JavaScript, CSS, Python, Dockerfile, HTML, Unity, Node.js, Docker, React
+- **Languages:** TypeScript, JavaScript, CSS, PLpgSQL, Python, Dockerfile, HTML, Unity, Node.js, Docker
 - **Contributors:** 6
 - **Organization/Owner:** Organization (Clemson-Capstone)
 - **Role:** Contributor/Collaborator
