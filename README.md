@@ -60,8 +60,8 @@
 
 <!-- LANGUAGE_SUMMARY:start -->
 - **TypeScript:** 30.6%
-- **C++:** 18.8%
-- **JavaScript:** 15.9%
+- **C++:** 18.7%
+- **JavaScript:** 16.0%
 - **C#:** 13.3%
 - **CSS:** 6.4%
 - **HTML:** 5.5%
