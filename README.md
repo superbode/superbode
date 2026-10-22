@@ -102,12 +102,6 @@
 ## 🚀 Current Projects
 
 <!-- CURRENT_PROJECTS:start -->
-**[Curiosity](https://github.com/Walhalla7/Curiosity)** - An indie Unreal Engine 5 horror game built by a small Clemson development team.
-- **Languages:** Not specified
-- **Contributors:** 2
-- **Organization/Owner:** Owner (Walhalla7)
-- **Role:** Contributor/Collaborator
-
 **[s26-ikigai](https://github.com/Clemson-Capstone/s26-ikigai)** - Supports Ikigai Gardens by connecting South Carolina churches and volunteers to grow food and combat insecurity.
 - **Languages:** TypeScript, JavaScript, CSS, PLpgSQL, Python, Dockerfile, HTML, Unity, Node.js, Docker
 - **Contributors:** 6
@@ -120,6 +114,12 @@
 ## 🗄️ Past Projects
 
 <!-- PAST_PROJECTS:start -->
+**[Curiosity](https://github.com/Walhalla7/Curiosity)** - An indie Unreal Engine 5 horror game built by a small Clemson development team.
+- **Languages:** Not specified
+- **Contributors:** 2
+- **Organization/Owner:** Owner (Walhalla7)
+- **Role:** Contributor/Collaborator
+
 **[CPSC4110-SP25-Team7](https://github.com/sveaej/CPSC4110-SP25-Team7)** - A repository for CPSC 4110 Team 7 s Fishing Simulator.
 - **Languages:** ShaderLab, C#, Mathematica
 - **Contributors:** 4
