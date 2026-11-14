@@ -210,7 +210,7 @@ _No repositories updated within the last month._
 **Computer Science Teaching Assistant**
 *August 2022 – May 2023*
 - Provided one-on-one and group coding assistance to 200+ students in advanced Computer Science coursework.
-- Led lab sections, graded assignments/ quizzes/code, and delivered feedback to reinforce core principles of software design, methodology, and best practices.
+- Led lab sections, graded assignments/quizzes/code, and delivered feedback to reinforce core principles of software design, methodology, and best practices.
 - Collaborated with the Undergraduate Program Coordinator to support curriculum needs.
 
 ### U.S. ARMY RESERVES Fort Sill, OK; Fort Eisenhower, GA; Greenville, SC
